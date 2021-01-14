@@ -8,6 +8,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
