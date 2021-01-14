@@ -33,7 +33,7 @@ public class SceneHandler {
 	private Scene setInitialScene(String filename, int x, int y) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/" + filename));
 		Parent root = (Parent) loader.load();
-		return new Scene(root, x, y);
+		return new Scene(root, x + 6, y + 35);
 	}
 
 	public void goToScene(String filename, String title, int x, int y) throws Exception {
