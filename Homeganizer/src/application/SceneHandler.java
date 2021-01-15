@@ -22,7 +22,7 @@ public class SceneHandler {
 
 	public void init(Stage primaryStage) throws Exception {
 		stage = primaryStage;
-		scene = setInitialScene("", 1280, 720);// dimensioni arbitrarie per adesso
+		scene = setInitialScene("loginInterface.fxml", 1280, 720);
 		stage.setScene(scene);
 		stage.setTitle("Homeganizer Login");
 		stage.setResizable(false);
