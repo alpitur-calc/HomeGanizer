@@ -26,6 +26,14 @@ public class RegisterController {
 
     @FXML
     private Label txtQuestion;
+    
+    @FXML
+    private Button backButton;
+
+    @FXML
+    private void goBack(MouseEvent event) {
+
+    }
 
     @FXML
     private void handleBtnRegisterPressed(MouseEvent event) {

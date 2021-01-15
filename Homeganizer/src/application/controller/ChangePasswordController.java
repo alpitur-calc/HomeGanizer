@@ -26,6 +26,14 @@ public class ChangePasswordController {
 
     @FXML
     private Label txtQuestion;
+    
+    @FXML
+    private Button backButton;
+
+    @FXML
+    private void goBack(MouseEvent event) {
+
+    }
 
     @FXML
     void handleBtnRegisterPressed(MouseEvent event) {
