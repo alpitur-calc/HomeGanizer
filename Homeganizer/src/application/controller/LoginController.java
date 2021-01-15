@@ -17,6 +17,7 @@ public class LoginController {
 
     @FXML
     private Button btnRegister;
+<<<<<<< HEAD
 
     @FXML
     private PasswordField txtPassword2;
@@ -30,6 +31,26 @@ public class LoginController {
     @FXML
     void handleBtnRegisterPressed(MouseEvent event) {
     	
+=======
+    
+    
+    //Funzione che gestisce la pressione del tasto Login
+    @FXML
+    private void handleBtnLoginPressed(MouseEvent e) {
+    	//fai il login
+    }
+    
+    //Funzione che gestisce la pressione del tasto Register
+    @FXML
+    private void handleBtnRegisterPressed(MouseEvent e) {
+    	//vai alla pagina di registrazione
+    }
+    
+    //Funzione che gestisce la pressione sulla Label PasswordDimenticata
+    @FXML
+    private void handlelblForgotPasswordClicked(MouseEvent e) {
+    	//vai alla pagina di recupero password
+>>>>>>> branch 'main' of https://github.com/alpitur-calc/progettoingsw
     }
     
     ​​
