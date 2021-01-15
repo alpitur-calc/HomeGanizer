@@ -41,7 +41,5 @@ public class Stanza {
 		
 		return false;
 	}
-	
-	
-	
+		
 }
