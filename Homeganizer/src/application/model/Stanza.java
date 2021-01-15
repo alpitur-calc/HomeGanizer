@@ -1,14 +1,14 @@
 package application.model;
 
 import java.util.ArrayList;
-//import java.util.Map;
+import java.util.Map;
 
 public class Stanza {
 
 	private String id;
 	private int larghezza, profondità;
 	private String proprietario;
-	//private Map<String, Mobile> mobili;
+	private Map<String, Mobile> mobili;
 	private ArrayList<String> whitelisted;
 	
 	public Stanza(String Id, String Proprietario, int Larghezza, int Profondità) {
