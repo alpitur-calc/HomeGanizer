@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.SceneHandler;
 import application.model.LoginHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -39,7 +40,7 @@ public class LoginController {
     //Funzione che gestisce la pressione del tasto Register
     @FXML
     private void handleBtnRegisterPressed(MouseEvent e) {
-    	//vai alla pagina di registrazione
+    	SceneHandler.getInstance().goToScene("registerInterface.fxml", "Boh", 1280, 720);
     }
     
     //Funzione che gestisce la pressione sulla Label PasswordDimenticata
