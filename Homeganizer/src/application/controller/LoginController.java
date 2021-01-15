@@ -39,7 +39,7 @@ public class LoginController {
     
     //Funzione che gestisce la pressione del tasto Register
     @FXML
-    private void handleBtnRegisterPressed(MouseEvent e) {
+    private void handleBtnRegisterPressed(MouseEvent e) throws Exception {
     	SceneHandler.getInstance().goToScene("registerInterface.fxml", "Boh", 1280, 720);
     }
     
