@@ -26,22 +26,22 @@
             <Font size="18.0" />
          </font>
       </PasswordField>
-      <Button fx:id="btnRegister" layoutX="538.0" layoutY="454.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="202.0" text="Registrati">
+      <Button fx:id="btnRegister" layoutX="538.0" layoutY="454.0" mnemonicParsing="false" onMouseClicked="#handleBtnRegisterPressed" prefHeight="50.0" prefWidth="202.0" text="Registrati">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <PasswordField fx:id="txtPassword1" layoutX="468.0" layoutY="212.0" prefHeight="50.0" prefWidth="345.0" promptText="Conferma Password">
+      <PasswordField fx:id="txtPassword2" layoutX="468.0" layoutY="212.0" prefHeight="50.0" prefWidth="345.0" promptText="Conferma Password">
          <font>
             <Font size="18.0" />
          </font>
       </PasswordField>
-      <TextField fx:id="txtUsername1" layoutX="468.0" layoutY="360.0" prefHeight="50.0" prefWidth="345.0" promptText="Risposta">
+      <TextField fx:id="txtAnswer" layoutX="468.0" layoutY="360.0" prefHeight="50.0" prefWidth="345.0" promptText="Risposta">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <Label layoutX="471.0" layoutY="290.0" prefHeight="43.0" prefWidth="345.0" text="Il nome del tuo gruppo preferito quando eri piccolo:">
+      <Label fx:id="txtQuestion" layoutX="471.0" layoutY="290.0" prefHeight="43.0" prefWidth="345.0" text="Il nome del tuo gruppo preferito quando eri piccolo:">
          <font>
             <Font size="14.0" />
          </font>
