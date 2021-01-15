@@ -32,12 +32,12 @@
             <Font size="14.0" />
          </font>
       </CheckBox>
-      <Label fx:id="lblForgotpassword" layoutX="669.0" layoutY="464.0" prefHeight="27.0" prefWidth="147.0" text="Password Dimenticata?" textFill="RED" underline="true">
+      <Label fx:id="lblForgotpassword" layoutX="669.0" layoutY="464.0" onMouseClicked="#handlelblForgotPasswordClicked" prefHeight="27.0" prefWidth="147.0" text="Password Dimenticata?" textFill="RED" underline="true">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btnLogin" layoutX="414.0" layoutY="517.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="202.0" text="Accedi">
+      <Button fx:id="btnLogin" layoutX="414.0" layoutY="517.0" mnemonicParsing="false" onMousePressed="#handleBtnLoginPressed" prefHeight="50.0" prefWidth="202.0" text="Accedi">
          <font>
             <Font size="24.0" />
          </font>
@@ -47,7 +47,7 @@
             <Font size="18.0" />
          </font>
       </PasswordField>
-      <Button fx:id="btnRegister" layoutX="669.0" layoutY="517.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="202.0" text="Registrati">
+      <Button fx:id="btnRegister" layoutX="669.0" layoutY="517.0" mnemonicParsing="false" onMousePressed="#handleBtnRegisterPressed" prefHeight="50.0" prefWidth="202.0" text="Registrati">
          <font>
             <Font size="24.0" />
          </font>
