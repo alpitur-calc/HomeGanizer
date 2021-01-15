@@ -1,6 +1,6 @@
 package application.model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Mobile {
 	
@@ -11,29 +11,78 @@ public class Mobile {
 								LIBRERIA = "libreria",
 								ARMADIO = "armadio";
 	
-	private ArrayList<Oggetto> listaOggetti;
+	private static Integer IDCOUNTERSCRIVANIA = 1;
+	private static Integer IDCOUNTERTAVOLO = 1;
+	private static Integer IDCOUNTERPOLTRONA = 1;
+	private static Integer IDCOUNTERSEDIA = 1;
+	private static Integer IDCOUNTERLIBRERIA = 1;
+	private static Integer IDCOUNTERARMADIO = 1;
+	
+	private LinkedList <Oggetto> oggetti;
 	private String id;
 	private String nome;
+	private String tipo;
 	
-	public Mobile(String nome, String id){
-		this.id = id;
+	public Mobile(String nome, String tipo){
+		initId();
 		this.nome = nome;
+		this.tipo = tipo;
+		this.oggetti = new LinkedList <Oggetto>();
+		
 	}
 	
-	public void AggiungiOggetto(String id, String nome, String descrizione){
-		listaOggetti.add(new Oggetto(id, nome, descrizione));
+	private void initId() {
+		switch (tipo) {
+		
+		case SCRIVANIA:
+			this.id = "MSC" + IDCOUNTERSCRIVANIA.toString();
+			IDCOUNTERSCRIVANIA++;
+			break;
+		
+		case TAVOLO:
+			this.id = "MTA" + IDCOUNTERTAVOLO.toString();
+			IDCOUNTERTAVOLO++;
+			break;
+			
+		case POLTRONA:
+			this.id = "MPO" + IDCOUNTERPOLTRONA.toString();
+			IDCOUNTERPOLTRONA++;
+			break;
+			
+		case SEDIA:
+			this.id = "MSE" + IDCOUNTERSEDIA.toString();
+			IDCOUNTERSEDIA++;
+			break;
+		case LIBRERIA:
+			this.id = "MLI" + IDCOUNTERLIBRERIA.toString();
+			IDCOUNTERLIBRERIA++;
+			break;
+			
+		case ARMADIO:
+			this.id = "MAR" + IDCOUNTERARMADIO.toString();
+			IDCOUNTERARMADIO++;
+			break;
+			
+		default:
+			break;
+		}
 	}
 	
-	public void RimuoviOggetto(String id) {
-		for (Oggetto i : listaOggetti) {
+	public void aggiungiOggetto(String nome, String descrizione, String tipo){
+		oggetti.add(new Oggetto(nome, descrizione, tipo));
+	}
+	
+	
+	public void rimuoviOggetto(String id) {
+		for (Oggetto i : oggetti) {
 			if(i.getId().equals(id)) {
-				listaOggetti.remove(i);
+				oggetti.remove(i);
 			}
 		}
 	}
-		
-	public ArrayList<Oggetto> getListaOggetti() {
-		return listaOggetti;
+
+	public LinkedList <Oggetto> getOggetti() {
+		return oggetti;
 	}
 
 	public String getId() {
@@ -42,6 +91,10 @@ public class Mobile {
 
 	public String getNome() {
 		return nome;
+	}
+	
+	public String getTipo() {
+		return tipo;
 	}
 
 }
