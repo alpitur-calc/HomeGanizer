@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.LoginController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
@@ -22,22 +22,22 @@
             <Image url="@../../resources/homeganizer%20logo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="txtUsername" layoutX="468.0" layoutY="335.0" prefHeight="50.0" prefWidth="345.0" promptText="Username">
+      <TextField fx:id="txtUsername" layoutX="468.0" layoutY="335.0" prefHeight="50.0" prefWidth="345.0" promptText="Nome Utente">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <CheckBox fx:id="chkRemember" layoutX="468.0" layoutY="467.0" mnemonicParsing="false" text="Remember me">
+      <CheckBox fx:id="chkRemember" layoutX="468.0" layoutY="467.0" mnemonicParsing="false" text="Memorizza Password">
          <font>
             <Font size="14.0" />
          </font>
       </CheckBox>
-      <Label fx:id="lblForgotpassword" layoutX="669.0" layoutY="464.0" prefHeight="27.0" prefWidth="147.0" text="Forgot Password?" textFill="RED" underline="true">
+      <Label fx:id="lblForgotpassword" layoutX="669.0" layoutY="464.0" prefHeight="27.0" prefWidth="147.0" text="Password Dimenticata?" textFill="RED" underline="true">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btnLogin" layoutX="414.0" layoutY="517.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="202.0" text="Log In">
+      <Button fx:id="btnLogin" layoutX="414.0" layoutY="517.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="202.0" text="Accedi">
          <font>
             <Font size="24.0" />
          </font>
@@ -47,7 +47,7 @@
             <Font size="18.0" />
          </font>
       </PasswordField>
-      <Button fx:id="btnRegister" layoutX="669.0" layoutY="517.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="202.0" text="Register">
+      <Button fx:id="btnRegister" layoutX="669.0" layoutY="517.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="202.0" text="Registrati">
          <font>
             <Font size="24.0" />
          </font>
