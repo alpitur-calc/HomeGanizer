@@ -2,11 +2,14 @@ package application.model;
 
 public class Oggetto {
 	
-	public static final String 	UTENSILE = "utensile", 
+	public static final String 	UTENSILE = "utensile",
 								LIBRO = "libro";
 	
+	//Prendere i vari COUNTER dal DB
+	/*
 	private static Integer 	IDCOUNTERU = 1,
 							IDCOUNTERL = 1;
+	*/
 	
 	private String id;
 	private String nome;
@@ -14,12 +17,13 @@ public class Oggetto {
 	private String tipo;
 	
 	public Oggetto(String nome, String descrizione, String tipo){
-		initId();			
+		//initId();			
 		this.nome = nome;
 		this.descrizione = descrizione;
 		this.tipo = tipo;
 	}
 	
+	/*
 	private void initId() {
 		switch (tipo) {
 		
@@ -37,7 +41,8 @@ public class Oggetto {
 			break;
 		}
 	}
-		
+	*/
+	
 	public String getId() {
 		return id;
 	}

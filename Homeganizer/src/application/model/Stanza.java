@@ -6,21 +6,22 @@ import java.util.LinkedList;
 public class Stanza {
 
 	private String id;
+	private String nome;
 	private int larghezza, profondità;
 	private String proprietario;
 	private LinkedList<Mobile> mobili;
 	private ArrayList<String> whitelisted;
 	
-	public Stanza(String Id, String Proprietario, int Larghezza, int Profondità) {
-		this.id= Id;
+	public Stanza(String nome, String Proprietario, int Larghezza, int Profondità) {
+		this.nome = nome;
 		this.proprietario= Proprietario;
 		this.larghezza= Larghezza;
 		this.profondità= Profondità;
 		this.mobili = new LinkedList<Mobile>();
 	}
 	
-	public void aggiungiMobile(Mobile m) {
-		mobili.add(m);
+	public void aggiungiMobile(String nome, String tipo) {
+		mobili.add(new Mobile(nome, tipo));
 	}
 	
 	public boolean isWhitelisted(String id) {
@@ -37,6 +38,10 @@ public class Stanza {
 	
 	public String getId() {
 		return id;
+	}
+		
+	public String getNome() {
+		return nome;
 	}
 
 	public int getLarghezza() {
