@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.SceneHandler;
+import application.model.RegisterHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -38,7 +39,7 @@ public class ChangePasswordController {
 
     @FXML
     void handleBtnRegisterPressed(MouseEvent event) {
-    	
+    	RegisterHandler.changePassword(txtUsername.getText(), txtNewPassword.getText(), txtNewPassword2.getText(), txtAnswer.getText());
     }
 
 }
