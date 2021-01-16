@@ -1,5 +1,7 @@
 package application.controller;
 
+import application.SceneHandler;
+import application.model.RegisterHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -31,13 +33,13 @@ public class RegisterController {
     private Button btnBack;
 
     @FXML
-    private void handleBtnBackPressed(MouseEvent event) {
-
+    private void handleBtnBackPressed(MouseEvent event) throws Exception {
+    	SceneHandler.getInstance().goToScene("loginInterface.fxml", "Homeganizer Login", 1280, 720);
     }
 
     @FXML
     private void handleBtnRegisterPressed(MouseEvent event) {
-
+    	RegisterHandler.createUser(txtUsername.getText(), txtPassword.getText(), txtPassword2.getText(), txtAnswer.getText());
     }
 
 }

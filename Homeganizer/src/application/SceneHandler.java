@@ -40,7 +40,6 @@ public class SceneHandler {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/" + filename));
 		Parent root = (Parent) loader.load();
 		scene.setRoot(root);
-		stage.hide();
 		stage.setTitle(title);
 		stage.setWidth(x);
 		stage.setHeight(y);

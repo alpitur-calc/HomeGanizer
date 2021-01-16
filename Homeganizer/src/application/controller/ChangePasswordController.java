@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.SceneHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -31,13 +32,13 @@ public class ChangePasswordController {
     private Button btnBack;
 
     @FXML
-    private void handleBtnBackPressed(MouseEvent event) {
-
+    private void handleBtnBackPressed(MouseEvent event) throws Exception {
+    	SceneHandler.getInstance().goToScene("loginInterface.fxml", "Homeganizer Login", 1280, 720);
     }
 
     @FXML
     void handleBtnRegisterPressed(MouseEvent event) {
-
+    	
     }
 
 }

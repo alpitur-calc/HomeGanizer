@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class DatabaseHandler {
 	private HashMap<String,User> users;
 	//private Connection con; indeciso
@@ -40,7 +42,7 @@ public class DatabaseHandler {
 	}
 	
 	private static void createUsersTableIfNotExists(Connection con) throws Exception {
-		PreparedStatement stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS users(username varchar(5),password varchar(12),secureAnswer varchar(2);");
+		PreparedStatement stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS users(username varchar(5),password varchar(12),secureAnswer varchar(2));");
 		stm.executeUpdate();
 		stm.close();
 	}
@@ -48,5 +50,25 @@ public class DatabaseHandler {
 	public HashMap<String, User> getUsers() {
 		return users;
 	}
-
+	
+	public void addUser(User u) {
+		users.put(u.getUsername(),u);
+		try {
+			Connection con = DriverManager.getConnection("jdbc:sqlite:database.db");
+			PreparedStatement stm1 = con.prepareStatement("INSERT INTO users VALUES(?,?,?);");
+			System.out.println("here");
+			stm1.setString(1, u.getUsername());
+			stm1.setString(2, u.getPassword());
+			stm1.setString(3, u.getSecureAnswer());
+			stm1.executeUpdate();
+			stm1.close();
+		} catch (Exception e) {
+			System.out.println("ahia");
+			//LoginMessageView.corruptedErrorMessage();
+		}
+	}
+	
+	public boolean userExists(String u) {
+		return users.containsKey(u);
+	}
 }

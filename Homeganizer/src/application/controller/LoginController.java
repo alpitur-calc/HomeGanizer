@@ -40,14 +40,13 @@ public class LoginController {
     //Funzione che gestisce la pressione del tasto Register
     @FXML
     private void handleBtnRegisterPressed(MouseEvent e) throws Exception {
-    	SceneHandler.getInstance().goToScene("registerInterface.fxml", "Boh", 1280, 720);
+    	SceneHandler.getInstance().goToScene("registerInterface.fxml", "Homeganizer Login", 1280, 720);
     }
     
     //Funzione che gestisce la pressione sulla Label PasswordDimenticata
     @FXML
-    private void handlelblForgotPasswordClicked(MouseEvent e) {
-    	
-    	//vai alla pagina di recupero password
+    private void handlelblForgotPasswordClicked(MouseEvent e) throws Exception {
+    	SceneHandler.getInstance().goToScene("passwordChangeInterface.fxml", "Homeganizer Login", 1280, 720);
     }
     
 }

@@ -15,7 +15,6 @@ import javafx.scene.control.Alert.AlertType;
 public class LoginHandler {
 	public static void login(String insertedUsername, String insertedPassword) {
 		if (insertedUsername.equals("") || insertedPassword.equals("")) {
-			// LoginMessageView.noUsernameOrPasswordError();
 			MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Nome Utente o Password non inseriti");
 			return;
 		}
@@ -32,7 +31,7 @@ public class LoginHandler {
 			} else
 				MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Utente non registrato");
 		} catch (Exception e) {
-			// LoginMessageView.corruptedErrorMessage();
+			MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Errore nel database. Contattare l'amministratore");
 		}
 	}
 
