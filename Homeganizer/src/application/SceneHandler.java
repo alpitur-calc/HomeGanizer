@@ -22,7 +22,9 @@ public class SceneHandler {
 
 	public void init(Stage primaryStage) throws Exception {
 		stage = primaryStage;
-		scene = setInitialScene("loginInterface.fxml", 1280, 720);
+		scene = setInitialScene("loginInterface.fxml");
+		stage.setWidth(1280);
+		stage.setHeight(720);
 		stage.setScene(scene);
 		stage.setTitle("Homeganizer Login");
 		stage.setResizable(false);
@@ -30,10 +32,10 @@ public class SceneHandler {
 
 	}
 
-	private Scene setInitialScene(String filename, int x, int y) throws Exception {
+	private Scene setInitialScene(String filename) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/" + filename));
 		Parent root = (Parent) loader.load();
-		return new Scene(root, x, y);
+		return new Scene(root);
 	}
 
 	public void goToScene(String filename, String title, int x, int y) throws Exception {
