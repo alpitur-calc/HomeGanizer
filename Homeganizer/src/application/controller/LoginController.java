@@ -1,7 +1,9 @@
 package application.controller;
 
 import application.SceneHandler;
+import application.model.DatabaseHandler;
 import application.model.LoginHandler;
+import application.model.MemorizedUserPassword;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -34,7 +36,7 @@ public class LoginController {
     //Funzione che gestisce la pressione del tasto Login
     @FXML
     private void handleBtnLoginPressed(MouseEvent e) {
-    	LoginHandler.login(txtUsername.getText(), txtPassword.getText());
+    	LoginHandler.login(txtUsername.getText(), txtPassword.getText(),chkRemember.isSelected());
     }
     
     //Funzione che gestisce la pressione del tasto Register
@@ -48,5 +50,14 @@ public class LoginController {
     private void handlelblForgotPasswordClicked(MouseEvent e) throws Exception {
     	SceneHandler.getInstance().goToScene("passwordChangeInterface.fxml", "Homeganizer Login", 1280, 720);
     }
+
+	public void init() {
+		MemorizedUserPassword mup = DatabaseHandler.getInstance().getMemorizedUser();
+		if(mup != null) {
+			chkRemember.setSelected(true);
+			txtUsername.appendText(mup.getUsername());
+			txtPassword.appendText(mup.getPassword());
+		}
+	}
     
 }

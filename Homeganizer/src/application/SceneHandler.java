@@ -1,5 +1,6 @@
 package application;
 
+import application.controller.LoginController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,20 +23,19 @@ public class SceneHandler {
 
 	public void init(Stage primaryStage) throws Exception {
 		stage = primaryStage;
-		scene = setInitialScene("loginInterface.fxml");
+		String filename = "loginInterface.fxml";
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/" + filename));
+		Parent root = (Parent) loader.load();
+		scene = new Scene(root);
 		stage.setWidth(1280);
 		stage.setHeight(720);
 		stage.setScene(scene);
 		stage.setTitle("Homeganizer Login");
 		stage.setResizable(false);
+		LoginController l = loader.<LoginController>getController();
+		l.init();
 		stage.show();
 
-	}
-
-	private Scene setInitialScene(String filename) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/" + filename));
-		Parent root = (Parent) loader.load();
-		return new Scene(root);
 	}
 
 	public void goToScene(String filename, String title, int x, int y) throws Exception {

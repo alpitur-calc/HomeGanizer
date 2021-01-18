@@ -25,6 +25,7 @@ public class RegisterHandler {
 		if (insertedPassword1.length() >= 5) {
 			User u = new User(insertedUsername, BCrypt.hashpw(insertedPassword1, BCrypt.gensalt(12)), secureAnswer);
 			DatabaseHandler.getInstance().addUser(u);
+			MessageView.showMessageAlert(AlertType.INFORMATION, "Informazione", "Utente registrato correttamente");
 		} else
 			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione",
 					"La password deve contenere almeno 5 caratteri");
@@ -53,6 +54,7 @@ public class RegisterHandler {
 		if (insertedPassword1.length() >= 5) {
 			User u = new User(insertedUsername, BCrypt.hashpw(insertedPassword1, BCrypt.gensalt(12)), secureAnswer);
 			DatabaseHandler.getInstance().UpdateUser(u);
+			MessageView.showMessageAlert(AlertType.INFORMATION, "Informazione", "Password aggiornata correttamente");
 		} else
 			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione",
 					"La password deve contenere almeno 5 caratteri");
