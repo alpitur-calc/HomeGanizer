@@ -1,21 +1,16 @@
 package application.model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.HashMap;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import application.SceneHandler;
 import application.view.MessageView;
 import javafx.scene.control.Alert.AlertType;
 
 public class LoginHandler {
 	public static void login(String insertedUsername, String insertedPassword) {
 		if (insertedUsername.equals("") || insertedPassword.equals("")) {
-			MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Nome Utente o Password non inseriti");
+			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Nome Utente o Password non inseriti");
 			return;
 		}
 		HashMap<String, User> usernamePassword = DatabaseHandler.getInstance().getUsers();
@@ -31,7 +26,7 @@ public class LoginHandler {
 			} else
 				MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Utente non registrato");
 		} catch (Exception e) {
-			MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Errore nel database. Contattare l'amministratore");
+			MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Si è verificato un errore. Contattare l'amministratore");
 		}
 	}
 

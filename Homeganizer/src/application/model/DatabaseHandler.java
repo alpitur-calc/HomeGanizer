@@ -8,6 +8,9 @@ import java.util.HashMap;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import application.view.MessageView;
+import javafx.scene.control.Alert.AlertType;
+
 public class DatabaseHandler {
 	private HashMap<String,User> users;
 	//private Connection con; indeciso
@@ -37,7 +40,7 @@ public class DatabaseHandler {
 			}
 			stm1.close();
 		} catch (Exception e) {
-			//LoginMessageView.corruptedErrorMessage();
+			MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Si è verificato un errore. Contattare l'amministratore");
 		}
 	}
 	
@@ -63,8 +66,7 @@ public class DatabaseHandler {
 			stm1.executeUpdate();
 			stm1.close();
 		} catch (Exception e) {
-			System.out.println("ahia");
-			//LoginMessageView.corruptedErrorMessage();
+			MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Si è verificato un errore. Contattare l'amministratore");
 		}
 	}
 	
@@ -87,8 +89,7 @@ public class DatabaseHandler {
 			stm1.executeUpdate();
 			stm1.close();
 		} catch (Exception e) {
-			System.out.println("ahia");
-			//LoginMessageView.corruptedErrorMessage();
+			MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Si è verificato un errore. Contattare l'amministratore");
 		}
 	}
 }

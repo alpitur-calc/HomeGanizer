@@ -2,6 +2,9 @@ package application.model;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import application.view.MessageView;
+import javafx.scene.control.Alert.AlertType;
+
 public class RegisterHandler {
 	public static void createUser(String insertedUsername, String insertedPassword1, String insertedPassword2,
 			String secureAnswer) {
@@ -9,51 +12,49 @@ public class RegisterHandler {
 			System.out.println("user esiste");
 			return;
 		}
-		if (insertedUsername.equals("") || insertedPassword1.equals("") || insertedPassword1.equals("")
+		if (insertedUsername.equals("") || insertedPassword1.equals("") || insertedPassword2.equals("")
 				|| secureAnswer.equals("")) {
 			System.out.println("user non esiste");
-			// LoginMessageView.noUsernameOrPasswordError();
+			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Non tutti i dati sono stati inseriti");
 			return;
 		}
 		if (!insertedPassword1.equals(insertedPassword2)) {
-			// errore
-			System.out.println("password non esiste");
+			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Le password non corrispondono");
 			return;
 		}
 		if (insertedPassword1.length() >= 5) {
-			User u = new User(insertedUsername,BCrypt.hashpw(insertedPassword1, BCrypt.gensalt(12)),secureAnswer);
+			User u = new User(insertedUsername, BCrypt.hashpw(insertedPassword1, BCrypt.gensalt(12)), secureAnswer);
 			DatabaseHandler.getInstance().addUser(u);
 		} else
-			System.out.println("password 5 non esiste");
-		// LoginMessageView.shortPassword();
+			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione",
+					"La password deve contenere almeno 5 caratteri");
 	}
-	
+
 	public static void changePassword(String insertedUsername, String insertedPassword1, String insertedPassword2,
 			String secureAnswer) {
 		if (!DatabaseHandler.getInstance().userExists(insertedUsername)) {
-			System.out.println("user non esiste");
+			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Utente non registrato");
 			return;
 		}
-		if (!DatabaseHandler.getInstance().userAnswer(insertedUsername,secureAnswer)) {
-			System.out.println("user esiste");
+		if (!DatabaseHandler.getInstance().userAnswer(insertedUsername, secureAnswer)) {
+			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Risposta di sicurezza non valida");
 			return;
 		}
 		if (insertedUsername.equals("") || insertedPassword1.equals("") || insertedPassword1.equals("")
 				|| secureAnswer.equals("")) {
 			System.out.println("dati non inseriti");
-			// LoginMessageView.noUsernameOrPasswordError();
+			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Non tutti i dati sono stati inseriti");
 			return;
 		}
 		if (!insertedPassword1.equals(insertedPassword2)) {
-			// errore
-			System.out.println("password non uguale");
+			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Le password non corrispondono");
 			return;
 		}
 		if (insertedPassword1.length() >= 5) {
-			User u = new User(insertedUsername,BCrypt.hashpw(insertedPassword1, BCrypt.gensalt(12)),secureAnswer);
+			User u = new User(insertedUsername, BCrypt.hashpw(insertedPassword1, BCrypt.gensalt(12)), secureAnswer);
 			DatabaseHandler.getInstance().UpdateUser(u);
 		} else
-			System.out.println("password 5 non esiste");
-		// LoginMessageView.shortPassword();
+			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione",
+					"La password deve contenere almeno 5 caratteri");
 	}
 }
