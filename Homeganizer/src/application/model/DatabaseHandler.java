@@ -122,7 +122,6 @@ public class DatabaseHandler {
 		try {
 			Connection con = DriverManager.getConnection("jdbc:sqlite:database.db");
 			PreparedStatement stm1 = con.prepareStatement("UPDATE users SET password=? WHERE username=?;");
-			System.out.println("here");
 			stm1.setString(1, u.getPassword());
 			stm1.setString(2, u.getUsername());
 			stm1.executeUpdate();
