@@ -2,8 +2,17 @@ package application.model;
 
 public class Oggetto {
 	
-	public static final String 	UTENSILE = "utensile",
-								LIBRO = "libro";
+	public static final String 	BOTTIGLIA = "bottiglia",
+								CONTENITORE = "contenitore",
+								DISCO = "disco",
+								ELETTRONICA = "elettronica",
+								FOTO = "foto",
+								GIOIELLI = "gioielli",
+								LIBRO = "libro",
+								MEDICINA = "medicina",
+								STATUA = "statua",
+								UTENSILE = "utensile";
+								
 	
 	//Prendere i vari COUNTER dal DB
 	/*

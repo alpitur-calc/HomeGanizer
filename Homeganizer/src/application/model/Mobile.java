@@ -1,16 +1,22 @@
 package application.model;
 
-import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
-public class Mobile{
+public class Mobile {
 	
-	public static final String 	SCRIVANIA = "scrivania",
-								TAVOLO = "tavolo",
-								POLTRONA = "poltrona",
-								SEDIA = "sedia",
+	public static final String 	ARMADIO = "armadio",
+								CASSAPANCA = "cassapanca",
+								COMODINO = "comodino",
+								CONTAINER = "container",
+								CREDENZA = "credenza",
+								//DIVANO = "divano",
+								//LETTO = "letto",
 								LIBRERIA = "libreria",
-								ARMADIO = "armadio";
+								TAVOLO = "tavolo",
+								SCAFFALE = "scaffale",
+								SCRIVANIA = "scrivania",
+								VETRINA = "vetrina";
+					
 	
 	//Prendere i vari COUNTER dal DB
 	/*
@@ -26,14 +32,23 @@ public class Mobile{
 	private String id;
 	private String nome;
 	private String tipo;
+	//private boolean contenitore;
 	
 	public Mobile(String nome, String tipo) {
 		//initId();
+		//initCont();
 		this.nome = nome;
 		this.tipo = tipo;
 		this.oggetti = new LinkedList <Oggetto>();
 	}
-	
+	/*
+	private void initCont() {
+		if(this.tipo == Mobile.LETTO || this.tipo == Mobile.DIVANO)
+			contenitore = false;
+		else
+			contenitore = true;
+	}
+	*/
 	/*
 	private void initId() {
 		switch (tipo) {
@@ -75,7 +90,10 @@ public class Mobile{
 	*/
 	
 	public void aggiungiOggetto(String nome, String descrizione, String tipo){
+		//if(this.contenitore == true)
 		oggetti.add(new Oggetto(nome, descrizione, tipo));
+		//else
+			//System.out.println("NON PUO' CONTENERE OGGETTI");
 	}
 	
 	//Va fatta la parte del DB

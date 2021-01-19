@@ -13,11 +13,11 @@ public class Stanza {
 	private LinkedList<Mobile> mobili;
 	private ArrayList<String> whitelisted;
 	
-	public Stanza(String nome, String Proprietario, int Larghezza, int Profondità) {
+	public Stanza(String nome, String proprietario, int larghezza, int profondità) {
 		this.nome = nome;
-		this.proprietario= Proprietario;
-		this.larghezza= Larghezza;
-		this.profondità= Profondità;
+		this.proprietario= proprietario;
+		this.larghezza= larghezza;
+		this.profondità= profondità;
 		this.mobili = new LinkedList<Mobile>();
 	}
 	

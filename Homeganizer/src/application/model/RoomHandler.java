@@ -18,8 +18,8 @@ public class RoomHandler {
 		stanze = new LinkedList<Stanza>();
 	}
 
-	public boolean aggiungiStanza(String nome, int Larghezza, int Profondità) {
-		stanze.add(new Stanza(nome, idProprietario, Larghezza, Profondità));
+	public boolean aggiungiStanza(String nome, int larghezza, int profondità) {
+		stanze.add(new Stanza(nome, idProprietario, larghezza, profondità));
 		return true;
 	}
 	
