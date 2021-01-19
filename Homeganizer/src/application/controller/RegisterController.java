@@ -36,6 +36,8 @@ public class RegisterController {
     private void handleBtnBackPressed(MouseEvent event) throws Exception {
     	SceneHandler.getInstance().goToScene("loginInterface.fxml", "Homeganizer Login", 1280, 720);
     }
+    
+  
 
     @FXML
     private void handleBtnRegisterPressed(MouseEvent event) {

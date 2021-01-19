@@ -2,6 +2,7 @@ package application.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
@@ -65,6 +66,8 @@ public class MainInterfaceController {
     void handleMtmLogOut(ActionEvent event) {
 
     }
+    
+    
 
 }
 

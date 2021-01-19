@@ -1,8 +1,9 @@
 package application.model;
 
+import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
-public class Mobile {
+public class Mobile{
 	
 	public static final String 	SCRIVANIA = "scrivania",
 								TAVOLO = "tavolo",
@@ -31,7 +32,6 @@ public class Mobile {
 		this.nome = nome;
 		this.tipo = tipo;
 		this.oggetti = new LinkedList <Oggetto>();
-		
 	}
 	
 	/*
