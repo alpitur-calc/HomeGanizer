@@ -24,6 +24,14 @@ public class Stanza {
 		mobili.add(new Mobile(nome, tipo));
 	}
 	
+	public void rimuoviMobile(String id) {
+		for (Mobile i : mobili) {
+			if(i.getId().equals(id)) {
+				mobili.remove(i);
+			}
+		}
+	}
+	
 	public boolean isWhitelisted(String id) {
 		for(String p : whitelisted) {
 			if(p.equals(id)) { return true; }
