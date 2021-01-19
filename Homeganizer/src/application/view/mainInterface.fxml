@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.MainInterfaceController">
+   <children>
+      <BorderPane layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <ListView fx:id="lstRooms" prefHeight="720.0" prefWidth="240.0" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <ListView fx:id="lstFurniture" prefHeight="400.0" prefWidth="240.0" BorderPane.alignment="CENTER" />
+         </right>
+         <top>
+            <MenuBar BorderPane.alignment="CENTER">
+              <menus>
+                <Menu fx:id="mnuAccount" mnemonicParsing="false" onAction="#handleMnuAccountCLicked" text="Account">
+                  <items>
+                    <MenuItem fx:id="mtmLogOut" mnemonicParsing="false" onAction="#handleMtmLogOut" text="LogOut" />
+                  </items>
+                </Menu>
+                <Menu fx:id="mnuAzioni" mnemonicParsing="false" onAction="#handleMnuAzioniClicked" text="Azioni">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu fx:id="mnuAbout" mnemonicParsing="false" onAction="#handleMnuAboutClicked" text="About">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+                  <Menu fx:id="mnuSpotlight" mnemonicParsing="false" onAction="#handleMnuSpotlightClicked" text="🔎">
+                     <graphic>
+                        <TextField fx:id="txtSpotlight" promptText="RIcerca Oggetto..." />
+                     </graphic>
+                  </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+         <center>
+            <Pane prefHeight="695.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ScrollPane prefHeight="550.0" prefWidth="800.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="800.0">
+                           <children>
+                              <Canvas fx:id="cnvRoom" height="550.0" width="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+                  <AnchorPane layoutY="550.0" prefHeight="135.0" prefWidth="800.0">
+                     <children>
+                        <ScrollPane prefHeight="135.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="135.0" prefWidth="800.0">
+                                 <children>
+                                    <TextArea fx:id="txtObjectDescription" layoutX="63.0" layoutY="-39.0" prefHeight="135.0" prefWidth="800.0" promptText="Descrizione Oggetto..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </TextArea>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
