@@ -36,8 +36,8 @@ public class RoomHandler {
 		
 	}
 	
-	public void setProprietario(String pro) {
-		this.idProprietario = pro;
+	public void setProprietario(String idProprietario) {
+		this.idProprietario = idProprietario;
 	}
 	
 }

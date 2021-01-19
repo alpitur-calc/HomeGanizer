@@ -7,7 +7,8 @@ public class Stanza {
 
 	private String id;
 	private String nome;
-	private int larghezza, profondità;
+	private int larghezza;
+	private int profondità;
 	private String proprietario;
 	private LinkedList<Mobile> mobili;
 	private ArrayList<String> whitelisted;
