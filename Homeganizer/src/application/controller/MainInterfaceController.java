@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.SceneHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -63,8 +64,8 @@ public class MainInterfaceController {
     }
 
     @FXML
-    void handleMtmLogOut(ActionEvent event) {
-
+    void handleMtmLogOut(ActionEvent event) throws Exception {
+    	SceneHandler.getInstance().goToScene("loginInterface.fxml", "Room Editor", 1280, 720);
     }
     
     
