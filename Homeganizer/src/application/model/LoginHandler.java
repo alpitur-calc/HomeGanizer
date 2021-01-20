@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import application.SceneHandler;
 import application.view.MessageView;
 import javafx.scene.control.Alert.AlertType;
 
@@ -14,8 +15,6 @@ public class LoginHandler {
 			
 		}
 		HashMap<String, User> usernamePassword = DatabaseHandler.getInstance().getUsers();
-		if (usernamePassword == null)
-			
 		try {
 			if (usernamePassword.containsKey(insertedUsername)
 					&& BCrypt.checkpw(insertedPassword, usernamePassword.get(insertedUsername).getPassword())) {
@@ -23,7 +22,7 @@ public class LoginHandler {
 					DatabaseHandler.getInstance().addMemorizedUser(insertedUsername, insertedPassword);
 				else
 					DatabaseHandler.getInstance().clearMemorizedUser();
-				MessageView.showMessageAlert(AlertType.INFORMATION, "Informazione", "Login OK"); // provvisorio?
+				SceneHandler.getInstance().goToScene("mainInterface.fxml", "Room Editor", 1280, 720); // provvisorio?
 			} else
 				MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Utente non registrato");
 				

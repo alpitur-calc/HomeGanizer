@@ -37,10 +37,9 @@ public class RegisterController {
     	SceneHandler.getInstance().goToScene("loginInterface.fxml", "Homeganizer Login", 1280, 720);
     }
     
-  
 
     @FXML
-    private void handleBtnRegisterPressed(MouseEvent event) {
+    private void handleBtnRegisterPressed(MouseEvent event) throws Exception {
     	RegisterHandler.createUser(txtUsername.getText(), txtPassword.getText(), txtPassword2.getText(), txtAnswer.getText());
     }
 
