@@ -38,7 +38,7 @@ public class ChangePasswordController {
     }
 
     @FXML
-    void handleBtnRegisterPressed(MouseEvent event) {
+    void handleBtnRegisterPressed(MouseEvent event) throws Exception {
     	RegisterHandler.changePassword(txtUsername.getText(), txtNewPassword.getText(), txtNewPassword2.getText(), txtAnswer.getText());
     }
 
