@@ -22,7 +22,8 @@ public class LoginHandler {
 					DatabaseHandler.getInstance().addMemorizedUser(insertedUsername, insertedPassword);
 				else
 					DatabaseHandler.getInstance().clearMemorizedUser();
-				SceneHandler.getInstance().goToScene("mainInterface.fxml", "Room Editor", 1280, 720); // provvisorio?
+				SceneHandler.getInstance().goToScene("mainInterface.fxml", "Room Editor", 1280, 720);
+				RoomHandler.getInstance().setProprietario(insertedUsername);
 			} else
 				MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Utente non registrato");
 				
