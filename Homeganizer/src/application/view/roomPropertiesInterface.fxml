@@ -23,7 +23,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtHeight" layoutX="203.0" layoutY="253.0" prefHeight="46.0" prefWidth="235.0" promptText="Altezza">
+            <TextField fx:id="txtHeight" layoutX="203.0" layoutY="253.0" prefHeight="46.0" prefWidth="235.0" promptText="Profondità">
                <font>
                   <Font size="14.0" />
                </font>

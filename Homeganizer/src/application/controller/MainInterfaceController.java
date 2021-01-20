@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import application.SceneHandler;
 import application.model.RoomHandler;
+import application.view.MessageView;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
@@ -28,7 +31,6 @@ import javafx.stage.Stage;
 
 public class MainInterfaceController implements Initializable {
 
-	private Stage roomProp;
 	
     @FXML
     private ListView<Pane> lstRooms;
@@ -66,15 +68,7 @@ public class MainInterfaceController implements Initializable {
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
     	
-    	roomProp = new Stage();
-    	try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/roomPropertiesInterface.fxml"));
-			AnchorPane root = loader.load();
-			Scene scene = new Scene(root);
-			roomProp.setTitle("Inserire dati stanza");
-			roomProp.setScene(scene);
-			
-		} catch (IOException e1) { e1.printStackTrace(); }
+    	
     	
 		Pane p = new Pane();
     	btnAddRoom = new Button();
@@ -122,30 +116,43 @@ public class MainInterfaceController implements Initializable {
 			String nome="";
 			int larghezza = 0, profondità = 0;
 			
+			Stage roomProp;
+			
+			roomProp = new Stage();
+	    	try {
+	    		FXMLLoader loaderRoomProp = new FXMLLoader(getClass().getResource("/application/view/roomPropertiesInterface.fxml"));
+	    		AnchorPane rootRoomProp = loaderRoomProp.load();
+	    		Scene sceneRoomProp = new Scene(rootRoomProp);
+	    		roomProp.setTitle("Inserire dati stanza");
+	    		roomProp.setScene(sceneRoomProp);
+			} catch (IOException e1) { e1.printStackTrace(); }
+	
 			roomProp.showAndWait();
 			Pane p = (Pane) roomProp.getScene().getRoot().getChildrenUnmodifiable().get(0);
 			
+			try {
 			if(p.getChildren().get(1).getId().equals("txtRoomName")) {
 				TextField txtRoomName = (TextField) p.getChildren().get(1);
 				nome = txtRoomName.getText();
-				txtRoomName.setText("");
 			}
 
 			if(p.getChildren().get(2).getId().equals("txtHeight")) {
 				TextField txtHeight = (TextField) p.getChildren().get(2);
 				profondità = Integer.parseInt(txtHeight.getText());
-				txtHeight.setText("");
 			}
 
 			if(p.getChildren().get(3).getId().equals("txtWidth")) {
 				TextField txtWidth = (TextField) p.getChildren().get(3);
 				larghezza = Integer.parseInt(txtWidth.getText());
-				txtWidth.setText("");
 			}
 			
-			RoomHandler.getInstance().setProprietario("idManu");
 			RoomHandler.getInstance().aggiungiStanza(nome, larghezza, profondità);
+			}catch(NumberFormatException e2) {
+				MessageView.showMessageAlert(AlertType.WARNING, "Dati inseriti non validi", "Per favore, riprovare e inserire i dati correttamente.");
+			}
 			
+		
+
 		}};
 	
 }
