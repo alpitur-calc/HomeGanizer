@@ -149,6 +149,3 @@ public class MainInterfaceController implements Initializable {
 		}};
 	
 }
-
-
-
