@@ -9,8 +9,6 @@ public class Mobile {
 								COMODINO = "comodino",
 								CONTAINER = "container",
 								CREDENZA = "credenza",
-								//DIVANO = "divano",
-								//LETTO = "letto",
 								LIBRERIA = "libreria",
 								TAVOLO = "tavolo",
 								SCAFFALE = "scaffale",
@@ -28,27 +26,21 @@ public class Mobile {
 	private static Integer IDCOUNTERARMADIO = 1;
 	*/
 	
-	private LinkedList <Oggetto> oggetti;
 	private String id;
 	private String nome;
 	private String tipo;
-	//private boolean contenitore;
+	private int x,y;
+	private LinkedList <Oggetto> oggetti;
 	
 	public Mobile(String nome, String tipo) {
 		//initId();
-		//initCont();
+		this.x = 0;
+		this.y = 0;
 		this.nome = nome;
 		this.tipo = tipo;
 		this.oggetti = new LinkedList <Oggetto>();
 	}
-	/*
-	private void initCont() {
-		if(this.tipo == Mobile.LETTO || this.tipo == Mobile.DIVANO)
-			contenitore = false;
-		else
-			contenitore = true;
-	}
-	*/
+	
 	/*
 	private void initId() {
 		switch (tipo) {
@@ -90,10 +82,7 @@ public class Mobile {
 	*/
 	
 	public void aggiungiOggetto(String nome, String descrizione, String tipo){
-		//if(this.contenitore == true)
 		oggetti.add(new Oggetto(nome, descrizione, tipo));
-		//else
-			//System.out.println("NON PUO' CONTENERE OGGETTI");
 	}
 	
 	//Va fatta la parte del DB
@@ -121,4 +110,19 @@ public class Mobile {
 		return tipo;
 	}
 
+	public int getX() {
+		return x;
+	}
+	
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
+	}
 }

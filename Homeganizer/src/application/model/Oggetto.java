@@ -64,6 +64,10 @@ public class Oggetto {
 		return descrizione;
 	}
 	
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+	
 	public String getTipo() {
 		return tipo;
 	}
