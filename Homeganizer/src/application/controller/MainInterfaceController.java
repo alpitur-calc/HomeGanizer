@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 import application.SceneHandler;
+import application.model.Mobile;
 import application.model.RoomHandler;
 import application.model.RoomPane;
 import application.model.Stanza;
@@ -21,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
@@ -38,12 +40,14 @@ import javafx.stage.Stage;
 
 public class MainInterfaceController implements Initializable {
 
+	private Stanza stanzaSelezionata = null;
+	private Button btnAddRoom, btnAddMobile; 
 	
     @FXML
     private ListView<RoomPane> lstRooms;
 
     @FXML
-    private ListView<?> lstFurniture;
+    private ListView<RoomPane> lstFurniture;
 
     @FXML
     private Menu mnuAccount;
@@ -68,14 +72,19 @@ public class MainInterfaceController implements Initializable {
 
     @FXML
     private TextArea txtObjectDescription;
-    
-    	
-    private Button btnAddRoom;
+   
     
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
     	
-		RoomPane p = new RoomPane("buttonAdd");
+    	//-------- Inizializzazione Lista Stanze (a sx)-----------------
+    	RoomPane p = new RoomPane("listaStanze");
+    	Label lblListaStanze = new Label("Elenco delle stanze:");
+    	lblListaStanze.setFont(new Font(16));
+    	
+    	p.getChildren().add(lblListaStanze);
+    	
+		RoomPane pbtn = new RoomPane("buttonAdd");
     	btnAddRoom = new Button();
     	btnAddRoom.setPrefSize(225.0, 35.0);
     	
@@ -85,8 +94,11 @@ public class MainInterfaceController implements Initializable {
     	btnAddRoom.setAlignment(Pos.CENTER);
     	btnAddRoom.setOnMousePressed(handleBtnAddRoom);
     	
-    	p.getChildren().add(btnAddRoom);
+    	pbtn.getChildren().add(btnAddRoom);
+
     	lstRooms.getItems().add(lstRooms.getItems().size(),p);  	
+    	lstRooms.getItems().add(lstRooms.getItems().size(),pbtn);  	
+
 	}
 
     @FXML
@@ -125,6 +137,7 @@ public class MainInterfaceController implements Initializable {
 			Stage roomProp;
 			
 			roomProp = new Stage();
+			roomProp.setResizable(false);
 	    	try {
 	    		FXMLLoader loaderRoomProp = new FXMLLoader(getClass().getResource("/application/view/roomPropertiesInterface.fxml"));
 	    		AnchorPane rootRoomProp = loaderRoomProp.load();
@@ -181,16 +194,98 @@ public class MainInterfaceController implements Initializable {
 
 		@Override
 		public void handle(MouseEvent event) {
+			
+			//----- Prendo la stanza selezionata -----
 			LinkedList<Stanza> stanze = RoomHandler.getInstance().getStanze();
 			String idStanza= ((RoomPane) event.getSource()).getIdStanza();
-			Stanza stanzaSelezionata = null;
+			
 			for(Stanza S : stanze) {
 				if(S.getId().equals(idStanza)) { stanzaSelezionata= S; break; }
 			}
 			
+			//----- Genero la griglia nel canvas -----
 			MessageView.showMessageAlert(AlertType.INFORMATION, "Stanza", "Stanza con id: " + stanzaSelezionata.getId());
-			
 			Piantina.disegna(cnvRoom, stanzaSelezionata);
+			
+			//----- Inizializo la lista di mobili (a dx) -----
+			RoomPane p = new RoomPane("listaStanze");
+	    	Label lblListaStanze = new Label("Elenco dei mobili:");
+	    	lblListaStanze.setFont(new Font(16));
+			
+	    	p.getChildren().add(lblListaStanze);
+			RoomPane pbtn = new RoomPane(stanzaSelezionata.getId());
+	    	btnAddMobile = new Button();
+	    	btnAddMobile.setPrefSize(205.0, 35.0);
+	    	btnAddMobile.setOnMouseClicked(handleBtnAddMobile);
+	    	
+	    	Image buttonImg =  new Image(getClass().getResourceAsStream("/resources/ButtonAddMobileImage.png"));
+	    	ImageView imgv= new ImageView(buttonImg);
+	    	btnAddMobile.setGraphic(imgv);
+	    	
+	    	pbtn.getChildren().add(btnAddMobile);
+	    	lstFurniture.getItems().add(lstFurniture.getItems().size(),p);
+	    	lstFurniture.getItems().add(lstFurniture.getItems().size(),pbtn); 
+	    	
+	    	LinkedList<Mobile> mobili = stanzaSelezionata.getMobili();
+	    	
+	    	int i =0;
+	    	for(Mobile m : mobili) {
+	    		
+	    		RoomPane mp = new RoomPane("mobile"+i);
+	    		HBox h = new HBox();
+	    		h.setAlignment(Pos.CENTER);
+	    		Image img = new Image(getClass().getResourceAsStream("/resources/MobileIcon.png"));
+	    		ImageView imgViewIcona = new ImageView(img); 
+	    		Label nomeStanza = new Label(m.getNome());
+	    		nomeStanza.setFont(new Font(14));
+	    		h.getChildren().add(imgViewIcona);
+	    		h.getChildren().add(nomeStanza);
+	    		mp.getChildren().add(h);
+	    		mp.setOnMouseClicked(handleStanzaInListClicked);
+	    		lstFurniture.getItems().add(lstRooms.getItems().size()-1,mp);  
+	    		i++;
+	    	}
 		}
 	};
+	
+	private EventHandler<MouseEvent> handleBtnAddMobile = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent e) {
+			
+			String nome="",tipo="";
+			
+			Stage mobileProp;
+			mobileProp = new Stage();
+			mobileProp.setResizable(false);
+	    	try {
+	    		FXMLLoader loaderMobileProp = new FXMLLoader(getClass().getResource("/application/view/mobilePropertiesInterface.fxml"));
+	    		AnchorPane rootMobileProp = loaderMobileProp.load();
+	    		Scene sceneMobileProp = new Scene(rootMobileProp);
+	    		mobileProp.setTitle("Inserire dati mobile");
+	    		mobileProp.setScene(sceneMobileProp);
+			} catch (IOException e1) { e1.printStackTrace(); }
+	
+	    	mobileProp.showAndWait();
+			Pane p = (Pane) mobileProp.getScene().getRoot().getChildrenUnmodifiable().get(0);
+			
+			try {
+			if(p.getChildren().get(1).getId().equals("txtNome")) {
+				TextField txtNome = (TextField) p.getChildren().get(1);
+				nome = txtNome.getText();
+			}
+
+			if(p.getChildren().get(2).getId().equals("cmbTipo")) {
+				ComboBox cmbTipo = (ComboBox) p.getChildren().get(2);
+				tipo = (String) cmbTipo.getValue();
+			}
+			
+			if(stanzaSelezionata != null && !nome.equals("") && !tipo.equals("")) {stanzaSelezionata.aggiungiMobile(nome, tipo);}
+			}
+			catch(NumberFormatException e2) {
+				//MessageView.showMessageAlert(AlertType.WARNING, "Dati inseriti non validi", "Per favore, riprovare e inserire i dati correttamente.");
+			}
+		}
+	};
+	
 }
