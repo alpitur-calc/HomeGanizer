@@ -19,6 +19,7 @@ public class Mobile {
 	//Prendere i vari COUNTER dal DB
 	
 	private static Integer IDCOUNTERARMADIO = 1;
+	private static Integer IDCOUNTERCASSAPANCA = 1;
 	private static Integer IDCOUNTERLIBRERIA = 1;
 	private static Integer IDCOUNTERSCRIVANIA = 1;
 	private static Integer IDCOUNTERTAVOLO = 1;;
@@ -46,6 +47,11 @@ public class Mobile {
 		case ARMADIO:
 			this.id = "MAR" + IDCOUNTERARMADIO.toString();
 			IDCOUNTERARMADIO++;
+			break;
+			
+		case CASSAPANCA:
+			this.id = "MCA" + IDCOUNTERCASSAPANCA.toString();
+			IDCOUNTERCASSAPANCA++;
 			break;
 			
 		case LIBRERIA:
