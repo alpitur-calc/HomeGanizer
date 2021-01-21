@@ -2,14 +2,14 @@ package application.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
-
-import javax.swing.GroupLayout.Alignment;
 
 import application.SceneHandler;
 import application.model.RoomHandler;
+import application.model.RoomPane;
+import application.model.Stanza;
 import application.view.MessageView;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -33,14 +33,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class MainInterfaceController implements Initializable {
 
 	
     @FXML
-    private ListView<Pane> lstRooms;
+    private ListView<RoomPane> lstRooms;
 
     @FXML
     private ListView<?> lstFurniture;
@@ -75,7 +74,7 @@ public class MainInterfaceController implements Initializable {
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
     	
-		Pane p = new Pane();
+		RoomPane p = new RoomPane("buttonAdd");
     	btnAddRoom = new Button();
     	btnAddRoom.setPrefSize(225.0, 35.0);
     	
@@ -153,7 +152,7 @@ public class MainInterfaceController implements Initializable {
 			}
 			
 			RoomHandler.getInstance().aggiungiStanza(nome, larghezza, profondità);
-			addStanzaToList(nome);
+			addStanzaToList(RoomHandler.getInstance().getStanze().getLast().getId(),nome);
 			}
 			catch(NumberFormatException e2) {
 				MessageView.showMessageAlert(AlertType.WARNING, "Dati inseriti non validi", "Per favore, riprovare e inserire i dati correttamente.");
@@ -161,8 +160,9 @@ public class MainInterfaceController implements Initializable {
 		}
 	};
 	
-	private void addStanzaToList(String nome) {
-		Pane p = new Pane();
+	private void addStanzaToList(String id, String nome) {
+		RoomPane p = new RoomPane(id);
+
 		HBox h = new HBox();
 		h.setAlignment(Pos.CENTER);
 		Image img = new Image(getClass().getResourceAsStream("/resources/StanzaIcon.png"));
@@ -180,7 +180,14 @@ public class MainInterfaceController implements Initializable {
 
 		@Override
 		public void handle(MouseEvent event) {
-			MessageView.showMessageAlert(AlertType.INFORMATION, "Stanza", "Ecco la tua stanza, maledetto!!");
+			LinkedList<Stanza> stanze = RoomHandler.getInstance().getStanze();
+			String idStanza= ((RoomPane) event.getSource()).getIdStanza();
+			Stanza stanzaSelezionata = null;
+			for(Stanza S : stanze) {
+				if(S.getId().equals(idStanza)) { stanzaSelezionata= S; break; }
+			}
+			
+			MessageView.showMessageAlert(AlertType.INFORMATION, "Stanza", "Stanza con id: " + stanzaSelezionata.getId());
 		}
 	};
 }
