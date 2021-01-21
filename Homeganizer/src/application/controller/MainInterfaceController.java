@@ -10,6 +10,7 @@ import application.model.RoomHandler;
 import application.model.RoomPane;
 import application.model.Stanza;
 import application.view.MessageView;
+import application.view.Piantina;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -188,6 +189,8 @@ public class MainInterfaceController implements Initializable {
 			}
 			
 			MessageView.showMessageAlert(AlertType.INFORMATION, "Stanza", "Stanza con id: " + stanzaSelezionata.getId());
+			
+			Piantina.disegna(cnvRoom, stanzaSelezionata);
 		}
 	};
 }
