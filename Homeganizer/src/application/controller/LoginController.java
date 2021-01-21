@@ -36,8 +36,7 @@ public class LoginController {
     //Funzione che gestisce la pressione del tasto Login
     @FXML
     private void handleBtnLoginPressed(MouseEvent e) throws Exception {
-    	LoginHandler.login(txtUsername.getText(), txtPassword.getText(),chkRemember.isSelected());
-    	
+    	if (LoginHandler.login(txtUsername.getText(), txtPassword.getText(),chkRemember.isSelected()))
     	SceneHandler.getInstance().goToScene("mainInterface.fxml", "Room Editor", 1280, 720);
     }
     

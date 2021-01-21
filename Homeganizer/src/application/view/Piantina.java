@@ -4,6 +4,7 @@ import application.model.Mobile;
 import application.model.Stanza;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Piantina {
 
@@ -25,8 +26,8 @@ public class Piantina {
 	
 	public static void disegna(Canvas c, Stanza s)
 	{
-		c.setHeight(s.getProfondità());
-		c.setWidth(s.getLarghezza());
+		c.setHeight(s.getProfondità()*Piantina.l);
+		c.setWidth(s.getLarghezza()*Piantina.l); 
 		
 		
 		
@@ -35,8 +36,10 @@ public class Piantina {
 		for(int i=0; i< c.getHeight(); i+=Piantina.l)
 		{
 			for(int j=0; j < c.getWidth(); j+=Piantina.l)
-			{
-				gc.rect(i, j, Piantina.l, Piantina.l);
+			{	
+				gc.setLineWidth(0.5);
+				gc.setStroke(Color.DARKGREEN);
+				gc.strokeRect(i, j, Piantina.l, Piantina.l);
 			}
 		}
 		
@@ -44,6 +47,7 @@ public class Piantina {
 		
 		for (Mobile m : s.getMobili())
 		{
+			gc.setFill(Color.BLUE);
 			gc.fillRect(m.getX()*Piantina.l, m.getY()*Piantina.l, Piantina.l, Piantina.l);
 		}
 	}
