@@ -23,7 +23,9 @@ public class Stanza {
 		this.matrice = new String[larghezza][profondità];
 
 		for (Mobile m : mobili) {
-			matrice[m.getX()][m.getY()] = m.getId();
+			matrice[m.getX()][m.getY()] = m.getId();   
+			
+			
 		}
 	}
 
