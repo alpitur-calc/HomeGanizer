@@ -6,25 +6,23 @@ public class Mobile {
 	
 	public static final String 	ARMADIO = "armadio",
 								CASSAPANCA = "cassapanca",
-								COMODINO = "comodino",
-								CONTAINER = "container",
-								CREDENZA = "credenza",
+								//COMODINO = "comodino",
+								//CONTAINER = "container",
+								//CREDENZA = "credenza",
 								LIBRERIA = "libreria",
 								TAVOLO = "tavolo",
-								SCAFFALE = "scaffale",
-								SCRIVANIA = "scrivania",
-								VETRINA = "vetrina";
+								//SCAFFALE = "scaffale",
+								SCRIVANIA = "scrivania";
+								//VETRINA = "vetrina";
 					
 	
 	//Prendere i vari COUNTER dal DB
-	/*
-	private static Integer IDCOUNTERSCRIVANIA = 1;
-	private static Integer IDCOUNTERTAVOLO = 1;
-	private static Integer IDCOUNTERPOLTRONA = 1;
-	private static Integer IDCOUNTERSEDIA = 1;
-	private static Integer IDCOUNTERLIBRERIA = 1;
+	
 	private static Integer IDCOUNTERARMADIO = 1;
-	*/
+	private static Integer IDCOUNTERLIBRERIA = 1;
+	private static Integer IDCOUNTERSCRIVANIA = 1;
+	private static Integer IDCOUNTERTAVOLO = 1;;
+	
 	
 	private String id;
 	private String nome;
@@ -33,7 +31,7 @@ public class Mobile {
 	private LinkedList <Oggetto> oggetti;
 	
 	public Mobile(String nome, String tipo) {
-		//initId();
+		initId();
 		this.x = 0;
 		this.y = 0;
 		this.nome = nome;
@@ -41,9 +39,19 @@ public class Mobile {
 		this.oggetti = new LinkedList <Oggetto>();
 	}
 	
-	/*
+	
 	private void initId() {
 		switch (tipo) {
+		
+		case ARMADIO:
+			this.id = "MAR" + IDCOUNTERARMADIO.toString();
+			IDCOUNTERARMADIO++;
+			break;
+			
+		case LIBRERIA:
+			this.id = "MLI" + IDCOUNTERLIBRERIA.toString();
+			IDCOUNTERLIBRERIA++;
+			break;
 		
 		case SCRIVANIA:
 			this.id = "MSC" + IDCOUNTERSCRIVANIA.toString();
@@ -54,32 +62,12 @@ public class Mobile {
 			this.id = "MTA" + IDCOUNTERTAVOLO.toString();
 			IDCOUNTERTAVOLO++;
 			break;
-			
-		case POLTRONA:
-			this.id = "MPO" + IDCOUNTERPOLTRONA.toString();
-			IDCOUNTERPOLTRONA++;
-			break;
-			
-		case SEDIA:
-			this.id = "MSE" + IDCOUNTERSEDIA.toString();
-			IDCOUNTERSEDIA++;
-			break;
-			
-		case LIBRERIA:
-			this.id = "MLI" + IDCOUNTERLIBRERIA.toString();
-			IDCOUNTERLIBRERIA++;
-			break;
-			
-		case ARMADIO:
-			this.id = "MAR" + IDCOUNTERARMADIO.toString();
-			IDCOUNTERARMADIO++;
-			break;
-			
+							
 		default:
 			break;
 		}
 	}
-	*/
+	
 	
 	public void aggiungiOggetto(String nome, String descrizione, String tipo){
 		oggetti.add(new Oggetto(nome, descrizione, tipo));
