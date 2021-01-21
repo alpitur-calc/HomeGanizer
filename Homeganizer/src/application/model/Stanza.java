@@ -14,7 +14,10 @@ public class Stanza {
 	private ArrayList<String> whitelisted;
 	private String matrice[][];
 
+	private static Integer IDCOUNTER = 1;
+	
 	public Stanza(String nome, String proprietario, int larghezza, int profondità) {
+		initId();
 		this.nome = nome;
 		this.proprietario = proprietario;
 		this.larghezza = larghezza;
@@ -23,10 +26,13 @@ public class Stanza {
 		this.matrice = new String[larghezza][profondità];
 
 		for (Mobile m : mobili) {
-			matrice[m.getX()][m.getY()] = m.getId();   
-			
-			
+			matrice[m.getX()][m.getY()] = m.getId();
 		}
+	}
+	
+	private void initId() {
+		this.id = "S" + IDCOUNTER.toString();
+		IDCOUNTER++;
 	}
 
 	public void aggiungiMobile(String nome, String tipo) {
