@@ -36,8 +36,16 @@ public class RoomHandler {
 		
 	}
 	
+	public String getProprietario() {
+		return idProprietario;
+	}
+	
 	public void setProprietario(String idProprietario) {
 		this.idProprietario = idProprietario;
+	}
+	
+	public LinkedList<Stanza> getStanze() {
+		return stanze;
 	}
 	
 }
