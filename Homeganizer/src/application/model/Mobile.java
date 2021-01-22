@@ -22,7 +22,7 @@ public class Mobile {
 	private static Integer IDCOUNTERCASSAPANCA = 1;
 	private static Integer IDCOUNTERLIBRERIA = 1;
 	private static Integer IDCOUNTERSCRIVANIA = 1;
-	private static Integer IDCOUNTERTAVOLO = 1;;
+	private static Integer IDCOUNTERTAVOLO = 1;
 	
 	
 	private String id;
