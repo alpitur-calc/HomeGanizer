@@ -60,6 +60,7 @@ public class Piantina {
                 Piantina .disegna(c, s);
                 gc.setFill(Color.RED);
                 gc.fillRect(m.getX()*Piantina.l, m.getY()*Piantina.l, Piantina.l, Piantina.l);
+                
 
     }
 

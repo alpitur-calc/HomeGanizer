@@ -438,12 +438,19 @@ public class MainInterfaceController implements Initializable {
 
         for (Stanza s : RoomHandler.getInstance().getStanze()) {
             for (Mobile m : s.getMobili()) {
-                if (m.getNome().equals(txtSpotlight.getText())) {
-                    System.out.println(m.getNome() + txtSpotlight.getText() );
-                    Piantina.evidenziaMobile(cnvRoom, s, m);
+                {
+                	for( Oggetto o : m.getOggetti() )
+                	{
+                		if (o.getNome().equals(txtSpotlight.getText()))
+                		{
+                			Piantina.evidenziaMobile(cnvRoom, s, m);
+                			break;
+                		}
+                	}
+                   
 
                 }
             }
         }
     }
-}
+} //ultimo cambiamento

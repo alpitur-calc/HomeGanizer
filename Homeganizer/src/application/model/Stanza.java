@@ -12,7 +12,7 @@ public class Stanza {
 	private String proprietario;
 	private LinkedList<Mobile> mobili;
 	private ArrayList<String> whitelisted;
-	private String matrice[][];
+	private String matriceMobili[][];
 
 	private static Integer IDCOUNTER = 1;
 	
@@ -23,10 +23,10 @@ public class Stanza {
 		this.larghezza = larghezza;
 		this.profondità = profondità;
 		this.mobili = new LinkedList<Mobile>();
-		this.matrice = new String[larghezza][profondità];
-
+		this.matriceMobili = new String[larghezza][profondità];
+		
 		for (Mobile m : mobili) {
-			matrice[m.getX()][m.getY()] = m.getId();
+			matriceMobili[m.getX()][m.getY()] = m.getId();
 		}
 	}
 	
@@ -81,5 +81,11 @@ public class Stanza {
 	public String getProprietario() {
 		return proprietario;
 	}
+
+	public String[][] getMatriceMobili() {
+		return matriceMobili;
+	}
+
+	
 
 }
