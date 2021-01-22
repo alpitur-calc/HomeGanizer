@@ -52,4 +52,15 @@ public class Piantina {
 		}
 	}
 	
+
+    public static void evidenziaMobile(Canvas c, Stanza s,Mobile m)
+    {
+                Piantina .disegna(c, s);
+                gc.setFill(Color.RED);
+                gc.fillRect(m.getX()*Piantina.l, m.getY()*Piantina.l, Piantina.l, Piantina.l);
+
+    }
+
 }
+	
+

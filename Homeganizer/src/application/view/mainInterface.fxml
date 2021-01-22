@@ -13,12 +13,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.MainInterfaceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.MainInterfaceController">
    <children>
       <BorderPane layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <ListView fx:id="lstRooms" prefHeight="720.0" prefWidth="240.0" BorderPane.alignment="CENTER" />
          </left>
+         <right>
+            <ListView fx:id="lstFurniture" prefHeight="720.0" prefWidth="225.0" BorderPane.alignment="CENTER" />
+         </right>
          <top>
             <MenuBar BorderPane.alignment="CENTER">
               <menus>
@@ -39,7 +42,7 @@
                 </Menu>
                   <Menu fx:id="mnuSpotlight" mnemonicParsing="false" onAction="#handleMnuSpotlightClicked" text="🔎">
                      <graphic>
-                        <TextField fx:id="txtSpotlight" promptText="RIcerca Oggetto..." />
+                        <TextField fx:id="txtSpotlight" onAction="#ricercaMobile" onMouseClicked="#ricercaMobile" promptText="RIcerca Oggetto..." />
                      </graphic>
                   </Menu>
               </menus>
@@ -73,14 +76,6 @@
                </children>
             </Pane>
          </center>
-         <right>
-            <Pane prefHeight="720.0" prefWidth="225.0" BorderPane.alignment="CENTER">
-               <children>
-                  <ListView fx:id="lstFurniture" prefHeight="450.0" prefWidth="225.0" />
-                  <ListView fx:id="lstOggetti" layoutY="418.0" prefHeight="270.0" prefWidth="225.0" />
-               </children>
-            </Pane>
-         </right>
       </BorderPane>
    </children>
 </AnchorPane>
