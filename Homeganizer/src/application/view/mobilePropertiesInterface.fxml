@@ -21,7 +21,7 @@
             <TextField fx:id="txtNome" layoutX="203.0" layoutY="99.0" prefHeight="46.0" prefWidth="235.0" promptText="Nome" />
             <ComboBox fx:id="cmbTipo" layoutX="203.0" layoutY="194.0" prefHeight="46.0" prefWidth="235.0" promptText="Tipo" visibleRowCount="5" />
             <Button fx:id="btnConferma" layoutX="205.0" layoutY="308.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="98.0" text="Conferma" textFill="#00a11a" />
-            <Button fx:id="txtAnnulla" layoutX="340.0" layoutY="308.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="98.0" text="Annulla" textFill="RED" />
+            <Button fx:id="btnAnnulla" layoutX="340.0" layoutY="308.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="98.0" text="Annulla" textFill="RED" />
          </children>
       </Pane>
    </children>

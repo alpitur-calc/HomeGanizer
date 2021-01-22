@@ -207,44 +207,8 @@ public class MainInterfaceController implements Initializable {
 			MessageView.showMessageAlert(AlertType.INFORMATION, "Stanza", "Stanza con id: " + stanzaSelezionata.getId());
 			Piantina.disegna(cnvRoom, stanzaSelezionata);
 			
-			//----- Inizializo la lista di mobili (a dx) -----
-			RoomPane p = new RoomPane("listaStanze");
-	    	Label lblListaStanze = new Label("Elenco dei mobili:");
-	    	lblListaStanze.setFont(new Font(16));
-			
-	    	p.getChildren().add(lblListaStanze);
-			RoomPane pbtn = new RoomPane(stanzaSelezionata.getId());
-	    	btnAddMobile = new Button();
-	    	btnAddMobile.setPrefSize(205.0, 35.0);
-	    	btnAddMobile.setOnMouseClicked(handleBtnAddMobile);
-	    	
-	    	Image buttonImg =  new Image(getClass().getResourceAsStream("/resources/ButtonAddMobileImage.png"));
-	    	ImageView imgv= new ImageView(buttonImg);
-	    	btnAddMobile.setGraphic(imgv);
-	    	
-	    	pbtn.getChildren().add(btnAddMobile);
-	    	lstFurniture.getItems().add(lstFurniture.getItems().size(),p);
-	    	lstFurniture.getItems().add(lstFurniture.getItems().size(),pbtn); 
-	    	
-	    	LinkedList<Mobile> mobili = stanzaSelezionata.getMobili();
-	    	
-	    	int i =0;
-	    	for(Mobile m : mobili) {
-	    		
-	    		RoomPane mp = new RoomPane("mobile"+i);
-	    		HBox h = new HBox();
-	    		h.setAlignment(Pos.CENTER);
-	    		Image img = new Image(getClass().getResourceAsStream("/resources/MobileIcon.png"));
-	    		ImageView imgViewIcona = new ImageView(img); 
-	    		Label nomeStanza = new Label(m.getNome());
-	    		nomeStanza.setFont(new Font(14));
-	    		h.getChildren().add(imgViewIcona);
-	    		h.getChildren().add(nomeStanza);
-	    		mp.getChildren().add(h);
-	    		mp.setOnMouseClicked(handleStanzaInListClicked);
-	    		lstFurniture.getItems().add(lstRooms.getItems().size()-1,mp);  
-	    		i++;
-	    	}
+			//----- Carico la lista Mobili -----
+			caricaMobili();
 		}
 	};
 	
@@ -270,22 +234,63 @@ public class MainInterfaceController implements Initializable {
 			Pane p = (Pane) mobileProp.getScene().getRoot().getChildrenUnmodifiable().get(0);
 			
 			try {
-			if(p.getChildren().get(1).getId().equals("txtNome")) {
-				TextField txtNome = (TextField) p.getChildren().get(1);
-				nome = txtNome.getText();
+				if(p.getChildren().get(1).getId().equals("txtNome")) {
+					TextField txtNome = (TextField) p.getChildren().get(1);
+					nome = txtNome.getText();
+				}
+	
+				if(p.getChildren().get(2).getId().equals("cmbTipo")) {
+					ComboBox<String> cmbTipo = (ComboBox<String>) p.getChildren().get(2);
+					tipo = (String) cmbTipo.getValue();
+				}
+				
+				if(stanzaSelezionata != null && !nome.equals("") && !tipo.equals("")) {
+					stanzaSelezionata.aggiungiMobile(nome, tipo); 
+					caricaMobili();
+				}
 			}
-
-			if(p.getChildren().get(2).getId().equals("cmbTipo")) {
-				ComboBox cmbTipo = (ComboBox) p.getChildren().get(2);
-				tipo = (String) cmbTipo.getValue();
-			}
-			
-			if(stanzaSelezionata != null && !nome.equals("") && !tipo.equals("")) {stanzaSelezionata.aggiungiMobile(nome, tipo);}
-			}
-			catch(NumberFormatException e2) {
-				//MessageView.showMessageAlert(AlertType.WARNING, "Dati inseriti non validi", "Per favore, riprovare e inserire i dati correttamente.");
+			catch(Exception e2) {
+				MessageView.showMessageAlert(AlertType.WARNING, "Errore", "Oops, qualcosa è andato storto. Per favore, riprovare.");
 			}
 		}
 	};
 	
+	private void caricaMobili() {
+		//----- Inizializo la lista di mobili (a dx) -----
+		lstFurniture.getItems().clear();
+		
+		RoomPane p = new RoomPane("listMobili");
+    	Label lblListaStanze = new Label("Elenco dei mobili:");
+    	lblListaStanze.setFont(new Font(16));
+    	p.getChildren().add(lblListaStanze);
+    	
+		RoomPane pbtn = new RoomPane(stanzaSelezionata.getId());
+    	btnAddMobile = new Button();
+    	btnAddMobile.setPrefSize(205.0, 35.0);
+    	btnAddMobile.setOnMouseClicked(handleBtnAddMobile);
+    	Image buttonImg =  new Image(getClass().getResourceAsStream("/resources/ButtonAddMobileImage.png"));
+    	ImageView imgv= new ImageView(buttonImg);
+    	btnAddMobile.setGraphic(imgv);
+    	pbtn.getChildren().add(btnAddMobile);
+    	
+    	lstFurniture.getItems().add(lstFurniture.getItems().size(),p); 
+    	
+    	LinkedList<Mobile> mobili = stanzaSelezionata.getMobili();   	
+    	for(Mobile m : mobili) {	
+    		RoomPane mp = new RoomPane(m.getId());
+    		HBox h = new HBox();
+    		h.setAlignment(Pos.CENTER);
+    		Image img = new Image(getClass().getResourceAsStream("/resources/MobileIcon.png"));
+    		ImageView imgViewIcona = new ImageView(img); 
+    		Label nomeStanza = new Label(m.getNome()+"("+m.getTipo()+")");
+    		nomeStanza.setFont(new Font(14));
+    		h.getChildren().add(imgViewIcona);
+    		h.getChildren().add(nomeStanza);
+    		mp.getChildren().add(h);
+    		mp.setOnMouseClicked(handleStanzaInListClicked);
+    		lstFurniture.getItems().add(lstFurniture.getItems().size(),mp);  
+    	}
+
+    	lstFurniture.getItems().add(lstFurniture.getItems().size(),pbtn);
+	}
 }

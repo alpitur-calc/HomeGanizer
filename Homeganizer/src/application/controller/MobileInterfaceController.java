@@ -25,7 +25,7 @@ public class MobileInterfaceController implements Initializable {
     private Button btnConferma;
 
     @FXML
-    private Button txtAnnulla;
+    private Button btnAnnulla;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
