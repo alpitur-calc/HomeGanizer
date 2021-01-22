@@ -32,7 +32,7 @@ public class Mobile {
 	private LinkedList <Oggetto> oggetti;
 	
 	public Mobile(String nome, String tipo) {
-		initId();
+		initId(tipo);
 		this.x = 0;
 		this.y = 0;
 		this.nome = nome;
@@ -41,7 +41,7 @@ public class Mobile {
 	}
 	
 	
-	private void initId() {
+	private void initId(String tipo) {
 		switch (tipo) {
 		
 		case ARMADIO:

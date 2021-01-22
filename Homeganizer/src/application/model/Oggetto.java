@@ -29,14 +29,14 @@ public class Oggetto {
 	private String tipo;
 	
 	public Oggetto(String nome, String descrizione, String tipo){
-		initId();			
+		initId(tipo);			
 		this.nome = nome;
 		this.descrizione = descrizione;
 		this.tipo = tipo;
 	}
 	
 	
-	private void initId() {
+	private void initId(String tipo) {
 		switch (tipo) {
 		
 		case BOTTIGLIA:
