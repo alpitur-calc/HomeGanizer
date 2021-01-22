@@ -20,7 +20,12 @@
             <ListView fx:id="lstRooms" prefHeight="720.0" prefWidth="240.0" BorderPane.alignment="CENTER" />
          </left>
          <right>
-            <ListView fx:id="lstFurniture" prefHeight="720.0" prefWidth="225.0" BorderPane.alignment="CENTER" />
+            <Pane prefHeight="720.0" prefWidth="225.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ListView fx:id="lstFurniture" prefHeight="450.0" prefWidth="225.0" />
+                  <ListView fx:id="lstOggetti" layoutY="418.0" prefHeight="270.0" prefWidth="225.0" />
+               </children>
+            </Pane>
          </right>
          <top>
             <MenuBar BorderPane.alignment="CENTER">

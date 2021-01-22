@@ -306,7 +306,7 @@ public class MainInterfaceController implements Initializable {
 		public void handle(MouseEvent e) {
 			
 			//----- Prendo il mobile selezionato -----
-			String idMobile=  ((RoomPane)e.getSource()).getId();
+			String idMobile=  ((RoomPane)e.getSource()).getIdStanza();
 			LinkedList<Mobile> mobili = stanzaSelezionata.getMobili();
 			
 			for(Mobile M : mobili) {
@@ -314,14 +314,15 @@ public class MainInterfaceController implements Initializable {
 			}
 			
 			//----- Carico la lista di oggetti -----
-			caricaOggetti(mobileSelezionato);
+			if(mobileSelezionato != null) caricaOggetti(mobileSelezionato);
 		}
 	};
 	
 	private void caricaOggetti(Mobile M) {
+		lstOggetti.getItems().clear();
 		
 		RoomPane p = new RoomPane("listOggetti");
-    	Label lblListaOggetti = new Label("Elenco degli oggetti::");
+    	Label lblListaOggetti = new Label("Elenco degli oggetti:");
     	lblListaOggetti.setFont(new Font(14));
     	p.getChildren().add(lblListaOggetti);
     	
@@ -341,11 +342,11 @@ public class MainInterfaceController implements Initializable {
     		RoomPane mp = new RoomPane(o.getId());
     		HBox h = new HBox();
     		h.setAlignment(Pos.CENTER);
-    		//Image img = new Image(getClass().getResourceAsStream("/resources/OggettoIcon.png"));
-    		//ImageView imgViewIcona = new ImageView(img); 
+    		Image img = new Image(getClass().getResourceAsStream("/resources/iconeOggetti/"+ o.getIcona()+ ".png"));
+    		ImageView imgViewIcona = new ImageView(img); 
     		Label nomeOggetto = new Label(o.getNome()+"("+o.getTipo()+")");
     		nomeOggetto.setFont(new Font(14));
-    		//h.getChildren().add(imgViewIcona);
+    		h.getChildren().add(imgViewIcona);
     		h.getChildren().add(nomeOggetto);
     		mp.getChildren().add(h);
     		mp.setOnMouseClicked(handleOggettoInListClicked);
@@ -361,7 +362,7 @@ public class MainInterfaceController implements Initializable {
 		@Override
 		public void handle(MouseEvent event) {
 			//----- Prendo il mobile selezionato -----
-			String idMobile=  ((RoomPane)event.getSource()).getId();
+			String idMobile=  ((RoomPane)event.getSource()).getIdStanza();
 			System.out.println("id"  +mobileSelezionato.getId());
 			LinkedList<Oggetto> oggetti = mobileSelezionato.getOggetti();
 			
@@ -405,9 +406,9 @@ public class MainInterfaceController implements Initializable {
 					tipo = (String) cmbTipo.getValue();
 				}
 				
-				if(p.getChildren().get(2).getId().equals("txtDescrizione")) {
-					TextArea txtDescrizione = (TextArea) p.getChildren().get(1);
-					nome = txtDescrizione.getText();
+				if(p.getChildren().get(5).getId().equals("txtDescrizione")) {
+					TextArea txtDescrizione = (TextArea) p.getChildren().get(5);
+					descrizione = txtDescrizione.getText();
 				}
 				
 				if(stanzaSelezionata != null && !nome.equals("") && !tipo.equals("")) {
