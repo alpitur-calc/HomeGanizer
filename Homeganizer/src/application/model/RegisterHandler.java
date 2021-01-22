@@ -10,7 +10,7 @@ public class RegisterHandler {
 	public static void createUser(String insertedUsername, String insertedPassword1, String insertedPassword2,
 			String secureAnswer) throws Exception {
 		if (DatabaseHandler.getInstance().userExists(insertedUsername)) {
-			System.out.println("user esiste");
+			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Utente già registrato");
 			return;
 		}
 		if (insertedUsername.equals("") || insertedPassword1.equals("") || insertedPassword2.equals("")

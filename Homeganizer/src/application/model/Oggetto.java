@@ -2,16 +2,16 @@ package application.model;
 
 public class Oggetto {
 	
-	public static final String 	BOTTIGLIA = "bottiglia",
-								CONTENITORE = "contenitore",
-								DISCO = "disco",
-								ELETTRONICA = "elettronica",
-								//FOTO = "foto",
-								//GIOIELLI = "gioielli",
-								LIBRO = "libro",
-								//MEDICINA = "medicina",
-								//STATUA = "statua",
-								UTENSILE = "utensile";
+	public static final String 	BOTTIGLIA = "Bottiglia",
+								CONTENITORE = "Contenitore",
+								DISCO = "Disco",
+								ELETTRONICA = "Elettronica",
+								//FOTO = "Foto",
+								//GIOIELLI = "Gioielli",
+								LIBRO = "Libro",
+								//MEDICINA = "Medicina",
+								//STATUA = "Statua",
+								UTENSILE = "Utensile";
 								
 	
 	//Prendere i vari COUNTER dal DB
@@ -102,19 +102,19 @@ public class Oggetto {
 			return "BottigliaIcon";
 
 		case CONTENITORE:
-			return "BottigliaIcon";
+			return "ContenitoreIcon";
 			
 		case DISCO:
-			return "BottigliaIcon";
+			return "DiscoIcon";
 			
 		case ELETTRONICA:
-			return "BottigliaIcon";
+			return "ElettronicaIcon";
 			
 		case LIBRO:
-			return "BottigliaIcon";
+			return "LibroIcon";
 			
 		case UTENSILE:
-			return "BottigliaIcon";
+			return "UtensileIcon";
 			
 		default:
 			return null;

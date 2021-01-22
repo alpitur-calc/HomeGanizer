@@ -4,16 +4,16 @@ import java.util.LinkedList;
 
 public class Mobile {
 	
-	public static final String 	ARMADIO = "armadio",
-								CASSAPANCA = "cassapanca",
-								//COMODINO = "comodino",
-								//CONTAINER = "container",
-								//CREDENZA = "credenza",
-								LIBRERIA = "libreria",
-								TAVOLO = "tavolo",
-								//SCAFFALE = "scaffale",
-								SCRIVANIA = "scrivania";
-								//VETRINA = "vetrina";
+	public static final String 	ARMADIO = "Armadio",
+								CASSAPANCA = "Cassapanca",
+								//COMODINO = "Comodino",
+								//CONTAINER = "Container",
+								//CREDENZA = "Credenza",
+								LIBRERIA = "Libreria",
+								TAVOLO = "Tavolo",
+								//SCAFFALE = "Scaffale",
+								SCRIVANIA = "Scrivania";
+								//VETRINA = "Vetrina";
 					
 	
 	//Prendere i vari COUNTER dal DB
