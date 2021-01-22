@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import application.SceneHandler;
 import application.model.Mobile;
+import application.model.Oggetto;
 import application.model.RoomHandler;
 import application.model.RoomPane;
 import application.model.Stanza;
@@ -40,14 +41,19 @@ import javafx.stage.Stage;
 
 public class MainInterfaceController implements Initializable {
 
-	private Stanza stanzaSelezionata = null;
-	private Button btnAddRoom, btnAddMobile; 
+	private Stanza stanzaSelezionata = null; 
+	private	Mobile mobileSelezionato= null;
+	private Oggetto oggettoSelezionato= null;
+	private Button btnAddRoom, btnAddMobile,btnAddOggetto; 
 	
     @FXML
     private ListView<RoomPane> lstRooms;
 
     @FXML
     private ListView<RoomPane> lstFurniture;
+    
+    @FXML
+    private ListView<RoomPane> lstOggetti;
 
     @FXML
     private Menu mnuAccount;
@@ -99,6 +105,7 @@ public class MainInterfaceController implements Initializable {
     	lstRooms.getItems().add(lstRooms.getItems().size(),p);  	
     	lstRooms.getItems().add(lstRooms.getItems().size(),pbtn);  	
 
+    	txtObjectDescription.setEditable(false);
 	}
 
     @FXML
@@ -204,10 +211,9 @@ public class MainInterfaceController implements Initializable {
 			}
 			
 			//----- Genero la griglia nel canvas -----
-			MessageView.showMessageAlert(AlertType.INFORMATION, "Stanza", "Stanza con id: " + stanzaSelezionata.getId());
 			Piantina.disegna(cnvRoom, stanzaSelezionata);
 			
-			//----- Carico la lista Mobili -----
+			//----- Carico la lista di mobili -----
 			caricaMobili();
 		}
 	};
@@ -260,9 +266,9 @@ public class MainInterfaceController implements Initializable {
 		lstFurniture.getItems().clear();
 		
 		RoomPane p = new RoomPane("listMobili");
-    	Label lblListaStanze = new Label("Elenco dei mobili:");
-    	lblListaStanze.setFont(new Font(16));
-    	p.getChildren().add(lblListaStanze);
+    	Label lblListaMobili = new Label("Elenco dei mobili:");
+    	lblListaMobili.setFont(new Font(16));
+    	p.getChildren().add(lblListaMobili);
     	
 		RoomPane pbtn = new RoomPane(stanzaSelezionata.getId());
     	btnAddMobile = new Button();
@@ -282,15 +288,147 @@ public class MainInterfaceController implements Initializable {
     		h.setAlignment(Pos.CENTER);
     		Image img = new Image(getClass().getResourceAsStream("/resources/MobileIcon.png"));
     		ImageView imgViewIcona = new ImageView(img); 
-    		Label nomeStanza = new Label(m.getNome()+"("+m.getTipo()+")");
-    		nomeStanza.setFont(new Font(14));
+    		Label nomeMobile = new Label(m.getNome()+"("+m.getTipo()+")");
+    		nomeMobile.setFont(new Font(14));
     		h.getChildren().add(imgViewIcona);
-    		h.getChildren().add(nomeStanza);
+    		h.getChildren().add(nomeMobile);
     		mp.getChildren().add(h);
-    		mp.setOnMouseClicked(handleStanzaInListClicked);
+    		mp.setOnMouseClicked(handleMobileInListClicked);
     		lstFurniture.getItems().add(lstFurniture.getItems().size(),mp);  
     	}
 
     	lstFurniture.getItems().add(lstFurniture.getItems().size(),pbtn);
+	}
+	
+	private EventHandler<MouseEvent> handleMobileInListClicked = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent e) {
+			
+			//----- Prendo il mobile selezionato -----
+			String idMobile=  ((RoomPane)e.getSource()).getId();
+			LinkedList<Mobile> mobili = stanzaSelezionata.getMobili();
+			
+			for(Mobile M : mobili) {
+				if(M.getId().equals(idMobile)) { mobileSelezionato= M; break; }
+			}
+			
+			//----- Carico la lista di oggetti -----
+			caricaOggetti(mobileSelezionato);
+		}
+	};
+	
+	private void caricaOggetti(Mobile M) {
+		
+		RoomPane p = new RoomPane("listOggetti");
+    	Label lblListaOggetti = new Label("Elenco degli oggetti::");
+    	lblListaOggetti.setFont(new Font(14));
+    	p.getChildren().add(lblListaOggetti);
+    	
+		RoomPane pbtn = new RoomPane(stanzaSelezionata.getId());
+    	btnAddOggetto = new Button();
+    	btnAddOggetto.setPrefSize(205.0, 20.0);
+    	btnAddOggetto.setOnMouseClicked(handleBtnAddOggetto);
+    	Image buttonImg =  new Image(getClass().getResourceAsStream("/resources/ButtonAddOggettoImage.png"));
+    	ImageView imgv= new ImageView(buttonImg);
+    	btnAddMobile.setGraphic(imgv);
+    	pbtn.getChildren().add(btnAddOggetto);
+    	
+    	lstOggetti.getItems().add(lstOggetti.getItems().size(),p); 
+    	
+    	LinkedList<Oggetto> oggetti = M.getOggetti();   	
+    	for(Oggetto o : oggetti) {	
+    		RoomPane mp = new RoomPane(o.getId());
+    		HBox h = new HBox();
+    		h.setAlignment(Pos.CENTER);
+    		//Image img = new Image(getClass().getResourceAsStream("/resources/OggettoIcon.png"));
+    		//ImageView imgViewIcona = new ImageView(img); 
+    		Label nomeOggetto = new Label(o.getNome()+"("+o.getTipo()+")");
+    		nomeOggetto.setFont(new Font(14));
+    		//h.getChildren().add(imgViewIcona);
+    		h.getChildren().add(nomeOggetto);
+    		mp.getChildren().add(h);
+    		mp.setOnMouseClicked(handleOggettoInListClicked);
+    		lstOggetti.getItems().add(lstOggetti.getItems().size(),mp);  
+    	}
+
+    	lstOggetti.getItems().add(lstOggetti.getItems().size(),pbtn);
+		
+	}
+	
+	private EventHandler<MouseEvent> handleOggettoInListClicked = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent event) {
+			//----- Prendo il mobile selezionato -----
+			String idMobile=  ((RoomPane)event.getSource()).getId();
+			System.out.println("id"  +mobileSelezionato.getId());
+			LinkedList<Oggetto> oggetti = mobileSelezionato.getOggetti();
+			
+			for(Oggetto O : oggetti) {
+				if(O.getId().equals(idMobile)) { oggettoSelezionato= O; break; }
+			}
+			
+			//----- Carico la lista di oggetti -----
+			caricaOggettoSelezionato(oggettoSelezionato);
+		}
+	};
+	
+	private EventHandler<MouseEvent> handleBtnAddOggetto = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent event) {
+			String nome="", tipo="", descrizione="";
+			
+			Stage oggettoProp;
+			oggettoProp = new Stage();
+			oggettoProp.setResizable(false);
+	    	try {
+	    		FXMLLoader loaderOggettoProp = new FXMLLoader(getClass().getResource("/application/view/oggettoPropertiesInterface.fxml"));
+	    		AnchorPane rootOggettoProp = loaderOggettoProp.load();
+	    		Scene sceneOggettoProp = new Scene(rootOggettoProp);
+	    		oggettoProp.setTitle("Inserire dati mobile");
+	    		oggettoProp.setScene(sceneOggettoProp);
+			} catch (IOException e1) { e1.printStackTrace(); }
+	
+	    	oggettoProp.showAndWait();
+			Pane p = (Pane) oggettoProp.getScene().getRoot().getChildrenUnmodifiable().get(0);
+			
+			try {
+				if(p.getChildren().get(1).getId().equals("txtNome")) {
+					TextField txtNome = (TextField) p.getChildren().get(1);
+					nome = txtNome.getText();
+				}
+	
+				if(p.getChildren().get(2).getId().equals("cmbTipo")) {
+					ComboBox<String> cmbTipo = (ComboBox<String>) p.getChildren().get(2);
+					tipo = (String) cmbTipo.getValue();
+				}
+				
+				if(p.getChildren().get(2).getId().equals("txtDescrizione")) {
+					TextArea txtDescrizione = (TextArea) p.getChildren().get(1);
+					nome = txtDescrizione.getText();
+				}
+				
+				if(stanzaSelezionata != null && !nome.equals("") && !tipo.equals("")) {
+					mobileSelezionato.aggiungiOggetto(nome, descrizione, tipo);
+					caricaOggetti(mobileSelezionato);
+				}
+			}
+			catch(Exception e2) {
+				MessageView.showMessageAlert(AlertType.WARNING, "Errore", "Oops, qualcosa è andato storto. Per favore, riprovare.");
+			}
+		}
+	};
+	
+	private void caricaOggettoSelezionato(Oggetto O) {
+		
+		txtObjectDescription.clear();
+		
+		String testo = "Nome Oggetto: " + O.getNome() + System.lineSeparator() +
+					   "Tipo Oggetto: " + O.getTipo() + System.lineSeparator() +
+					   "Descrizione: " + O.getDescrizione();
+		txtObjectDescription.setText(testo);
+		
 	}
 }
