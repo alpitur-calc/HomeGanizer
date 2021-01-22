@@ -25,17 +25,19 @@ public class Piantina {
 	{}
 	
 	public static void disegna(Canvas c, Stanza s)
-	{
+	{	
+		
 		c.setHeight(s.getProfondità()*Piantina.l);
 		c.setWidth(s.getLarghezza()*Piantina.l); 
 		
 		
 		
 		gc = c.getGraphicsContext2D();
+		gc.clearRect(0, 0, c.getWidth(), c.getHeight());
 		
-		for(int i=0; i< c.getHeight(); i+=Piantina.l)
+		for(int i=0; i< c.getHeight()*Piantina.l; i+=Piantina.l)
 		{
-			for(int j=0; j < c.getWidth(); j+=Piantina.l)
+			for(int j=0; j < c.getWidth()*Piantina.l; j+=Piantina.l)
 			{	
 				gc.setLineWidth(0.5);
 				gc.setStroke(Color.DARKGREEN);
