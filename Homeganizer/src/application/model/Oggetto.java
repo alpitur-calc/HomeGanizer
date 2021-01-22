@@ -94,4 +94,30 @@ public class Oggetto {
 	public String getTipo() {
 		return tipo;
 	}
+	
+	public String getIcona() {
+		switch (tipo) {
+		
+		case BOTTIGLIA:
+			return "BottigliaIcon";
+
+		case CONTENITORE:
+			return "BottigliaIcon";
+			
+		case DISCO:
+			return "BottigliaIcon";
+			
+		case ELETTRONICA:
+			return "BottigliaIcon";
+			
+		case LIBRO:
+			return "BottigliaIcon";
+			
+		case UTENSILE:
+			return "BottigliaIcon";
+			
+		default:
+			return null;
+		}
+	}
 }
