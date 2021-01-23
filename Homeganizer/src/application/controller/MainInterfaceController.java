@@ -107,7 +107,7 @@ public class MainInterfaceController implements Initializable {
 
     	txtObjectDescription.setEditable(false);
     	Piantina.getInstance().setCanvas(cnvRoom);
-	}
+    }
 
     @FXML
     void handleMnuAboutClicked(ActionEvent event) {
@@ -203,6 +203,9 @@ public class MainInterfaceController implements Initializable {
 		@Override
 		public void handle(MouseEvent event) {
 			
+			lstFurniture.getItems().clear();
+			lstOggetti.getItems().clear();
+			
 			//----- Prendo la stanza selezionata -----
 			LinkedList<Stanza> stanze = RoomHandler.getInstance().getStanze();
 			String idStanza= ((RoomPane) event.getSource()).getIdStanza();
@@ -212,7 +215,7 @@ public class MainInterfaceController implements Initializable {
 			}
 			
 			//----- Genero la griglia nel canvas -----
-			Piantina.getInstance().disegna(stanzaSelezionata);
+			Piantina.getInstance().disegna();
 			
 			//----- Carico la lista di mobili -----
 			caricaMobili();
@@ -254,7 +257,7 @@ public class MainInterfaceController implements Initializable {
 				if(stanzaSelezionata != null && !nome.equals("") && !tipo.equals("")) {
 					stanzaSelezionata.aggiungiMobile(nome, tipo); 
 					caricaMobili();
-					Piantina.getInstance().disegna(stanzaSelezionata);
+					Piantina.getInstance().disegna();
 				}
 			}
 			catch(Exception e2) {
@@ -334,7 +337,7 @@ public class MainInterfaceController implements Initializable {
     	btnAddOggetto.setOnMouseClicked(handleBtnAddOggetto);
     	Image buttonImg =  new Image(getClass().getResourceAsStream("/resources/ButtonAddOggettoImage.png"));
     	ImageView imgv= new ImageView(buttonImg);
-    	btnAddMobile.setGraphic(imgv);
+    	btnAddOggetto.setGraphic(imgv);
     	pbtn.getChildren().add(btnAddOggetto);
     	
     	lstOggetti.getItems().add(lstOggetti.getItems().size(),p); 
@@ -426,7 +429,7 @@ public class MainInterfaceController implements Initializable {
 	private void caricaOggettoSelezionato(Oggetto O) {
 		
 		txtObjectDescription.clear();
-		
+		txtObjectDescription.setFont(new Font(16));
 		String testo = "Nome Oggetto: " + O.getNome() + System.lineSeparator() +
 					   "Tipo Oggetto: " + O.getTipo() + System.lineSeparator() +
 					   "Descrizione: " + O.getDescrizione();
@@ -444,13 +447,17 @@ public class MainInterfaceController implements Initializable {
                 	{
                 		if (o.getNome().equals(txtSpotlight.getText()))
                 		{
-                			Piantina.getInstance().evidenziaMobile( s, m);
+                			setStanzaCorrente(s);
+                			setMobileCorrente(m);
+                			Piantina.getInstance().evidenziaMobile();
                 			break;
                 		}
                 	}
                 }
             }
         }
+        
+        MessageView.showMessageAlert(AlertType.INFORMATION, "Errore", "Il mobile ricercato non è presente.");
     }
 	
 	public static void setStanzaCorrente(Stanza stanza) {
