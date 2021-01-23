@@ -26,7 +26,9 @@ public class MobileInterfaceController implements Initializable {
 
     @FXML
     private Button btnAnnulla;
-
+ 
+   // private Stage thisStage;
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -37,6 +39,7 @@ public class MobileInterfaceController implements Initializable {
 		cmbTipo.getItems().add(Mobile.TAVOLO);
 		
 		btnConferma.setOnMouseClicked(handleBtnConfermaClicked);
+	//	btnAnnulla.setOnMouseClicked(handleBtnAnnullaClicked);
 	}
 	
 	private EventHandler<MouseEvent> handleBtnConfermaClicked = new EventHandler<MouseEvent>(){
@@ -48,4 +51,32 @@ public class MobileInterfaceController implements Initializable {
 		}
 		
 	};
+	
+	/*private EventHandler<MouseEvent> handleBtnAnnullaClicked = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent event) {
+			annullaCreazione();
+		}
+		
+	};
+	
+	public void setStage(Stage s) {
+		thisStage=s; 
+		thisStage.setOnHiding(handleStageClosing);
+	}
+	
+	private EventHandler<WindowEvent> handleStageClosing = new EventHandler<WindowEvent>() {
+
+		@Override
+		public void handle(WindowEvent arg0) {
+			annullaCreazione();
+		}
+		
+	};
+	
+	private void annullaCreazione() {
+		txtNome.clear();
+			cmbTipo.getItems().clear();
+	}*/
 }
