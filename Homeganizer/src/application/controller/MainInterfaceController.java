@@ -106,6 +106,7 @@ public class MainInterfaceController implements Initializable {
     	lstRooms.getItems().add(lstRooms.getItems().size(),pbtn);  	
 
     	txtObjectDescription.setEditable(false);
+    	Piantina.getInstance().setCanvas(cnvRoom);
 	}
 
     @FXML
@@ -211,7 +212,7 @@ public class MainInterfaceController implements Initializable {
 			}
 			
 			//----- Genero la griglia nel canvas -----
-			Piantina.disegna(cnvRoom, stanzaSelezionata);
+			Piantina.getInstance().disegna(stanzaSelezionata);
 			
 			//----- Carico la lista di mobili -----
 			caricaMobili();
@@ -253,6 +254,7 @@ public class MainInterfaceController implements Initializable {
 				if(stanzaSelezionata != null && !nome.equals("") && !tipo.equals("")) {
 					stanzaSelezionata.aggiungiMobile(nome, tipo); 
 					caricaMobili();
+					Piantina.getInstance().disegna(stanzaSelezionata);
 				}
 			}
 			catch(Exception e2) {
@@ -443,7 +445,7 @@ public class MainInterfaceController implements Initializable {
                 	{
                 		if (o.getNome().equals(txtSpotlight.getText()))
                 		{
-                			Piantina.evidenziaMobile(cnvRoom, s, m);
+                			Piantina.getInstance().evidenziaMobile( s, m);
                 			break;
                 		}
                 	}
