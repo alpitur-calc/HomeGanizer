@@ -77,17 +77,26 @@ public class Stanza {
 		return false;
 	}
 
+	public Mobile getMobileSelezionato(int x, int y) {
+		for(Mobile m : mobili) {
+			if(matrice[x][y] == matrice[m.getX()][m.getY()])
+				return m;
+		}
+		return null;
+	}
+	
 	// BOZZISSIMA
 	public boolean traslazione(Mobile m, int x, int y) {
 		boolean sicurow = false;
 		boolean sicuroh = false;
+		
 		if (matrice[x][y] == null) {
-			for (int i = x; i < m.getW(); i++) {
-				if (matrice[x + i][y] == null)
+			for (int l = x; l < m.getW(); l++) {
+				if ((matrice[x + l][y] == null) && (l < larghezza))
 					sicurow = true;
 			}
-			for (int i = y; i < m.getH(); i++) {
-				if (matrice[x][y + i] == null)
+			for (int p = y; p < m.getH(); p++) {
+				if ((matrice[x][y + p] == null) && (p < profondità))
 					sicuroh = true;
 			}
 			if (sicurow && sicuroh)
