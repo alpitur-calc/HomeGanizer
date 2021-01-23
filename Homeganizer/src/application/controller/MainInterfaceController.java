@@ -41,9 +41,9 @@ import javafx.stage.Stage;
 
 public class MainInterfaceController implements Initializable {
 
-	private Stanza stanzaSelezionata = null; 
-	private	Mobile mobileSelezionato= null;
-	private Oggetto oggettoSelezionato= null;
+	private static Stanza stanzaSelezionata = null; 
+	private	static Mobile mobileSelezionato= null;
+	private static Oggetto oggettoSelezionato= null;
 	private Button btnAddRoom, btnAddMobile,btnAddOggetto; 
 	
     @FXML
@@ -365,7 +365,6 @@ public class MainInterfaceController implements Initializable {
 		public void handle(MouseEvent event) {
 			//----- Prendo il mobile selezionato -----
 			String idMobile=  ((RoomPane)event.getSource()).getIdStanza();
-			System.out.println("id"  +mobileSelezionato.getId());
 			LinkedList<Oggetto> oggetti = mobileSelezionato.getOggetti();
 			
 			for(Oggetto O : oggetti) {
@@ -449,10 +448,24 @@ public class MainInterfaceController implements Initializable {
                 			break;
                 		}
                 	}
-                   
-
                 }
             }
         }
     }
-} //ultimo cambiamento
+	
+	public static void setStanzaCorrente(Stanza stanza) {
+		stanzaSelezionata = stanza;
+	}
+	
+	public static void setMobileCorrente(Mobile mobile) {
+		mobileSelezionato = mobile;
+	}
+	
+	public static Stanza getStanzaCorrente() {
+		return stanzaSelezionata;
+	}
+	
+	public static Mobile getMobileCorrente() {
+		return mobileSelezionato;
+	}
+}
