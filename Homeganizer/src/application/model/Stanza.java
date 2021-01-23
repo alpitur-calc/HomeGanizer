@@ -39,7 +39,7 @@ public class Stanza {
 	public void aggiungiMobile(String nome, String tipo) {
 
 		mobili.add(new Mobile(nome, tipo));
-		mobili.getLast().setH(3);
+		
 		if (inserito())
 			aggiornaMatrice();
 		else
