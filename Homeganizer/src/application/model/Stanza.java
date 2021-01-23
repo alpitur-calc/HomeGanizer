@@ -35,6 +35,7 @@ public class Stanza {
 		this.id = "S" + IDCOUNTER.toString();
 		IDCOUNTER++;
 	}
+	
 
 	public void aggiungiMobile(String nome, String tipo) {
 
@@ -79,7 +80,7 @@ public class Stanza {
 
 	public Mobile getMobileSelezionato(int x, int y) {
 		for(Mobile m : mobili) {
-			if(matrice[x][y] == matrice[m.getX()][m.getY()])
+			if(matrice[x][y] == m.getId())
 				return m;
 		}
 		return null;
