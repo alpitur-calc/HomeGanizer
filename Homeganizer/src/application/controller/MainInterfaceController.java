@@ -450,7 +450,7 @@ public class MainInterfaceController implements Initializable {
                 			setStanzaCorrente(s);
                 			setMobileCorrente(m);
                 			Piantina.getInstance().evidenziaMobile();
-                			break;
+                			return;
                 		}
                 	}
                 }
