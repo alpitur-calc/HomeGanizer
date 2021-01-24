@@ -82,6 +82,15 @@ public class MainInterfaceController implements Initializable {
 
     @FXML
     private TextArea txtObjectDescription;
+    
+    @FXML
+    private MenuItem mtmCreaStanza;
+
+    @FXML
+    private MenuItem mtmEliminaStanza;
+
+    @FXML
+    private MenuItem btnAbout;
    
     
     @Override
