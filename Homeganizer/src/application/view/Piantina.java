@@ -89,7 +89,7 @@ public class Piantina {
 	}
 	
 	public void deselezionaMobile() {
-		gc.setFill(Color.GREEN);
+		gc.setFill(Color.BLUE);
 		gc.fillRect(MainInterfaceController.getMobileCorrente().getX() * Piantina.l, MainInterfaceController.getMobileCorrente().getY() * Piantina.l, MainInterfaceController.getMobileCorrente().getW() * Piantina.l, MainInterfaceController.getMobileCorrente().getH() * Piantina.l);
 
 	}
@@ -125,7 +125,7 @@ public class Piantina {
 				}
 			}
 		}
-	};
+	}; 
 
 	public EventHandler<MouseEvent> selezionaMobile = new EventHandler<MouseEvent>() {
 
