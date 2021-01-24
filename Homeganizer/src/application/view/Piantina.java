@@ -42,8 +42,11 @@ public class Piantina {
 		gc = c.getGraphicsContext2D();
 		gc.clearRect(0, 0, c.getWidth(), c.getHeight());
 
-		for (int i = 0; i < c.getHeight() * Piantina.l; i += Piantina.l) {
-			for (int j = 0; j < c.getWidth() * Piantina.l; j += Piantina.l) {
+		//Ho eliminato i " * Piantina.l" da "i < c.getHeight()" e "j < c.getWidth()" dal for e va più fluido. 
+		//Prima era --> i < c.getHeight() * Piantina.l
+		//Non so se servivano
+		for (int i = 0; i < c.getHeight(); i += Piantina.l) {
+			for (int j = 0; j < c.getWidth(); j += Piantina.l) {
 				gc.setLineWidth(0.5);
 				gc.setStroke(Color.DARKCYAN);
 				gc.strokeRect(i, j, Piantina.l, Piantina.l);
@@ -55,12 +58,35 @@ public class Piantina {
 			gc.fillRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
 		}
 	}
+	
+	public void aggiornaPiantina() {
+		gc.clearRect(0, 0, c.getWidth(), c.getHeight());
+		
+		for (int i = 0; i < c.getHeight(); i += Piantina.l) {
+			for (int j = 0; j < c.getWidth(); j += Piantina.l) {
+				gc.setLineWidth(0.5);
+				gc.setStroke(Color.DARKCYAN);
+				gc.strokeRect(i, j, Piantina.l, Piantina.l);
+			}
+		}
+		
+		for (Mobile m : MainInterfaceController.getStanzaCorrente().getMobili()) {
+			gc.setFill(Color.BLUE);
+			gc.fillRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
+		}
+	}
 
 	public void evidenziaMobile() {
 		for (Mobile m : MainInterfaceController.getStanzaCorrente().getMobili()) {
 			gc.setFill(Color.BLUE);
 			gc.fillRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
 		}
+		gc.setFill(Color.GREEN);
+		gc.fillRect(MainInterfaceController.getMobileCorrente().getX() * Piantina.l, MainInterfaceController.getMobileCorrente().getY() * Piantina.l, MainInterfaceController.getMobileCorrente().getW() * Piantina.l, MainInterfaceController.getMobileCorrente().getH() * Piantina.l);
+
+	}
+	
+	public void deselezionaMobile() {
 		gc.setFill(Color.GREEN);
 		gc.fillRect(MainInterfaceController.getMobileCorrente().getX() * Piantina.l, MainInterfaceController.getMobileCorrente().getY() * Piantina.l, MainInterfaceController.getMobileCorrente().getW() * Piantina.l, MainInterfaceController.getMobileCorrente().getH() * Piantina.l);
 
@@ -83,7 +109,7 @@ public class Piantina {
 						MainInterfaceController.getMobileCorrente().setX(xPiantina);
 						MainInterfaceController.getMobileCorrente().setY(yPiantina);
 						MainInterfaceController.getStanzaCorrente().aggiornaMatrice();
-						disegna();
+						aggiornaPiantina();
 						evidenziaMobile();
 					}
 				}
@@ -96,7 +122,7 @@ public class Piantina {
 		@Override
 		public void handle(MouseEvent e) {
 
-if (MainInterfaceController.getStanzaCorrente() != null) {
+			if (MainInterfaceController.getStanzaCorrente() != null) {
 				
 				int xPiantina = (int) (e.getX() - (e.getX() % Piantina.l)) / Piantina.l;
 				int yPiantina = (int) (e.getY() - (e.getY() % Piantina.l)) / Piantina.l;
@@ -104,7 +130,7 @@ if (MainInterfaceController.getStanzaCorrente() != null) {
 				if(MainInterfaceController.getStanzaCorrente().getMatrice()[xPiantina][yPiantina] == null) {
 					
 					MainInterfaceController.setMobileCorrente(null);
-					disegna();
+					deselezionaMobile();
 				}
 				
 				if (MainInterfaceController.getStanzaCorrente().getMobileSelezionato(xPiantina, yPiantina) != null) {
