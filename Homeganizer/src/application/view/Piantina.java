@@ -47,8 +47,8 @@ public class Piantina {
 		//Ho eliminato i " * Piantina.l" da "i < c.getHeight()" e "j < c.getWidth()" dal for e va più fluido. 
 		//Prima era --> i < c.getHeight() * Piantina.l
 		//Non so se servivano
-		for (int i = 0; i < c.getHeight(); i += Piantina.l) {
-			for (int j = 0; j < c.getWidth(); j += Piantina.l) {
+		for (int i = 0; i < c.getHeight()* Piantina.l; i += Piantina.l) {
+			for (int j = 0; j < c.getWidth()* Piantina.l; j += Piantina.l) {
 				gc.setLineWidth(0.5);
 				gc.setStroke(Color.DARKCYAN);
 				gc.strokeRect(i, j, Piantina.l, Piantina.l);
