@@ -2,7 +2,6 @@ package application.view;
 
 import application.controller.MainInterfaceController;
 import application.model.Mobile;
-import application.model.Stanza;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,8 +14,6 @@ public class Piantina {
 	private static GraphicsContext gc;
 	private static final int l = 50;
 	private Canvas c;
-	private Stanza StanzaCorrente;
-	private Mobile mobileSelezionato;
 
 	public static Piantina getInstance() {
 		if (istanza == null) {
@@ -31,7 +28,8 @@ public class Piantina {
 
 	public void setCanvas(Canvas c) {
 		this.c = c;
-		c.setOnMouseClicked(selezionaMobile);
+		c.setOnMousePressed(selezionaMobile);
+		c.setOnMouseDragged(spostaMobile);
 	}
 
 	
@@ -59,7 +57,10 @@ public class Piantina {
 	}
 
 	public void evidenziaMobile() {
-		disegna();
+		for (Mobile m : MainInterfaceController.getStanzaCorrente().getMobili()) {
+			gc.setFill(Color.BLUE);
+			gc.fillRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
+		}
 		gc.setFill(Color.GREEN);
 		gc.fillRect(MainInterfaceController.getMobileCorrente().getX() * Piantina.l, MainInterfaceController.getMobileCorrente().getY() * Piantina.l, MainInterfaceController.getMobileCorrente().getW() * Piantina.l, MainInterfaceController.getMobileCorrente().getH() * Piantina.l);
 
@@ -70,15 +71,24 @@ public class Piantina {
 		@Override
 		public void handle(MouseEvent e) {
 
-			int xPiantina = (int) (e.getX() - (e.getX() % Piantina.l)) / Piantina.l;
-			int yPiantina = (int) (e.getY() - (e.getY() % Piantina.l)) / Piantina.l;
-
-			if (MainInterfaceController.getStanzaCorrente().getMatrice()[xPiantina][yPiantina] == null) {
-
+			if (MainInterfaceController.getStanzaCorrente() != null) {
+				
+				int xPiantina = (int) (e.getX() - (e.getX() % Piantina.l)) / Piantina.l;
+				int yPiantina = (int) (e.getY() - (e.getY() % Piantina.l)) / Piantina.l;
+								
+				if(MainInterfaceController.getMobileCorrente() != null) {
+					
+					if(MainInterfaceController.getStanzaCorrente().traslazione(MainInterfaceController.getMobileCorrente(), xPiantina, yPiantina)) {
+						
+						MainInterfaceController.getMobileCorrente().setX(xPiantina);
+						MainInterfaceController.getMobileCorrente().setY(yPiantina);
+						MainInterfaceController.getStanzaCorrente().aggiornaMatrice();
+						disegna();
+						evidenziaMobile();
+					}
+				}
 			}
-
 		}
-
 	};
 
 	public EventHandler<MouseEvent> selezionaMobile = new EventHandler<MouseEvent>() {
@@ -86,25 +96,27 @@ public class Piantina {
 		@Override
 		public void handle(MouseEvent e) {
 
-			int xPiantina = (int) (e.getX() - (e.getX() % Piantina.l)) / Piantina.l;
-			int yPiantina = (int) (e.getY() - (e.getY() % Piantina.l)) / Piantina.l;
+if (MainInterfaceController.getStanzaCorrente() != null) {
+				
+				int xPiantina = (int) (e.getX() - (e.getX() % Piantina.l)) / Piantina.l;
+				int yPiantina = (int) (e.getY() - (e.getY() % Piantina.l)) / Piantina.l;
 
-			System.out.println(xPiantina + ", " + yPiantina);
-
-			if (MainInterfaceController.getStanzaCorrente().getMobileSelezionato(xPiantina, yPiantina) != null) {
-				MainInterfaceController.setMobileCorrente(
-						MainInterfaceController.getStanzaCorrente().getMobileSelezionato(xPiantina, yPiantina));
-
-				evidenziaMobile();
-
-				System.out.println(MainInterfaceController.getMobileCorrente().getId());
+				if(MainInterfaceController.getStanzaCorrente().getMatrice()[xPiantina][yPiantina] == null) {
+					
+					MainInterfaceController.setMobileCorrente(null);
+					disegna();
+				}
+				
+				if (MainInterfaceController.getStanzaCorrente().getMobileSelezionato(xPiantina, yPiantina) != null) {
+					
+					MainInterfaceController.setMobileCorrente(MainInterfaceController.getStanzaCorrente().getMobileSelezionato(xPiantina, yPiantina));
+					evidenziaMobile();
+				}
 			}
-			// finchè non si clicca su un mobile o su una stanza la current room e il
-			// MobileCorrente sono null, tranne quando è stata fatta la ricerca di un
-			// oggetto
-
 		}
-
+		// finchè non si clicca su un mobile o su una stanza la current room e il
+		// MobileCorrente sono null, tranne quando è stata fatta la ricerca di un
+		// oggetto
 	};
 
 }

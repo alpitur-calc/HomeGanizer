@@ -85,50 +85,35 @@ public class Stanza {
 		}
 		return null;
 	}
-	
-	// BOZZISSIMA
+
 	public boolean traslazione(Mobile m, int x, int y) {
-		boolean sicurow = false;
-		boolean sicuroh = false;
-		
-		if (matrice[x][y] == null) {
-			for (int l = x; l < m.getW(); l++) {
-				if ((matrice[x + l][y] == null) && (l < larghezza))
-					sicurow = true;
-			}
-			for (int p = y; p < m.getH(); p++) {
-				if ((matrice[x][y + p] == null) && (p < profondità))
-					sicuroh = true;
-			}
-			if (sicurow && sicuroh)
-				return true;
-		}
+		for(int l = 0; l < m.getW(); l++)
+			for(int p = 0; p < m.getH(); p++)
+				if (!inMatrice(x + l, y + p) || (matrice[x + l][y + p] != null && matrice[x + l][y + p] != m.getId())) 
+					return false;		
+		return true;
+	}
+	
+	private boolean inMatrice(int x, int y) {
+		if(x < larghezza && y < profondità)
+			return true;
 		return false;
+		
 	}
 
 	public void aggiornaMatrice() {
-
 		for (int i = 0; i < larghezza; i++)
 			for (int k = 0; k < profondità; k++)
 				matrice[i][k] = null;
 
 		for (Mobile m : mobili) {
-			if (m.getW() > 1)
-				for (int i = 0; i < m.getW(); i++)
-					matrice[m.getX() + i][m.getY()] = m.getId();
-
-			if (m.getH() > 1)
-				for (int i = 0; i < m.getH(); i++)
-					matrice[m.getX()][m.getY() + i] = m.getId();
-			else
-				matrice[m.getX()][m.getY()] = m.getId();
+			for (int l = 0; l < m.getW(); l++)
+				for (int p = 0; p < m.getH(); p++)
+					if(inMatrice(m.getX() + l, m.getY() + p))
+						matrice[m.getX() + l][m.getY() + p] = m.getId();	
+			
 		}
-
-		/*
-		 * //Stampa per prova for(int i = 0; i < larghezza; i++) { for(int k = 0; k <
-		 * profondità; k++) System.out.print(matrice[i][k] + " "); System.out.println();
-		 * } System.out.println();
-		 */
+		 
 	}
 
 	public LinkedList<Mobile> getMobili() {
