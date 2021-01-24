@@ -57,6 +57,9 @@ public class Piantina {
 
 		for (Mobile m : MainInterfaceController.getStanzaCorrente().getMobili()) {
 			gc.setFill(Color.BLUE);
+			gc.setLineWidth(1);
+			gc.setStroke(Color.RED);
+			gc.strokeRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
 			gc.fillRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
 		}
 	}
@@ -81,6 +84,12 @@ public class Piantina {
 	public void evidenziaMobile() {
 
 		gc.setFill(Color.GREEN);
+		gc.setLineWidth(1);
+		gc.setStroke(Color.BLACK);
+		gc.strokeRect(MainInterfaceController.getMobileCorrente().getX() * Piantina.l,
+				MainInterfaceController.getMobileCorrente().getY() * Piantina.l,
+				MainInterfaceController.getMobileCorrente().getW() * Piantina.l,
+				MainInterfaceController.getMobileCorrente().getH() * Piantina.l);
 		gc.fillRect(MainInterfaceController.getMobileCorrente().getX() * Piantina.l,
 				MainInterfaceController.getMobileCorrente().getY() * Piantina.l,
 				MainInterfaceController.getMobileCorrente().getW() * Piantina.l,
@@ -112,27 +121,13 @@ public class Piantina {
 
 						if (e.getButton() == MouseButton.SECONDARY) {
 
-							if (xPiantina < MainInterfaceController.getMobileCorrente().getX()
-									|| yPiantina < MainInterfaceController.getMobileCorrente().getY()) {
-								Integer xPre =  MainInterfaceController.getMobileCorrente().getX();
-								Integer yPre =  MainInterfaceController.getMobileCorrente().getY();
-								MainInterfaceController.getMobileCorrente().setX(xPiantina);
-								MainInterfaceController.getMobileCorrente().setY(yPiantina);
-								MainInterfaceController.getMobileCorrente().setW(
-										Math.abs(xPre - MainInterfaceController.getMobileCorrente().getX()) + 1);
-								MainInterfaceController.getMobileCorrente().setH(
-										Math.abs(yPre - MainInterfaceController.getMobileCorrente().getY()) + 1);
-								
-								System.out.println(xPre +", " + yPre);
-							}
-
-							else {
+					
 								MainInterfaceController.getMobileCorrente().setW(
 										Math.abs(xPiantina - MainInterfaceController.getMobileCorrente().getX()) + 1);
 								MainInterfaceController.getMobileCorrente().setH(
 										Math.abs(yPiantina - MainInterfaceController.getMobileCorrente().getY()) + 1);
 							}
-						}
+						
 
 						else {
 

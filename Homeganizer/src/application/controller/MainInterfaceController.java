@@ -136,6 +136,11 @@ public class MainInterfaceController implements Initializable {
     void handleMnuAzioniClicked(ActionEvent event) {
 
     }
+    
+    @FXML
+    void handleBtnAboutClicked(ActionEvent event) {
+
+    }
 
     @FXML
     void handleMnuSpotlightClicked(ActionEvent event) {

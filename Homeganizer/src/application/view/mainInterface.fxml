@@ -37,12 +37,13 @@
                 </Menu>
                 <Menu fx:id="mnuAzioni" mnemonicParsing="false" onAction="#handleMnuAzioniClicked" text="Azioni">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem fx:id="mtmCreaStanza" mnemonicParsing="false" text="Crea Stanza" />
+                        <MenuItem fx:id="mtmEliminaStanza" mnemonicParsing="false" text="Elimina Stanza" />
                   </items>
                 </Menu>
                 <Menu fx:id="mnuAbout" mnemonicParsing="false" onAction="#handleMnuAboutClicked" text="About">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem fx:id="btnAbout" mnemonicParsing="false" onAction="#handleBtnAboutClicked" text="About" />
                   </items>
                 </Menu>
                   <Menu fx:id="mnuSpotlight" mnemonicParsing="false" onAction="#handleMnuSpotlightClicked" text="🔎">
