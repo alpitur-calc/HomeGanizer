@@ -32,8 +32,6 @@ public class RoomPropertiesController implements Initializable {
     @FXML
     private Button btnCancel;
     
-   // private Stage thisStage;
-    
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -42,7 +40,7 @@ public class RoomPropertiesController implements Initializable {
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		    	try{
 					int h = Integer.parseInt(txtHeight.getText()); 
-					if(h<=0 && h>50) { MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Profondità troppo alta. Inserire un numero da 1 a 50!"); }
+					if(h<=0 || h>50) { MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Profondità troppo alta. Inserire un numero da 1 a 50!"); }
 				}
 				catch(NumberFormatException e) {
 					MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Prego, inserire un numero intero!");
@@ -56,7 +54,7 @@ public class RoomPropertiesController implements Initializable {
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		    	try{
 					int w = Integer.parseInt(txtWidth.getText()); 
-					if(w<=0 && w>50) { MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Larghezza troppo grande. Inserire un numero da 1 a 50!"); }
+					if(w<=0 || w>50) { MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Larghezza troppo grande. Inserire un numero da 1 a 50!"); }
 					
 				}
 				catch(NumberFormatException e) {
@@ -69,35 +67,17 @@ public class RoomPropertiesController implements Initializable {
 
     @FXML
     void handleBtnCancelClicked(MouseEvent event) {
-    	//annullaCreazione();
-    }
-    
-  /*  public void setStage(Stage s) {
-		thisStage=s; 
-		thisStage.setOnHiding(handleStageClosing);
-	}*/
-
-    @FXML
-    void handleBtnConfirmClicked(MouseEvent event) {
+    	MainInterfaceController.ConfermaCreazioneStanza= false;
     	Stage thisStage = (Stage) btnConfirm.getScene().getWindow();
     	thisStage.close();
     }
 
-   /* private EventHandler<WindowEvent> handleStageClosing = new EventHandler<WindowEvent>() {
-
-		@Override
-		public void handle(WindowEvent arg0) {
-			//annullaCreazione();
-			MainInterfaceController.AnnullaOperazione= true;
-		}
-		
-	};
-	
-	private void annullaCreazione() {
-		txtRoomName.clear();
-		txtHeight.clear();
-		txtWidth.clear();
-	}*/
+    @FXML
+    void handleBtnConfirmClicked(MouseEvent event) {
+    	MainInterfaceController.ConfermaCreazioneStanza=true;
+    	Stage thisStage = (Stage) btnConfirm.getScene().getWindow();
+    	thisStage.close();
+    }
 
 }
 

@@ -45,12 +45,25 @@ public class OggettoInterfaceController implements Initializable{
 		cmbTipo.getItems().add(Oggetto.UTENSILE);
 		
 		btnConferma.setOnMouseClicked(handleBtnConfermaClicked);
+		btnAnnulla.setOnMouseClicked(handleBtnAnnullaClicked);
 	}
 	
 	private EventHandler<MouseEvent> handleBtnConfermaClicked = new EventHandler<MouseEvent>(){
 
 		@Override
 		public void handle(MouseEvent event) {
+			MainInterfaceController.ConfermaCreazioneOggetto= true;
+			Stage thisStage = (Stage) btnConferma.getScene().getWindow();
+	    	thisStage.close();
+		}
+		
+	};
+	
+	private EventHandler<MouseEvent> handleBtnAnnullaClicked = new EventHandler<MouseEvent>(){
+
+		@Override
+		public void handle(MouseEvent event) {
+			MainInterfaceController.ConfermaCreazioneOggetto= false;
 			Stage thisStage = (Stage) btnConferma.getScene().getWindow();
 	    	thisStage.close();
 		}

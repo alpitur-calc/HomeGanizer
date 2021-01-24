@@ -43,6 +43,8 @@ import javafx.stage.Stage;
 
 public class MainInterfaceController implements Initializable {
 
+	public static boolean ConfermaCreazioneStanza=false, ConfermaCreazioneMobile=false, ConfermaCreazioneOggetto=false;
+	
 	private static Stanza stanzaSelezionata = null; 
 	private	static Mobile mobileSelezionato= null;
 	private static Oggetto oggettoSelezionato= null;
@@ -159,27 +161,31 @@ public class MainInterfaceController implements Initializable {
 			roomProp.showAndWait();
 			Pane p = (Pane) roomProp.getScene().getRoot().getChildrenUnmodifiable().get(0);
 			
-			try {
-			if(p.getChildren().get(1).getId().equals("txtRoomName")) {
-				TextField txtRoomName = (TextField) p.getChildren().get(1);
-				nome = txtRoomName.getText();
-			}
+			if(ConfermaCreazioneStanza) {
+				try {
+				if(p.getChildren().get(1).getId().equals("txtRoomName")) {
+					TextField txtRoomName = (TextField) p.getChildren().get(1);
+					nome = txtRoomName.getText();
+				}
+	
+				if(p.getChildren().get(2).getId().equals("txtHeight")) {
+					TextField txtHeight = (TextField) p.getChildren().get(2);
+					profondità = Integer.parseInt(txtHeight.getText());
+				}
+	
+				if(p.getChildren().get(3).getId().equals("txtWidth")) {
+					TextField txtWidth = (TextField) p.getChildren().get(3);
+					larghezza = Integer.parseInt(txtWidth.getText());
+				}
+				
+				RoomHandler.getInstance().aggiungiStanza(nome, larghezza, profondità);
+				addStanzaToList(RoomHandler.getInstance().getStanze().getLast().getId(),nome);
 
-			if(p.getChildren().get(2).getId().equals("txtHeight")) {
-				TextField txtHeight = (TextField) p.getChildren().get(2);
-				profondità = Integer.parseInt(txtHeight.getText());
-			}
-
-			if(p.getChildren().get(3).getId().equals("txtWidth")) {
-				TextField txtWidth = (TextField) p.getChildren().get(3);
-				larghezza = Integer.parseInt(txtWidth.getText());
-			}
-			
-			RoomHandler.getInstance().aggiungiStanza(nome, larghezza, profondità);
-			addStanzaToList(RoomHandler.getInstance().getStanze().getLast().getId(),nome);
-			}
-			catch(NumberFormatException e2) {
-				MessageView.showMessageAlert(AlertType.WARNING, "Dati inseriti non validi", "Per favore, riprovare e inserire i dati correttamente.");
+		    	ConfermaCreazioneStanza= false;
+				}
+				catch(NumberFormatException e2) {
+					MessageView.showMessageAlert(AlertType.WARNING, "Dati inseriti non validi", "Per favore, riprovare e inserire i dati correttamente.");
+				}
 			}
 		}
 	};
@@ -245,25 +251,28 @@ public class MainInterfaceController implements Initializable {
 	    	mobileProp.showAndWait();
 			Pane p = (Pane) mobileProp.getScene().getRoot().getChildrenUnmodifiable().get(0);
 			
-			try {
-				if(p.getChildren().get(1).getId().equals("txtNome")) {
-					TextField txtNome = (TextField) p.getChildren().get(1);
-					nome = txtNome.getText();
+			if(ConfermaCreazioneMobile) {
+				try {
+					if(p.getChildren().get(1).getId().equals("txtNome")) {
+						TextField txtNome = (TextField) p.getChildren().get(1);
+						nome = txtNome.getText();
+					}
+		
+					if(p.getChildren().get(2).getId().equals("cmbTipo")) {
+						ComboBox<String> cmbTipo = (ComboBox<String>) p.getChildren().get(2);
+						tipo = (String) cmbTipo.getValue();
+					}
+					
+					if(stanzaSelezionata != null && !nome.equals("") && !tipo.equals("")) {
+						stanzaSelezionata.aggiungiMobile(nome, tipo); 
+						caricaMobili();
+						Piantina.getInstance().disegna();
+					}
+					ConfermaCreazioneMobile= false;
 				}
-	
-				if(p.getChildren().get(2).getId().equals("cmbTipo")) {
-					ComboBox<String> cmbTipo = (ComboBox<String>) p.getChildren().get(2);
-					tipo = (String) cmbTipo.getValue();
+				catch(Exception e2) {
+					MessageView.showMessageAlert(AlertType.WARNING, "Errore", "Oops, qualcosa è andato storto. Per favore, riprovare.");
 				}
-				
-				if(stanzaSelezionata != null && !nome.equals("") && !tipo.equals("")) {
-					stanzaSelezionata.aggiungiMobile(nome, tipo); 
-					caricaMobili();
-					Piantina.getInstance().disegna();
-				}
-			}
-			catch(Exception e2) {
-				MessageView.showMessageAlert(AlertType.WARNING, "Errore", "Oops, qualcosa è andato storto. Per favore, riprovare.");
 			}
 		}
 	};
@@ -401,29 +410,32 @@ public class MainInterfaceController implements Initializable {
 	    	oggettoProp.showAndWait();
 			Pane p = (Pane) oggettoProp.getScene().getRoot().getChildrenUnmodifiable().get(0);
 			
-			try {
-				if(p.getChildren().get(1).getId().equals("txtNome")) {
-					TextField txtNome = (TextField) p.getChildren().get(1);
-					nome = txtNome.getText();
+			if(ConfermaCreazioneOggetto) {
+				try {
+					if(p.getChildren().get(1).getId().equals("txtNome")) {
+						TextField txtNome = (TextField) p.getChildren().get(1);
+						nome = txtNome.getText();
+					}
+		
+					if(p.getChildren().get(2).getId().equals("cmbTipo")) {
+						ComboBox<String> cmbTipo = (ComboBox<String>) p.getChildren().get(2);
+						tipo = (String) cmbTipo.getValue();
+					}
+					
+					if(p.getChildren().get(5).getId().equals("txtDescrizione")) {
+						TextArea txtDescrizione = (TextArea) p.getChildren().get(5);
+						descrizione = txtDescrizione.getText();
+					}
+					
+					if(stanzaSelezionata != null && !nome.equals("") && !tipo.equals("")) {
+						mobileSelezionato.aggiungiOggetto(nome, descrizione, tipo);
+						caricaOggetti(mobileSelezionato);
+					}
+					ConfermaCreazioneOggetto= false;
 				}
-	
-				if(p.getChildren().get(2).getId().equals("cmbTipo")) {
-					ComboBox<String> cmbTipo = (ComboBox<String>) p.getChildren().get(2);
-					tipo = (String) cmbTipo.getValue();
+				catch(Exception e2) {
+					MessageView.showMessageAlert(AlertType.WARNING, "Errore", "Oops, qualcosa è andato storto. Per favore, riprovare.");
 				}
-				
-				if(p.getChildren().get(5).getId().equals("txtDescrizione")) {
-					TextArea txtDescrizione = (TextArea) p.getChildren().get(5);
-					descrizione = txtDescrizione.getText();
-				}
-				
-				if(stanzaSelezionata != null && !nome.equals("") && !tipo.equals("")) {
-					mobileSelezionato.aggiungiOggetto(nome, descrizione, tipo);
-					caricaOggetti(mobileSelezionato);
-				}
-			}
-			catch(Exception e2) {
-				MessageView.showMessageAlert(AlertType.WARNING, "Errore", "Oops, qualcosa è andato storto. Per favore, riprovare.");
 			}
 		}
 	};
