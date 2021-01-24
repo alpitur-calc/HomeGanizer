@@ -47,7 +47,7 @@
                 </Menu>
                   <Menu fx:id="mnuSpotlight" mnemonicParsing="false" onAction="#handleMnuSpotlightClicked" text="🔎">
                      <graphic>
-                        <TextField fx:id="txtSpotlight" onAction="#ricercaMobile" onMouseClicked="#ricercaMobile" promptText="RIcerca Oggetto..." />
+                        <TextField fx:id="txtSpotlight" onKeyPressed="#ricercaMobile" promptText="Ricerca Oggetto..." />
                      </graphic>
                   </Menu>
               </menus>

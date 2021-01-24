@@ -32,6 +32,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -438,30 +440,17 @@ public class MainInterfaceController implements Initializable {
 	}
 	
 	@FXML
-    void ricercaMobile(MouseEvent event) {
-
-        for (Stanza s : RoomHandler.getInstance().getStanze()) {
-            for (Mobile m : s.getMobili()) {
-                {
-                	for( Oggetto o : m.getOggetti() )
-                	{
-                		if (o.getNome().equals(txtSpotlight.getText()))
-                		{
-                			setStanzaCorrente(s);
-                			setMobileCorrente(m);
-                			Piantina.getInstance().evidenziaMobile();
-                			return;
-                		}
-                	}
-                }
-            }
-        }
-        
-        MessageView.showMessageAlert(AlertType.INFORMATION, "Errore", "Il mobile ricercato non è presente.");
+    void ricercaMobile(KeyEvent event) {
+		if( txtSpotlight.isFocused() &&!txtSpotlight.getText().equals("")) {
+			if(event.getCode().equals(KeyCode.ENTER)) {
+				RoomHandler.getInstance().ricerca(txtSpotlight.getText());
+			}
+		}
     }
 	
 	public static void setStanzaCorrente(Stanza stanza) {
 		stanzaSelezionata = stanza;
+		Piantina.getInstance().disegna();
 	}
 	
 	public static void setMobileCorrente(Mobile mobile) {
@@ -474,5 +463,9 @@ public class MainInterfaceController implements Initializable {
 	
 	public static Mobile getMobileCorrente() {
 		return mobileSelezionato;
+	}
+	
+	private void selectItemInLstRoom() {
+		
 	}
 }
