@@ -5,6 +5,7 @@ import application.model.Mobile;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -29,7 +30,8 @@ public class Piantina {
 	public void setCanvas(Canvas c) {
 		this.c = c;
 		c.setOnMousePressed(selezionaMobile);
-		c.setOnMouseDragged(spostaMobile);
+		//c.setOnMouseDragged(spostaMobile); -> rinominato in modificaMobile perchè ora lo ridimensiona pure ma se trovi un nome migliore metti quello
+		c.setOnMouseDragged(modificaMobile);
 	}
 
 	
@@ -92,7 +94,7 @@ public class Piantina {
 
 	}
 
-	public EventHandler<MouseEvent> spostaMobile = new EventHandler<MouseEvent>() {
+	public EventHandler<MouseEvent> modificaMobile = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent e) {
@@ -106,8 +108,16 @@ public class Piantina {
 					
 					if(MainInterfaceController.getStanzaCorrente().traslazione(MainInterfaceController.getMobileCorrente(), xPiantina, yPiantina)) {
 						
+						if(e.getButton() == MouseButton.SECONDARY) {
+							MainInterfaceController.getMobileCorrente().setW(Math.abs( xPiantina - MainInterfaceController.getMobileCorrente().getX() ) +1 );
+							MainInterfaceController.getMobileCorrente().setH(Math.abs( yPiantina - MainInterfaceController.getMobileCorrente().getY() ) +1 );
+						}
+						
+						else {
+						
 						MainInterfaceController.getMobileCorrente().setX(xPiantina);
 						MainInterfaceController.getMobileCorrente().setY(yPiantina);
+						}
 						MainInterfaceController.getStanzaCorrente().aggiornaMatrice();
 						aggiornaPiantina();
 						evidenziaMobile();
@@ -144,5 +154,7 @@ public class Piantina {
 		// MobileCorrente sono null, tranne quando è stata fatta la ricerca di un
 		// oggetto
 	};
+	
+	
 
 }
