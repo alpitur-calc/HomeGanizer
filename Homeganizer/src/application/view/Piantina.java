@@ -116,14 +116,14 @@ public class Piantina {
 
 				if (MainInterfaceController.getMobileCorrente() != null) {
 
-					if (MainInterfaceController.getStanzaCorrente()
-							.traslazione(MainInterfaceController.getMobileCorrente(), xPiantina, yPiantina)) {
+					if  (!(Math.abs(xPiantina - MainInterfaceController.getMobileCorrente().getX()) + 1 > MainInterfaceController.getStanzaCorrente().getLarghezza()
+							|| (Math.abs(yPiantina - MainInterfaceController.getMobileCorrente().getY()) + 1) > MainInterfaceController.getStanzaCorrente().getProfondità()  )) {
 
 						if (e.getButton() == MouseButton.SECONDARY) {
 
 					
 								MainInterfaceController.getMobileCorrente().setW(
-										Math.abs(xPiantina - MainInterfaceController.getMobileCorrente().getX()) + 1);
+									Math.abs(xPiantina - MainInterfaceController.getMobileCorrente().getX()) + 1);
 								MainInterfaceController.getMobileCorrente().setH(
 										Math.abs(yPiantina - MainInterfaceController.getMobileCorrente().getY()) + 1);
 							}
