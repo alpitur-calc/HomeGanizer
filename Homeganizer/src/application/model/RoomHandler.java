@@ -56,7 +56,7 @@ public class RoomHandler {
 		return stanze;
 	}
 
-	public static void ricerca(String txtspotlighttext) {
+	public void ricerca(String txtspotlighttext) {
 
 		for (Stanza s : RoomHandler.getInstance().getStanze()) {
 			for (Mobile m : s.getMobili()) {
