@@ -39,6 +39,19 @@ public class Mobile {
 		this.oggetti = new LinkedList <Oggetto>();
 	}
 	
+	//costruttore per db
+	
+	public Mobile(String id,String idStanza, String nome, String tipo,int x,int y,int w,int h) {
+		this.id = id;
+		this.idStanza = idStanza;
+		this.x = x;
+		this.y = y;
+		this.w = w; 
+		this.h = h; 
+		this.nome = nome;
+		this.tipo = tipo;
+		this.oggetti = new LinkedList <Oggetto>();
+	}
 	
 	private void initId(String tipo) {
 		switch (tipo) {
@@ -183,5 +196,9 @@ public class Mobile {
 	
 	public void setW(int w) {
 		this.w = w;
+	}
+
+	public void aggiungiOggetto(Oggetto o) {
+		oggetti.add(o);
 	}
 }

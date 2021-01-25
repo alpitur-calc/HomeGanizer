@@ -33,6 +33,23 @@ public class Stanza {
 				matrice[i][k] = null;
 			}
 	}
+	
+	//costruttore per db
+	
+	public Stanza(String id,String nome, String proprietario, int larghezza, int profondità) {
+		this.id = id;
+		this.nome = nome;
+		this.proprietario = proprietario;
+		this.larghezza = larghezza;
+		this.profondità = profondità;
+		this.mobili = new LinkedList<Mobile>();
+		this.matrice = new String[larghezza][profondità];
+
+		for (int i = 0; i < larghezza; i++)
+			for (int k = 0; k < profondità; k++) {
+				matrice[i][k] = null;
+			}
+	}
 
 	private void initId() {
 		this.id = "S" + IDCOUNTER.toString();
@@ -157,6 +174,10 @@ public class Stanza {
 
 	public String[][] getMatrice() {
 		return matrice;
+	}
+
+	public void aggiungiMobile(Mobile m) {
+		mobili.add(m);
 	}
 
 }

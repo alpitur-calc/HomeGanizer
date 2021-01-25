@@ -60,11 +60,14 @@ public class DatabaseHandler {
 		stm.executeUpdate();
 		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS memUser(username varchar(2),password varchar(2));");
 		stm.executeUpdate();
-		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS stanze(id varchar(2),nome varchar(2),proprietario varchar(2),larghezza int,profondità int);");
+		stm = con.prepareStatement(
+				"CREATE TABLE IF NOT EXISTS stanze(id varchar(2),nome varchar(2),proprietario varchar(2),larghezza int,profondità int);");
 		stm.executeUpdate();
-		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS mobili(id varchar(2),idStanza varchar(2),nome varchar(2),tipo varchar(2),x int,y int,w int,h int);");
+		stm = con.prepareStatement(
+				"CREATE TABLE IF NOT EXISTS mobili(id varchar(2),idStanza varchar(2),nome varchar(2),tipo varchar(2),x int,y int,w int,h int);");
 		stm.executeUpdate();
-		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS oggetti(id varchar(2),idMobile varchar(2),nome varchar(2),descrizione varchar(2),tipo varchar(2));");
+		stm = con.prepareStatement(
+				"CREATE TABLE IF NOT EXISTS oggetti(id varchar(2),idMobile varchar(2),nome varchar(2),descrizione varchar(2),tipo varchar(2));");
 		stm.executeUpdate();
 		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS counter(tipo varchar(2),valore int);");
 		stm.executeUpdate();
@@ -145,4 +148,57 @@ public class DatabaseHandler {
 	public MemorizedUserPassword getMemorizedUser() {
 		return memorizedUser;
 	}
+
+	public LinkedList<Stanza> getStanze() {
+		return stanze;
+	}
+
+	public String getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setCurrentUser(String currentUser) {
+		this.currentUser = currentUser;
+	}
+
+	public void loadRooms(String insertedUsername) throws Exception {
+		Connection con = DriverManager.getConnection("jdbc:sqlite:database.db");
+		PreparedStatement stm1 = con.prepareStatement("SELECT * FROM stanze WHERE proprietario=?;");
+		stm1.setString(1, insertedUsername);
+		ResultSet result = stm1.executeQuery();
+		while (result.next()) {
+			Stanza s = new Stanza(result.getString("id"), result.getString("nome"), result.getString("proprietario"),
+					result.getInt("larghezza"), result.getInt("profondità"));
+			loadFurniture(result.getString("id"), s, con);
+			stanze.add(s);
+		}
+		stm1.close();
+	}
+
+	private void loadFurniture(String idStanza, Stanza s, Connection con) throws Exception {
+		PreparedStatement stm1 = con.prepareStatement("SELECT * FROM mobili WHERE idStanza=?;");
+		stm1.setString(1, idStanza);
+		ResultSet result = stm1.executeQuery();
+		while (result.next()) {
+			Mobile m = new Mobile(result.getString("id"), result.getString("idStanza"), result.getString("nome"),
+					result.getString("tipo"), result.getInt("x"), result.getInt("y"), result.getInt("w"),
+					result.getInt("h"));
+			loadObjects(result.getString("id"), m, con);
+			s.aggiungiMobile(m);
+		}
+		stm1.close();
+	}
+
+	private void loadObjects(String idMobile, Mobile m, Connection con) throws Exception {
+		PreparedStatement stm1 = con.prepareStatement("SELECT * FROM oggetti WHERE idMobile=?;");
+		stm1.setString(1, idMobile);
+		ResultSet result = stm1.executeQuery();
+		while (result.next()) {
+			Oggetto o = new Oggetto(result.getString("id"), result.getString("idMobile"), result.getString("nome"),
+					result.getString("descrizione"), result.getString("tipo"));
+			m.aggiungiOggetto(o);
+		}
+		stm1.close();
+	}
+
 }

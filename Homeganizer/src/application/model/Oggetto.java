@@ -37,6 +37,13 @@ public class Oggetto {
 		this.tipo = tipo;
 	}
 	
+	public Oggetto(String id,String idMobile, String nome, String descrizione, String tipo){
+		this.id = id;		
+		this.idMobile = idMobile;
+		this.nome = nome;
+		this.descrizione = descrizione;
+		this.tipo = tipo;
+	}
 	
 	private void initId(String tipo) {
 		switch (tipo) {

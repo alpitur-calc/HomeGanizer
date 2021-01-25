@@ -25,6 +25,7 @@ public class LoginHandler {
 					DatabaseHandler.getInstance().clearMemorizedUser();
 				SceneHandler.getInstance().goToScene("mainInterface.fxml", "Room Editor", 1280, 720);
 				RoomHandler.getInstance().setProprietario(insertedUsername);
+				DatabaseHandler.getInstance().loadRooms(insertedUsername);
 			} else
 				{MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Utente non registrato"); return false;}
 				
