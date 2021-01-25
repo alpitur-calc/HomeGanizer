@@ -276,6 +276,8 @@ public class MainInterfaceController implements Initializable {
 		@Override
 		public void handle(ActionEvent event) {
 			RoomHandler.getInstance().rimuoviStanza(stanzaSelezionata.getId());
+			lstFurniture.getItems().clear();
+			lstOggetti.getItems().clear();
 			setStanzaCorrente(null);
 			caricaStanze();
 			Piantina.getInstance().disegna();
@@ -386,8 +388,12 @@ public class MainInterfaceController implements Initializable {
 			}
 			
 			//----- Carico la lista di oggetti -----
-			if(mobileSelezionato != null) caricaOggetti(mobileSelezionato);
-		}
+			if(mobileSelezionato != null) {
+				Piantina.getInstance().deselezionaMobile();
+				Piantina.getInstance().evidenziaMobile();
+				caricaOggetti(mobileSelezionato);
+				}
+			}
 	};
 	
 	private void caricaOggetti(Mobile M) {
