@@ -26,7 +26,7 @@ public class Piantina {
 	}
 
 	private Piantina() {
-		
+
 	}
 
 	public void setCanvas(Canvas c) {
@@ -36,7 +36,7 @@ public class Piantina {
 		// lo ridimensiona pure ma se trovi un nome migliore metti quello
 		c.setOnMouseDragged(modificaMobile);
 	}
-	
+
 	public void disegna() {
 
 		if (MainInterfaceController.getStanzaCorrente() != null) {
@@ -65,7 +65,7 @@ public class Piantina {
 						m.getH() * Piantina.l);
 				gc.fillRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
 				Image img = new Image("/resources/mobili/" + m.getImmagine() + ".png");
-				gc.drawImage(img, (double) m.getX()*l, (double) m.getY()*l, (double) l, (double) l);
+				gc.drawImage(img, (double) m.getX() * l, (double) m.getY() * l, (double) l, (double) l);
 			}
 		}
 	}
@@ -88,7 +88,7 @@ public class Piantina {
 			gc.strokeRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
 			gc.fillRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
 			Image img = new Image("/resources/mobili/" + m.getImmagine() + ".png");
-			gc.drawImage(img, (double) m.getX()*l, (double) m.getY()*l, (double) l, (double) l);
+			gc.drawImage(img, (double) m.getX() * l, (double) m.getY() * l, (double) l, (double) l);
 		}
 	}
 
@@ -105,8 +105,10 @@ public class Piantina {
 				MainInterfaceController.getMobileCorrente().getY() * Piantina.l,
 				MainInterfaceController.getMobileCorrente().getW() * Piantina.l,
 				MainInterfaceController.getMobileCorrente().getH() * Piantina.l);
-		Image img = new Image("/resources/mobili/" + MainInterfaceController.getMobileCorrente().getImmagine() + ".png");
-		gc.drawImage(img, (double) MainInterfaceController.getMobileCorrente().getX() *l, (double) MainInterfaceController.getMobileCorrente().getY()*l, (double) l, (double) l);
+		Image img = new Image(
+				"/resources/mobili/" + MainInterfaceController.getMobileCorrente().getImmagine() + ".png");
+		gc.drawImage(img, (double) MainInterfaceController.getMobileCorrente().getX() * l,
+				(double) MainInterfaceController.getMobileCorrente().getY() * l, (double) l, (double) l);
 
 	}
 
@@ -118,7 +120,7 @@ public class Piantina {
 			gc.strokeRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
 			gc.fillRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
 			Image img = new Image("/resources/mobili/" + m.getImmagine() + ".png");
-			gc.drawImage(img, (double) m.getX()*l, (double) m.getY()*l, (double) l, (double) l);
+			gc.drawImage(img, (double) m.getX() * l, (double) m.getY() * l, (double) l, (double) l);
 		}
 	}
 
@@ -178,21 +180,10 @@ public class Piantina {
 									}
 								}
 							}
-							// Prova per pulire il codice di sopra, continuo domani
-							/*
-							 * if(((xPiantina != xPre) || (yPiantina != yPre)) &&
-							 * MainInterfaceController.getStanzaCorrente().allargabile(
-							 * MainInterfaceController.getMobileCorrente(), Math.abs(xPiantina - xPre),
-							 * Math.abs(yPiantina - yPre))) {
-							 * MainInterfaceController.getMobileCorrente().setW(Math.abs(xPiantina -
-							 * MainInterfaceController.getMobileCorrente().getX()) + 1);
-							 * MainInterfaceController.getMobileCorrente().setH(Math.abs(yPiantina -
-							 * MainInterfaceController.getMobileCorrente().getY()) + 1); yPre = yPiantina;
-							 * xPre = xPiantina; }
-							 */
 						}
 
 						else if (e.getButton() == MouseButton.PRIMARY) {
+							System.out.println(xPiantina + ", " + yPiantina);
 							// Traslazione più dinamica e precisa, avevo sottovalutato la matematica
 							if (((xPiantina != xPre) || (yPiantina != yPre)) && MainInterfaceController
 									.getStanzaCorrente().traslabile(MainInterfaceController.getMobileCorrente(),
@@ -204,6 +195,53 @@ public class Piantina {
 										.setY(MainInterfaceController.getMobileCorrente().getY() + (yPiantina - yPre));
 								yPre = yPiantina;
 								xPre = xPiantina;
+							} else if (xPiantina > xPre
+									&& (yPiantina >= MainInterfaceController.getStanzaCorrente().getProfondità()
+											|| yPiantina < 0)) {
+								if (MainInterfaceController.getStanzaCorrente().traslabile(
+										MainInterfaceController.getMobileCorrente(),
+										MainInterfaceController.getMobileCorrente().getX() + 1,
+										MainInterfaceController.getMobileCorrente().getY())) {
+									MainInterfaceController.getMobileCorrente()
+											.setX(MainInterfaceController.getMobileCorrente().getX() + 1);
+									xPre = xPiantina;
+								}
+
+							} else if (xPiantina < xPre
+									&& (yPiantina >= MainInterfaceController.getStanzaCorrente().getProfondità()
+											|| yPiantina < 0)) {
+								if (MainInterfaceController.getStanzaCorrente().traslabile(
+										MainInterfaceController.getMobileCorrente(),
+										MainInterfaceController.getMobileCorrente().getX() - 1,
+										MainInterfaceController.getMobileCorrente().getY())) {
+									MainInterfaceController.getMobileCorrente()
+											.setX(MainInterfaceController.getMobileCorrente().getX() - 1);
+									xPre = xPiantina;
+								}
+
+							} else if (yPiantina > yPre
+									&& (xPiantina >= MainInterfaceController.getStanzaCorrente().getLarghezza()
+											|| xPiantina < 0)) {
+								if (MainInterfaceController.getStanzaCorrente().traslabile(
+										MainInterfaceController.getMobileCorrente(),
+										MainInterfaceController.getMobileCorrente().getX(),
+										MainInterfaceController.getMobileCorrente().getY() + 1)) {
+									MainInterfaceController.getMobileCorrente()
+											.setY(MainInterfaceController.getMobileCorrente().getY() + 1);
+									yPre = yPiantina;
+								}
+
+							} else if (yPiantina < yPre
+									&& (xPiantina >= MainInterfaceController.getStanzaCorrente().getLarghezza()
+											|| xPiantina < 0)) {
+								if (MainInterfaceController.getStanzaCorrente().traslabile(
+										MainInterfaceController.getMobileCorrente(),
+										MainInterfaceController.getMobileCorrente().getX(),
+										MainInterfaceController.getMobileCorrente().getY() - 1)) {
+									MainInterfaceController.getMobileCorrente()
+											.setY(MainInterfaceController.getMobileCorrente().getY() - 1);
+									yPre = yPiantina;
+								}
 							}
 
 						}
@@ -248,10 +286,8 @@ public class Piantina {
 		// MobileCorrente sono null, tranne quando è stata fatta la ricerca di un
 		// oggetto
 	};
-	
 
-	public void clear()
-	{
+	public void clear() {
 		gc.clearRect(0, 0, c.getWidth(), c.getHeight());
 	}
 
