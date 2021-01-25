@@ -3,6 +3,9 @@ package application.model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import application.view.MessageView;
+import javafx.scene.control.Alert.AlertType;
+
 public class Stanza {
 
 	private String id;
@@ -38,13 +41,14 @@ public class Stanza {
 	
 
 	public void aggiungiMobile(String nome, String tipo) {
-
 		mobili.add(new Mobile(this.id,nome, tipo));
 		
 		if (inserito())
 			aggiornaMatrice();
-		else
-			System.out.println("Non c'è più spacyo");
+		else {
+			MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Non c'è più spacyo");
+			rimuoviMobile(mobili.getLast().getId());
+		}
 	}
 
 	public void rimuoviMobile(String id) {
