@@ -280,6 +280,7 @@ public class MainInterfaceController implements Initializable {
 			lstOggetti.getItems().clear();
 			setStanzaCorrente(null);
 			caricaStanze();
+			Piantina.getInstance().clear();
 			Piantina.getInstance().disegna();
 		}
 		
