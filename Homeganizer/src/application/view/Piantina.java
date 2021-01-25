@@ -1,6 +1,7 @@
 package application.view;
 
 import application.controller.MainInterfaceController;
+import application.controller.PiantinaMouseController;
 import application.model.Mobile;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -14,9 +15,9 @@ public class Piantina {
 
 	private static Piantina istanza = null;
 	private static GraphicsContext gc;
-	private static final int l = 50;
+	public static final int l = 50;
 	private Canvas c;
-	private int xPre = 0, yPre = 0;
+	public int xPre = 0, yPre = 0;
 
 	public static Piantina getInstance() {
 		if (istanza == null) {
@@ -31,10 +32,8 @@ public class Piantina {
 
 	public void setCanvas(Canvas c) {
 		this.c = c;
-		c.setOnMousePressed(selezionaMobile);
-		// c.setOnMouseDragged(spostaMobile); -> rinominato in modificaMobile perchè ora
-		// lo ridimensiona pure ma se trovi un nome migliore metti quello
-		c.setOnMouseDragged(modificaMobile);
+		c.setOnMousePressed(PiantinaMouseController.getInstance(this).selezionaMobile);
+		c.setOnMouseDragged(PiantinaMouseController.getInstance(this).modificaMobile);
 	}
 
 	public void disegna() {
@@ -123,169 +122,6 @@ public class Piantina {
 			gc.drawImage(img, (double) m.getX() * l, (double) m.getY() * l, (double) l, (double) l);
 		}
 	}
-
-	public EventHandler<MouseEvent> modificaMobile = new EventHandler<MouseEvent>() {
-
-		@Override
-		public void handle(MouseEvent e) {
-
-			if (MainInterfaceController.getStanzaCorrente() != null) {
-
-				int xPiantina = (int) (e.getX() - (e.getX() % Piantina.l)) / Piantina.l;
-				int yPiantina = (int) (e.getY() - (e.getY() % Piantina.l)) / Piantina.l;
-
-				if (MainInterfaceController.getMobileCorrente() != null) {
-
-					if (!(Math.abs(xPiantina - MainInterfaceController.getMobileCorrente().getX())
-							+ 1 > MainInterfaceController.getStanzaCorrente().getLarghezza()
-							|| (Math.abs(yPiantina - MainInterfaceController.getMobileCorrente().getY())
-									+ 1) > MainInterfaceController.getStanzaCorrente().getProfondità())) {
-
-						if (e.getButton() == MouseButton.SECONDARY) {
-							if (xPiantina >= MainInterfaceController.getMobileCorrente().getX()
-									&& yPiantina >= MainInterfaceController.getMobileCorrente().getY()) {
-								// Allargamento più dinamico
-								if (xPiantina > xPre) {
-									if (MainInterfaceController.getStanzaCorrente()
-											.allargabile(MainInterfaceController.getMobileCorrente(), 1, 0)) {
-										MainInterfaceController.getMobileCorrente().setW(
-												Math.abs(xPiantina - MainInterfaceController.getMobileCorrente().getX())
-														+ 1);
-										xPre = xPiantina;
-									}
-								} else if (xPiantina < xPre) {
-									if (MainInterfaceController.getStanzaCorrente()
-											.allargabile(MainInterfaceController.getMobileCorrente(), -1, 0)) {
-										MainInterfaceController.getMobileCorrente().setW(
-												Math.abs(xPiantina - MainInterfaceController.getMobileCorrente().getX())
-														+ 1);
-										xPre = xPiantina;
-									}
-								}
-								if (yPiantina > yPre) {
-									if (MainInterfaceController.getStanzaCorrente()
-											.allargabile(MainInterfaceController.getMobileCorrente(), 0, 1)) {
-										MainInterfaceController.getMobileCorrente().setH(
-												Math.abs(yPiantina - MainInterfaceController.getMobileCorrente().getY())
-														+ 1);
-										yPre = yPiantina;
-									}
-								} else if (yPiantina < yPre) {
-									if (MainInterfaceController.getStanzaCorrente()
-											.allargabile(MainInterfaceController.getMobileCorrente(), 0, -1)) {
-										MainInterfaceController.getMobileCorrente().setH(
-												Math.abs(yPiantina - MainInterfaceController.getMobileCorrente().getY())
-														+ 1);
-										yPre = yPiantina;
-									}
-								}
-							}
-						}
-
-						else if (e.getButton() == MouseButton.PRIMARY) {
-							System.out.println(xPiantina + ", " + yPiantina);
-							// Traslazione più dinamica e precisa, avevo sottovalutato la matematica
-							if (((xPiantina != xPre) || (yPiantina != yPre)) && MainInterfaceController
-									.getStanzaCorrente().traslabile(MainInterfaceController.getMobileCorrente(),
-											MainInterfaceController.getMobileCorrente().getX() + (xPiantina - xPre),
-											MainInterfaceController.getMobileCorrente().getY() + (yPiantina - yPre))) {
-								MainInterfaceController.getMobileCorrente()
-										.setX(MainInterfaceController.getMobileCorrente().getX() + (xPiantina - xPre));
-								MainInterfaceController.getMobileCorrente()
-										.setY(MainInterfaceController.getMobileCorrente().getY() + (yPiantina - yPre));
-								yPre = yPiantina;
-								xPre = xPiantina;
-							} else if (xPiantina > xPre
-									&& (yPiantina >= MainInterfaceController.getStanzaCorrente().getProfondità()
-											|| yPiantina < 0)) {
-								if (MainInterfaceController.getStanzaCorrente().traslabile(
-										MainInterfaceController.getMobileCorrente(),
-										MainInterfaceController.getMobileCorrente().getX() + 1,
-										MainInterfaceController.getMobileCorrente().getY())) {
-									MainInterfaceController.getMobileCorrente()
-											.setX(MainInterfaceController.getMobileCorrente().getX() + 1);
-									xPre = xPiantina;
-								}
-
-							} else if (xPiantina < xPre
-									&& (yPiantina >= MainInterfaceController.getStanzaCorrente().getProfondità()
-											|| yPiantina < 0)) {
-								if (MainInterfaceController.getStanzaCorrente().traslabile(
-										MainInterfaceController.getMobileCorrente(),
-										MainInterfaceController.getMobileCorrente().getX() - 1,
-										MainInterfaceController.getMobileCorrente().getY())) {
-									MainInterfaceController.getMobileCorrente()
-											.setX(MainInterfaceController.getMobileCorrente().getX() - 1);
-									xPre = xPiantina;
-								}
-
-							} else if (yPiantina > yPre
-									&& (xPiantina >= MainInterfaceController.getStanzaCorrente().getLarghezza()
-											|| xPiantina < 0)) {
-								if (MainInterfaceController.getStanzaCorrente().traslabile(
-										MainInterfaceController.getMobileCorrente(),
-										MainInterfaceController.getMobileCorrente().getX(),
-										MainInterfaceController.getMobileCorrente().getY() + 1)) {
-									MainInterfaceController.getMobileCorrente()
-											.setY(MainInterfaceController.getMobileCorrente().getY() + 1);
-									yPre = yPiantina;
-								}
-
-							} else if (yPiantina < yPre
-									&& (xPiantina >= MainInterfaceController.getStanzaCorrente().getLarghezza()
-											|| xPiantina < 0)) {
-								if (MainInterfaceController.getStanzaCorrente().traslabile(
-										MainInterfaceController.getMobileCorrente(),
-										MainInterfaceController.getMobileCorrente().getX(),
-										MainInterfaceController.getMobileCorrente().getY() - 1)) {
-									MainInterfaceController.getMobileCorrente()
-											.setY(MainInterfaceController.getMobileCorrente().getY() - 1);
-									yPre = yPiantina;
-								}
-							}
-
-						}
-						MainInterfaceController.getStanzaCorrente().aggiornaMatrice();
-						aggiornaPiantina();
-						evidenziaMobile();
-					}
-				}
-			}
-		}
-	};
-
-	public EventHandler<MouseEvent> selezionaMobile = new EventHandler<MouseEvent>() {
-
-		@Override
-		public void handle(MouseEvent e) {
-
-			if (MainInterfaceController.getStanzaCorrente() != null) {
-
-				int xPiantina = (int) (e.getX() - (e.getX() % Piantina.l)) / Piantina.l;
-				int yPiantina = (int) (e.getY() - (e.getY() % Piantina.l)) / Piantina.l;
-
-				if (MainInterfaceController.getStanzaCorrente().getMatrice()[xPiantina][yPiantina] == null) {
-
-					MainInterfaceController.setMobileCorrente(null);
-					deselezionaMobile();
-				}
-
-				if (MainInterfaceController.getStanzaCorrente().getMobileSelezionato(xPiantina, yPiantina) != null) {
-
-					MainInterfaceController.setMobileCorrente(
-							MainInterfaceController.getStanzaCorrente().getMobileSelezionato(xPiantina, yPiantina));
-
-					xPre = xPiantina;
-					yPre = yPiantina;
-					deselezionaMobile();
-					evidenziaMobile();
-				}
-			}
-		}
-		// finchè non si clicca su un mobile o su una stanza la current room e il
-		// MobileCorrente sono null, tranne quando è stata fatta la ricerca di un
-		// oggetto
-	};
 
 	public void clear() {
 		gc.clearRect(0, 0, c.getWidth(), c.getHeight());
