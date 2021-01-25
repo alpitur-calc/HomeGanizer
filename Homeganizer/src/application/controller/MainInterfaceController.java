@@ -44,12 +44,12 @@ import javafx.stage.Stage;
 public class MainInterfaceController implements Initializable {
 
 	public static boolean ConfermaCreazioneStanza=false, ConfermaCreazioneMobile=false, ConfermaCreazioneOggetto=false;
+	private static boolean vista = false;
 	
 	private static Stanza stanzaSelezionata = null; 
 	private	static Mobile mobileSelezionato= null;
 	private static Oggetto oggettoSelezionato= null;
-	private Button btnAddRoom, btnAddMobile,btnAddOggetto; 
-	
+	private Button btnAddRoom, btnAddMobile,btnAddOggetto; 	
 	private Image stageIcon= new Image(getClass().getResourceAsStream("/resources/homeganizerIcon.png"));
 	
     @FXML
@@ -93,35 +93,19 @@ public class MainInterfaceController implements Initializable {
 
     @FXML
     private MenuItem btnAbout;
-   
-    
+      
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
     	
     	//-------- Inizializzazione Lista Stanze (a sx)-----------------
-    	RoomPane p = new RoomPane("listaStanze");
-    	Label lblListaStanze = new Label("Elenco delle stanze:");
-    	lblListaStanze.setFont(new Font(16));
-    	
-    	p.getChildren().add(lblListaStanze);
-    	
-		RoomPane pbtn = new RoomPane("buttonAdd");
-    	btnAddRoom = new Button();
-    	btnAddRoom.setPrefSize(225.0, 35.0);
-    	
-    	Image buttonImg =  new Image(getClass().getResourceAsStream("/resources/ButtonAddImage.png"));
-    	ImageView imgv= new ImageView(buttonImg);
-    	btnAddRoom.setGraphic(imgv);
-    	btnAddRoom.setAlignment(Pos.CENTER);
-    	btnAddRoom.setOnMousePressed(handleBtnAddRoom);
-    	
-    	pbtn.getChildren().add(btnAddRoom);
+    	caricaStanze();
 
-    	lstRooms.getItems().add(lstRooms.getItems().size(),p);  	
-    	lstRooms.getItems().add(lstRooms.getItems().size(),pbtn);  	
-
+    	mtmCreaStanza.setOnAction(handleBtnAddRoom);
+    	mtmEliminaStanza.setOnAction(handleBtnEliminaStanza);
+    	
     	txtObjectDescription.setEditable(false);
     	Piantina.getInstance().setCanvas(cnvRoom);
+    	
     }
 
     @FXML
@@ -163,10 +147,10 @@ public class MainInterfaceController implements Initializable {
     	SceneHandler.getInstance().goToScene("loginInterface.fxml", "Room Editor", 1280, 720);
     }
     
-    private EventHandler<MouseEvent> handleBtnAddRoom = new EventHandler<MouseEvent>() {
+    private EventHandler<ActionEvent> handleBtnAddRoom = new EventHandler<ActionEvent>() {
 
 		@Override
-		public void handle(MouseEvent e) {
+		public void handle(ActionEvent e) {
 				
 			String nome="";
 			int larghezza = 0, profondità = 0;
@@ -232,6 +216,37 @@ public class MainInterfaceController implements Initializable {
     	lstRooms.getItems().add(lstRooms.getItems().size()-1,p);  
 	}
 	
+	private void caricaStanze() {
+		lstRooms.getItems().clear();
+		
+		RoomPane p = new RoomPane("listaStanze");
+    	Label lblListaStanze = new Label("Elenco delle stanze:");
+    	lblListaStanze.setFont(new Font(16));
+    	
+    	p.getChildren().add(lblListaStanze);
+    	lstRooms.getItems().add(lstRooms.getItems().size(),p); 
+    	
+    	if(!isModVista()) {
+			RoomPane pbtn = new RoomPane("buttonAdd");
+	    	btnAddRoom = new Button();
+	    	btnAddRoom.setPrefSize(225.0, 35.0);
+	    	
+	    	Image buttonImg =  new Image(getClass().getResourceAsStream("/resources/ButtonAddImage.png"));
+	    	ImageView imgv= new ImageView(buttonImg);
+	    	btnAddRoom.setGraphic(imgv);
+	    	btnAddRoom.setAlignment(Pos.CENTER);
+	    	btnAddRoom.setOnAction(handleBtnAddRoom);
+	    	
+	    	pbtn.getChildren().add(btnAddRoom);
+	 	
+	    	lstRooms.getItems().add(lstRooms.getItems().size(),pbtn); 
+    	}
+    	
+		for(Stanza s : RoomHandler.getInstance().getStanze()) {
+			addStanzaToList(s.getId(),s.getNome());
+		}
+	}
+	
 	private EventHandler<MouseEvent> handleStanzaInListClicked = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -254,6 +269,18 @@ public class MainInterfaceController implements Initializable {
 			//----- Carico la lista di mobili -----
 			caricaMobili();
 		}
+	};
+	
+	private EventHandler<ActionEvent> handleBtnEliminaStanza = new EventHandler<ActionEvent>() {
+
+		@Override
+		public void handle(ActionEvent event) {
+			RoomHandler.getInstance().rimuoviStanza(stanzaSelezionata.getId());
+			setStanzaCorrente(null);
+			caricaStanze();
+			Piantina.getInstance().disegna();
+		}
+		
 	};
 	
 	private EventHandler<MouseEvent> handleBtnAddMobile = new EventHandler<MouseEvent>() {
@@ -312,17 +339,19 @@ public class MainInterfaceController implements Initializable {
     	Label lblListaMobili = new Label("Elenco dei mobili:");
     	lblListaMobili.setFont(new Font(16));
     	p.getChildren().add(lblListaMobili);
-    	
-		RoomPane pbtn = new RoomPane(stanzaSelezionata.getId());
-    	btnAddMobile = new Button();
-    	btnAddMobile.setPrefSize(205.0, 35.0);
-    	btnAddMobile.setOnMouseClicked(handleBtnAddMobile);
-    	Image buttonImg =  new Image(getClass().getResourceAsStream("/resources/ButtonAddMobileImage.png"));
-    	ImageView imgv= new ImageView(buttonImg);
-    	btnAddMobile.setGraphic(imgv);
-    	pbtn.getChildren().add(btnAddMobile);
-    	
     	lstFurniture.getItems().add(lstFurniture.getItems().size(),p); 
+    	
+    	if(!isModVista()) {
+			RoomPane pbtn = new RoomPane(stanzaSelezionata.getId());
+	    	btnAddMobile = new Button();
+	    	btnAddMobile.setPrefSize(205.0, 35.0);
+	    	btnAddMobile.setOnMouseClicked(handleBtnAddMobile);
+	    	Image buttonImg =  new Image(getClass().getResourceAsStream("/resources/ButtonAddMobileImage.png"));
+	    	ImageView imgv= new ImageView(buttonImg);
+	    	btnAddMobile.setGraphic(imgv);
+	    	pbtn.getChildren().add(btnAddMobile);
+	    	lstFurniture.getItems().add(lstFurniture.getItems().size(),pbtn);
+    	}
     	
     	LinkedList<Mobile> mobili = stanzaSelezionata.getMobili();   	
     	for(Mobile m : mobili) {	
@@ -337,10 +366,10 @@ public class MainInterfaceController implements Initializable {
     		h.getChildren().add(nomeMobile);
     		mp.getChildren().add(h);
     		mp.setOnMouseClicked(handleMobileInListClicked);
-    		lstFurniture.getItems().add(lstFurniture.getItems().size(),mp);  
+    		lstFurniture.getItems().add(lstFurniture.getItems().size()-1,mp);  
     	}
 
-    	lstFurniture.getItems().add(lstFurniture.getItems().size(),pbtn);
+    	
 	}
 	
 	private EventHandler<MouseEvent> handleMobileInListClicked = new EventHandler<MouseEvent>() {
@@ -368,18 +397,21 @@ public class MainInterfaceController implements Initializable {
     	Label lblListaOggetti = new Label("Elenco degli oggetti:");
     	lblListaOggetti.setFont(new Font(14));
     	p.getChildren().add(lblListaOggetti);
+    	lstOggetti.getItems().add(lstOggetti.getItems().size(),p);
     	
-		RoomPane pbtn = new RoomPane(stanzaSelezionata.getId());
-    	btnAddOggetto = new Button();
-    	btnAddOggetto.setPrefSize(205.0, 20.0);
-    	btnAddOggetto.setOnMouseClicked(handleBtnAddOggetto);
-    	Image buttonImg =  new Image(getClass().getResourceAsStream("/resources/ButtonAddOggettoImage.png"));
-    	ImageView imgv= new ImageView(buttonImg);
-    	btnAddOggetto.setGraphic(imgv);
-    	pbtn.getChildren().add(btnAddOggetto);
-    	
-    	lstOggetti.getItems().add(lstOggetti.getItems().size(),p); 
-    	
+    	if(!isModVista()) {
+			RoomPane pbtn = new RoomPane(stanzaSelezionata.getId());
+	    	btnAddOggetto = new Button();
+	    	btnAddOggetto.setPrefSize(205.0, 20.0);
+	    	btnAddOggetto.setOnMouseClicked(handleBtnAddOggetto);
+	    	Image buttonImg =  new Image(getClass().getResourceAsStream("/resources/ButtonAddOggettoImage.png"));
+	    	ImageView imgv= new ImageView(buttonImg);
+	    	btnAddOggetto.setGraphic(imgv);
+	    	pbtn.getChildren().add(btnAddOggetto);
+	    	
+			lstOggetti.getItems().add(lstOggetti.getItems().size(),pbtn);
+		}
+		
     	LinkedList<Oggetto> oggetti = M.getOggetti();   	
     	for(Oggetto o : oggetti) {	
     		RoomPane mp = new RoomPane(o.getId());
@@ -396,7 +428,6 @@ public class MainInterfaceController implements Initializable {
     		lstOggetti.getItems().add(lstOggetti.getItems().size(),mp);  
     	}
 
-    	lstOggetti.getItems().add(lstOggetti.getItems().size(),pbtn);
 		
 	}
 	
@@ -503,5 +534,13 @@ public class MainInterfaceController implements Initializable {
 	
 	public static Mobile getMobileCorrente() {
 		return mobileSelezionato;
+	}
+	
+	public static void setModVista(boolean mod) {
+		vista= mod;
+	}
+	
+	public static boolean isModVista() {
+		return vista;
 	}
 }
