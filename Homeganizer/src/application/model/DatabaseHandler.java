@@ -16,7 +16,7 @@ public class DatabaseHandler {
 	private HashMap<String, User> users;
 	private MemorizedUserPassword memorizedUser;
 	private LinkedList<Stanza> stanze;
-	// private Connection con; indeciso
+	private String currentUser;
 
 	private static DatabaseHandler instance = null;
 
@@ -56,9 +56,17 @@ public class DatabaseHandler {
 
 	private static void createTablesIfNotExist(Connection con) throws Exception {
 		PreparedStatement stm = con.prepareStatement(
-				"CREATE TABLE IF NOT EXISTS users(username varchar(5),password varchar(12),secureAnswer varchar(2));");
+				"CREATE TABLE IF NOT EXISTS users(username varchar(2),password varchar(2),secureAnswer varchar(2));");
 		stm.executeUpdate();
-		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS memUser(username varchar(5),password varchar(5));");
+		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS memUser(username varchar(2),password varchar(2));");
+		stm.executeUpdate();
+		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS stanze(id varchar(2),password varchar(2));");
+		stm.executeUpdate();
+		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS mobili(id varchar(2),password varchar(2));");
+		stm.executeUpdate();
+		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS memUser(id varchar(2),password varchar(2));");
+		stm.executeUpdate();
+		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS counter(tipo varchar(2),valore int);");
 		stm.executeUpdate();
 		stm.close();
 	}
