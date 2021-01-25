@@ -40,9 +40,6 @@ public class DatabaseHandler {
 	private void initialLoad() {
 		users = new HashMap<String, User>();
 		File f = new File("database.db");
-		boolean mustInitializeCounters = true;
-		if (f.exists() && !f.isDirectory())
-			mustInitializeCounters = false;
 		try {
 			Connection con = DriverManager.getConnection("jdbc:sqlite:database.db");
 			createTablesIfNotExist(con, mustInitializeCounters);
@@ -81,9 +78,13 @@ public class DatabaseHandler {
 		stm.executeUpdate();
 		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS counter(tipo varchar(2),valore int);");
 		stm.executeUpdate();
-		if (mustInitializeCounters)
+		if (mustInitializeCounters(stm))
 			initializeCounters(con, stm);
 		stm.close();
+	}
+
+	private static boolean mustInitializeCounters(PreparedStatement stm) {
+		return false;
 	}
 
 	private static void initializeCounters(Connection con, PreparedStatement stm) throws Exception {
