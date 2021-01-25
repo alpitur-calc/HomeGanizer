@@ -34,35 +34,7 @@ public class RoomPropertiesController implements Initializable {
     
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		txtHeight.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		    	try{
-					int h = Integer.parseInt(txtHeight.getText()); 
-					if(h<=0 || h>50) { MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Profondità troppo alta. Inserire un numero da 1 a 50!"); }
-				}
-				catch(NumberFormatException e) {
-					MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Prego, inserire un numero intero!");
-					Platform.runLater(()->{txtHeight.clear();});
-				}   	
-		    }
-		});
-		
-		txtWidth.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		    	try{
-					int w = Integer.parseInt(txtWidth.getText()); 
-					if(w<=0 || w>50) { MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Larghezza troppo grande. Inserire un numero da 1 a 50!"); }
-					
-				}
-				catch(NumberFormatException e) {
-					MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Prego, inserire un numero intero!");
-					Platform.runLater(()->{txtWidth.clear();});
-				}   	
-		    }
-		});
+
 	}
 
     @FXML
@@ -74,9 +46,27 @@ public class RoomPropertiesController implements Initializable {
 
     @FXML
     void handleBtnConfirmClicked(MouseEvent event) {
-    	MainInterfaceController.ConfermaCreazioneStanza=true;
-    	Stage thisStage = (Stage) btnConfirm.getScene().getWindow();
-    	thisStage.close();
+    	int w =0, h=0;
+    	boolean conferma = true;
+    	try{
+			h = Integer.parseInt(txtHeight.getText()); 
+			w = Integer.parseInt(txtWidth.getText()); 
+			if((h<=0 || h>50) || (w<=0 || w>50)) 
+			{
+				MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Dimensioni troppo grandi. Inserire un numero da 1 a 50!"); 
+				conferma = false;
+			}		
+		}
+		catch(NumberFormatException e) {
+			MessageView.showMessageAlert(AlertType.ERROR, "Errore", "Prego, inserire un numeri interi nelle dimensioni!");
+			conferma = false;
+		}  
+    	
+    	if(conferma) {
+	    	MainInterfaceController.ConfermaCreazioneStanza=true;
+	    	Stage thisStage = (Stage) btnConfirm.getScene().getWindow();
+	    	thisStage.close();
+    	}
     }
 
 }
