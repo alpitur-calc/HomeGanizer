@@ -62,9 +62,9 @@ public class DatabaseHandler {
 		stm.executeUpdate();
 		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS stanze(id varchar(2),nome varchar(2),proprietario varchar(2),larghezza int,profondità int);");
 		stm.executeUpdate();
-		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS mobili(id varchar(2),password varchar(2));");
+		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS mobili(id varchar(2),idStanza varchar(2),nome varchar(2),tipo varchar(2),x int,y int,w int,h int);");
 		stm.executeUpdate();
-		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS memUser(id varchar(2),password varchar(2));");
+		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS oggetti(id varchar(2),idMobile varchar(2),nome varchar(2),descrizione varchar(2),tipo varchar(2));");
 		stm.executeUpdate();
 		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS counter(tipo varchar(2),valore int);");
 		stm.executeUpdate();
