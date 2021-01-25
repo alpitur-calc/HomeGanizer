@@ -86,11 +86,22 @@ public class Stanza {
 		return null;
 	}
 
-	public boolean traslazione(Mobile m, int x, int y) {
+	public boolean traslabile(Mobile m, int x, int y) {
+		if(x < 0 || y < 0)
+			return false;
 		for(int l = 0; l < m.getW(); l++)
-			for(int p = 0; p < m.getH(); p++)
+			for(int p = 0; p < m.getH(); p++) 
 				if (!inMatrice(x + l, y + p) || (matrice[x + l][y + p] != null && matrice[x + l][y + p] != m.getId())) 
 					return false;		
+		return true;
+	}
+	
+	public boolean allargabile(Mobile m, int x, int y) {
+
+		for(int l = 0; l < m.getW() + x; l++)
+			for(int p = 0; p < m.getH() + y; p++) 
+				if (!inMatrice(m.getX() + l, m.getY() + p) || (matrice[m.getX() + l][m.getY() + p] != null && matrice[m.getX() + l][m.getY() + p] != m.getId())) 
+					return false;					
 		return true;
 	}
 	
