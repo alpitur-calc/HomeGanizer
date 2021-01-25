@@ -127,14 +127,13 @@ public class Piantina {
 							|| (Math.abs(yPiantina - MainInterfaceController.getMobileCorrente().getY()) + 1) > MainInterfaceController.getStanzaCorrente().getProfondità()  )) {
 
 						if (e.getButton() == MouseButton.SECONDARY) {
-							
+							//Allargamento più dinamico
 							if(xPiantina > xPre) {
 								if(MainInterfaceController.getStanzaCorrente().allargabile(MainInterfaceController.getMobileCorrente(), 1, 0)) {
 									MainInterfaceController.getMobileCorrente().setW(Math.abs(xPiantina - MainInterfaceController.getMobileCorrente().getX()) + 1);
 									xPre = xPiantina;
 								}
 							}
-							
 							else if(xPiantina < xPre) {
 								if(MainInterfaceController.getStanzaCorrente().allargabile(MainInterfaceController.getMobileCorrente(), -1, 0)) {
 									MainInterfaceController.getMobileCorrente().setW(Math.abs(xPiantina - MainInterfaceController.getMobileCorrente().getX()) + 1);
@@ -152,42 +151,23 @@ public class Piantina {
 									MainInterfaceController.getMobileCorrente().setH(Math.abs(yPiantina - MainInterfaceController.getMobileCorrente().getY()) + 1);
 									yPre = yPiantina;
 								}
-							}							
+							}
+							//Prova per pulire il codice di sopra, continuo domani
+							/*
+							if(((xPiantina != xPre) || (yPiantina != yPre)) && MainInterfaceController.getStanzaCorrente().allargabile(MainInterfaceController.getMobileCorrente(), Math.abs(xPiantina - xPre), Math.abs(yPiantina - yPre))) {
+								MainInterfaceController.getMobileCorrente().setW(Math.abs(xPiantina - MainInterfaceController.getMobileCorrente().getX()) + 1);
+								MainInterfaceController.getMobileCorrente().setH(Math.abs(yPiantina - MainInterfaceController.getMobileCorrente().getY()) + 1);
+								yPre = yPiantina;
+								xPre = xPiantina;
+							}*/
 						}
 						
 						
 						else if (e.getButton() == MouseButton.PRIMARY){
-
-							if(xPiantina > xPre) {
-								if(MainInterfaceController.getStanzaCorrente().traslabile(MainInterfaceController.getMobileCorrente(), MainInterfaceController.getMobileCorrente().getX() + 1, MainInterfaceController.getMobileCorrente().getY())) {
-									MainInterfaceController.getMobileCorrente().setX(MainInterfaceController.getMobileCorrente().getX() + 1);
-									xPre = xPiantina;
-								}
-								
-							}
-							else if(xPiantina < xPre) {
-								if(MainInterfaceController.getStanzaCorrente().traslabile(MainInterfaceController.getMobileCorrente(), MainInterfaceController.getMobileCorrente().getX() - 1, MainInterfaceController.getMobileCorrente().getY())) {
-									MainInterfaceController.getMobileCorrente().setX(MainInterfaceController.getMobileCorrente().getX() - 1);
-									xPre = xPiantina;
-								}
-								
-							}
-							if(yPiantina > yPre) {
-								if(MainInterfaceController.getStanzaCorrente().traslabile(MainInterfaceController.getMobileCorrente(), MainInterfaceController.getMobileCorrente().getX(), MainInterfaceController.getMobileCorrente().getY() + 1)) {
-									MainInterfaceController.getMobileCorrente().setY(MainInterfaceController.getMobileCorrente().getY() + 1);
-									yPre = yPiantina;
-								}
-								
-							}
-							else if(yPiantina < yPre) {
-								if(MainInterfaceController.getStanzaCorrente().traslabile(MainInterfaceController.getMobileCorrente(), MainInterfaceController.getMobileCorrente().getX(), MainInterfaceController.getMobileCorrente().getY() - 1)) {
-									MainInterfaceController.getMobileCorrente().setY(MainInterfaceController.getMobileCorrente().getY() - 1);
-									yPre = yPiantina;
-								}
-							}
-							if(((xPiantina != xPre) || (yPiantina != yPre)) && MainInterfaceController.getStanzaCorrente().traslabile(MainInterfaceController.getMobileCorrente(), xPiantina, yPiantina)) {
-									MainInterfaceController.getMobileCorrente().setX(xPiantina);
-									MainInterfaceController.getMobileCorrente().setY(yPiantina);
+							//Traslazione più dinamica e precisa, avevo sottovalutato la matematica
+							if(((xPiantina != xPre) || (yPiantina != yPre)) && MainInterfaceController.getStanzaCorrente().traslabile(MainInterfaceController.getMobileCorrente(), MainInterfaceController.getMobileCorrente().getX() + (xPiantina - xPre), MainInterfaceController.getMobileCorrente().getY() + (yPiantina - yPre))) {
+									MainInterfaceController.getMobileCorrente().setX(MainInterfaceController.getMobileCorrente().getX() + (xPiantina - xPre));
+									MainInterfaceController.getMobileCorrente().setY(MainInterfaceController.getMobileCorrente().getY() + (yPiantina - yPre));
 									yPre = yPiantina;
 									xPre = xPiantina;
 								}

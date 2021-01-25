@@ -97,7 +97,6 @@ public class Stanza {
 	}
 	
 	public boolean allargabile(Mobile m, int x, int y) {
-
 		for(int l = 0; l < m.getW() + x; l++)
 			for(int p = 0; p < m.getH() + y; p++) 
 				if (!inMatrice(m.getX() + l, m.getY() + p) || (matrice[m.getX() + l][m.getY() + p] != null && matrice[m.getX() + l][m.getY() + p] != m.getId())) 
