@@ -13,11 +13,11 @@ public class Mobile {
 	
 	//Prendere i vari COUNTER dal DB
 	
-	private static Integer IDCOUNTERARMADIO = 1;
-	private static Integer IDCOUNTERCASSAPANCA = 1;
-	private static Integer IDCOUNTERLIBRERIA = 1;
-	private static Integer IDCOUNTERSCAFFALE = 1;
-	private static Integer IDCOUNTERTAVOLO = 1;
+	public static Integer IDCOUNTERARMADIO = 1;
+	public static Integer IDCOUNTERCASSAPANCA = 1;
+	public static Integer IDCOUNTERLIBRERIA = 1;
+	public static Integer IDCOUNTERSCAFFALE = 1;
+	public static Integer IDCOUNTERTAVOLO = 1;
 	
 	
 	private String id;

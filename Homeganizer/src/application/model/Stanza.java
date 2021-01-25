@@ -17,7 +17,7 @@ public class Stanza {
 	private ArrayList<String> whitelisted;
 	private String matrice[][];
 
-	private static Integer IDCOUNTER = 1;
+	public static Integer IDCOUNTER = 1;
 
 	public Stanza(String nome, String proprietario, int larghezza, int profondità) {
 		initId();

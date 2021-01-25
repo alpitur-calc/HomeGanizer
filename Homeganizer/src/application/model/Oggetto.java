@@ -16,7 +16,7 @@ public class Oggetto {
 	
 	//Prendere i vari COUNTER dal DB
 	
-	private static Integer 	IDCOUNTERBO = 1,
+	public static Integer 	IDCOUNTERBO = 1,
 							IDCOUNTERCO = 1,
 							IDCOUNTERDI = 1,
 							IDCOUNTEREL = 1, 
