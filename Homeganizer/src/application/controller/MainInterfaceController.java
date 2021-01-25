@@ -278,15 +278,19 @@ public class MainInterfaceController implements Initializable {
 
 		@Override
 		public void handle(ActionEvent event) {
-			if(!isModVista()) {
-				RoomHandler.getInstance().rimuoviStanza(stanzaSelezionata.getId());
-				lstFurniture.getItems().clear();
-				lstOggetti.getItems().clear();
-				txtObjectDescription.setText("");
-				setStanzaCorrente(null);
-				caricaStanze();
-				Piantina.getInstance().clear();
-				Piantina.getInstance().disegna();
+			try {
+				if(!isModVista()) {
+					RoomHandler.getInstance().rimuoviStanza(stanzaSelezionata.getId());
+					lstFurniture.getItems().clear();
+					lstOggetti.getItems().clear();
+					txtObjectDescription.setText("");
+					setStanzaCorrente(null);
+					caricaStanze();
+					Piantina.getInstance().clear();
+					Piantina.getInstance().disegna();
+				}
+			} catch (Exception e) {
+				MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Nessuna stanza selezionata");
 			}
 		}
 		
