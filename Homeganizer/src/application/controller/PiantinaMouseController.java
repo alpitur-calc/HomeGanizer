@@ -41,7 +41,7 @@ public class PiantinaMouseController {
 						if (e.getButton() == MouseButton.SECONDARY) {
 							if (xPiantina >= MainInterfaceController.getMobileCorrente().getX()
 									&& yPiantina >= MainInterfaceController.getMobileCorrente().getY()) {
-								// Allargamento più dinamico
+								
 								if (xPiantina > p.xPre) {
 									if (MainInterfaceController.getStanzaCorrente()
 											.allargabile(MainInterfaceController.getMobileCorrente(), 1, 0)) {
@@ -80,8 +80,6 @@ public class PiantinaMouseController {
 						}
 
 						else if (e.getButton() == MouseButton.PRIMARY) {
-							System.out.println(xPiantina + ", " + yPiantina);
-							// Traslazione più dinamica e precisa, avevo sottovalutato la matematica
 							if (((xPiantina != p.xPre) || (yPiantina != p.yPre)) && MainInterfaceController
 									.getStanzaCorrente().traslabile(MainInterfaceController.getMobileCorrente(),
 											MainInterfaceController.getMobileCorrente().getX() + (xPiantina - p.xPre),
@@ -92,9 +90,10 @@ public class PiantinaMouseController {
 										.setY(MainInterfaceController.getMobileCorrente().getY() + (yPiantina - p.yPre));
 								p.yPre = yPiantina;
 								p.xPre = xPiantina;
-							} else if (xPiantina > p.xPre
+							} 
+							else if ((xPiantina > p.xPre
 									&& (yPiantina >= MainInterfaceController.getStanzaCorrente().getProfondità()
-											|| yPiantina < 0)) {
+											|| yPiantina < 0)) || xPiantina > p.xPre) {
 								if (MainInterfaceController.getStanzaCorrente().traslabile(
 										MainInterfaceController.getMobileCorrente(),
 										MainInterfaceController.getMobileCorrente().getX() + 1,
@@ -106,7 +105,7 @@ public class PiantinaMouseController {
 
 							} else if (xPiantina < p.xPre
 									&& (yPiantina >= MainInterfaceController.getStanzaCorrente().getProfondità()
-											|| yPiantina < 0)) {
+											|| yPiantina < 0) || xPiantina < p.xPre) {
 								if (MainInterfaceController.getStanzaCorrente().traslabile(
 										MainInterfaceController.getMobileCorrente(),
 										MainInterfaceController.getMobileCorrente().getX() - 1,
@@ -116,9 +115,10 @@ public class PiantinaMouseController {
 									p.xPre = xPiantina;
 								}
 
-							} else if (yPiantina > p.yPre
+							} 
+							if (yPiantina > p.yPre
 									&& (xPiantina >= MainInterfaceController.getStanzaCorrente().getLarghezza()
-											|| xPiantina < 0)) {
+											|| xPiantina < 0) || yPiantina > p.yPre) {
 								if (MainInterfaceController.getStanzaCorrente().traslabile(
 										MainInterfaceController.getMobileCorrente(),
 										MainInterfaceController.getMobileCorrente().getX(),
@@ -130,7 +130,7 @@ public class PiantinaMouseController {
 
 							} else if (yPiantina < p.yPre
 									&& (xPiantina >= MainInterfaceController.getStanzaCorrente().getLarghezza()
-											|| xPiantina < 0)) {
+											|| xPiantina < 0) || yPiantina < p.yPre) {
 								if (MainInterfaceController.getStanzaCorrente().traslabile(
 										MainInterfaceController.getMobileCorrente(),
 										MainInterfaceController.getMobileCorrente().getX(),
@@ -140,7 +140,6 @@ public class PiantinaMouseController {
 									p.yPre = yPiantina;
 								}
 							}
-
 						}
 						MainInterfaceController.getStanzaCorrente().aggiornaMatrice();
 						p.aggiornaPiantina();

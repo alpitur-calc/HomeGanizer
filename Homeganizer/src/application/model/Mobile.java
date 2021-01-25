@@ -21,13 +21,15 @@ public class Mobile {
 	
 	
 	private String id;
+	private String idStanza;
 	private String nome;
 	private String tipo;
 	private int x,y,w,h;
 	private LinkedList <Oggetto> oggetti;
 	
-	public Mobile(String nome, String tipo) {
+	public Mobile(String idStanza, String nome, String tipo) {
 		initId(tipo);
+		this.idStanza = idStanza;
 		this.x = 0;
 		this.y = 0;
 		this.w = 1; // largo 1 blocco della matrice
@@ -73,7 +75,7 @@ public class Mobile {
 	
 	
 	public void aggiungiOggetto(String nome, String descrizione, String tipo){
-		oggetti.add(new Oggetto(nome, descrizione, tipo));
+		oggetti.add(new Oggetto(this.id,nome, descrizione, tipo));
 	}
 	
 	//Va fatta la parte del DB
@@ -137,6 +139,10 @@ public class Mobile {
 
 	public String getId() {
 		return id;
+	}
+	
+	public String getIdStanza() {
+		return idStanza;
 	}
 	
 	public String getNome() {

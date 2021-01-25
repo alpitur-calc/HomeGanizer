@@ -3,12 +3,9 @@ package application.view;
 import application.controller.MainInterfaceController;
 import application.controller.PiantinaMouseController;
 import application.model.Mobile;
-import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class Piantina {
@@ -44,10 +41,7 @@ public class Piantina {
 
 			gc = c.getGraphicsContext2D();
 			gc.clearRect(0, 0, c.getWidth(), c.getHeight());
-			// Ho eliminato i " * Piantina.l" da "i < c.getHeight()" e "j < c.getWidth()"
-			// dal for e va più fluido.
-			// Prima era --> i < c.getHeight() * Piantina.l
-			// Non so se servivano
+			
 			for (int i = 0; i < c.getWidth(); i += Piantina.l) {
 				for (int j = 0; j < c.getHeight(); j += Piantina.l) {
 					gc.setLineWidth(0.5);

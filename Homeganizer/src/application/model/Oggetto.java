@@ -24,12 +24,14 @@ public class Oggetto {
 							IDCOUNTERUT = 1;
 	
 	private String id;
+	private String idMobile;
 	private String nome;
 	private String descrizione;
 	private String tipo;
 	
-	public Oggetto(String nome, String descrizione, String tipo){
-		initId(tipo);			
+	public Oggetto(String idMobile, String nome, String descrizione, String tipo){
+		initId(tipo);		
+		this.idMobile = idMobile;
 		this.nome = nome;
 		this.descrizione = descrizione;
 		this.tipo = tipo;
@@ -79,6 +81,10 @@ public class Oggetto {
 		return id;
 	}
 
+	public String getIdMobile() {
+		return idMobile;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
