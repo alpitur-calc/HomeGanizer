@@ -531,8 +531,41 @@ public class MainInterfaceController implements Initializable {
     void ricercaMobile(KeyEvent event) {
 		if( txtSpotlight.isFocused() &&!txtSpotlight.getText().equals("")) {
 			if(event.getCode().equals(KeyCode.ENTER)) {
-				RoomHandler.getInstance().ricerca(txtSpotlight.getText());
-			}
+				if(RoomHandler.getInstance().ricerca(txtSpotlight.getText())) {
+					int cont = 1;
+					for(RoomPane r : lstRooms.getItems()) {
+						if(r.getIdStanza().equals(stanzaSelezionata.getId())) {
+							lstRooms.getSelectionModel().select(cont);
+							caricaMobili();
+							int cont2 = 0;
+							for(RoomPane r2 : lstFurniture.getItems()) {
+								if(r2.getIdStanza().equals(mobileSelezionato.getId())) {
+									for(Mobile m : getStanzaCorrente().getMobili()) {
+										if(m.getId().equals(mobileSelezionato.getId())) {
+											lstFurniture.getSelectionModel().select(cont2);
+											caricaOggetti(mobileSelezionato);
+											int cont3 = 0;
+											//Da qui in poi non so cosa ho fatto
+											//Funziona però non mostra la descrizione
+											for(RoomPane r3 : lstOggetti.getItems()) {
+												for(Oggetto o : getMobileCorrente().getOggetti()) {
+													if(o.getNome().equals(txtSpotlight.getText())) {
+														lstOggetti.getSelectionModel().select(cont3);
+														txtObjectDescription.getText(); // questo è il maledetto
+													}
+												}
+												cont3 ++;
+											}
+										}
+									}
+								}
+								cont2 ++;
+							}
+						}	
+					}
+					cont ++;
+				}
+			}		
 		}
     }
 	
@@ -565,7 +598,11 @@ public class MainInterfaceController implements Initializable {
 
 		@Override
 		public void handle(MouseEvent event) {
-			if(mobileSelezionato != null) {
+			if(mobileSelezionato == null) {
+				lstFurniture.getSelectionModel().clearSelection();
+				lstOggetti.getItems().clear();
+			}
+			else if(mobileSelezionato != null) {
 				int cont = 0;
 				for(RoomPane r : lstFurniture.getItems()) {
 					if(r.getIdStanza().equals(mobileSelezionato.getId())) {

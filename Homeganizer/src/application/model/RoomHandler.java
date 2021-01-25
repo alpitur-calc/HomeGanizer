@@ -56,7 +56,7 @@ public class RoomHandler {
 		return stanze;
 	}
 
-	public void ricerca(String txtspotlighttext) {
+	public boolean ricerca(String txtspotlighttext) {
 
 		for (Stanza s : RoomHandler.getInstance().getStanze()) {
 			for (Mobile m : s.getMobili()) {
@@ -65,21 +65,21 @@ public class RoomHandler {
 						MainInterfaceController.setStanzaCorrente(s);
 						MainInterfaceController.setMobileCorrente(m);
 						Piantina.getInstance().evidenziaMobile();
-						return;
+						return true;
 					}
 					for (Oggetto o : m.getOggetti()) {
 						if (o.getNome().equals(txtspotlighttext)) {
 							MainInterfaceController.setStanzaCorrente(s);
 							MainInterfaceController.setMobileCorrente(m);
 							Piantina.getInstance().evidenziaMobile();
-							return;
+							return true;
 						}
 					}
 				}
 			}
-
-			MessageView.showMessageAlert(AlertType.INFORMATION, "Errore", "Il mobile ricercato non è presente.");
 		}
+		MessageView.showMessageAlert(AlertType.INFORMATION, "Errore", "Il mobile ricercato non è presente.");
+		return false;
 	}
 
 }
