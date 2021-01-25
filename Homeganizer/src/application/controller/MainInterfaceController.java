@@ -358,7 +358,7 @@ public class MainInterfaceController implements Initializable {
     		RoomPane mp = new RoomPane(m.getId());
     		HBox h = new HBox();
     		h.setAlignment(Pos.CENTER);
-    		Image img = new Image(getClass().getResourceAsStream("/resources/MobileIcon.png"));
+    		Image img = new Image(getClass().getResourceAsStream("/resources/iconeMobili/"+ m.getIcona() +".png"));
     		ImageView imgViewIcona = new ImageView(img); 
     		Label nomeMobile = new Label(m.getNome()+"("+m.getTipo()+")");
     		nomeMobile.setFont(new Font(14));
