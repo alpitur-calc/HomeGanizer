@@ -33,7 +33,7 @@ public class MobileInterfaceController implements Initializable {
 		cmbTipo.getItems().add(Mobile.ARMADIO);
 		cmbTipo.getItems().add(Mobile.CASSAPANCA);
 		cmbTipo.getItems().add(Mobile.LIBRERIA);
-		cmbTipo.getItems().add(Mobile.SCRIVANIA);
+		cmbTipo.getItems().add(Mobile.SCAFFALE);
 		cmbTipo.getItems().add(Mobile.TAVOLO);
 		
 		btnConferma.setOnMouseClicked(handleBtnConfermaClicked);
