@@ -50,6 +50,8 @@ public class MainInterfaceController implements Initializable {
 	private static Oggetto oggettoSelezionato= null;
 	private Button btnAddRoom, btnAddMobile,btnAddOggetto; 
 	
+	private Image stageIcon= new Image(getClass().getResourceAsStream("/resources/homeganizerIcon.png"));
+	
     @FXML
     private ListView<RoomPane> lstRooms;
 
@@ -139,7 +141,16 @@ public class MainInterfaceController implements Initializable {
     
     @FXML
     void handleBtnAboutClicked(ActionEvent event) {
-
+    	MessageView.showMessageAlert(AlertType.INFORMATION, "About us", "Homeganizer" + System.lineSeparator()+
+    																	"" + System.lineSeparator() +
+    																	"Software sviluppato per il corso di Ingegneria del Software" +System.lineSeparator()+
+    																	"A.A. 2020/21, Corso di Laurea in Informatica" +System.lineSeparator()+
+    																	"" + System.lineSeparator() +
+    																	"dagli studenti: " +System.lineSeparator() +
+    																	"Domenico Brunetti," + System.lineSeparator() +
+    																	"Stefano Bilotta," + System.lineSeparator() +
+    																	"Lorenzo Piro," + System.lineSeparator() +
+    																	"ed Emanuele Calabretta." + System.lineSeparator());
     }
 
     @FXML
@@ -164,6 +175,7 @@ public class MainInterfaceController implements Initializable {
 			
 			roomProp = new Stage();
 			roomProp.setResizable(false);
+			roomProp.getIcons().add(stageIcon);
 	    	try {
 	    		FXMLLoader loaderRoomProp = new FXMLLoader(getClass().getResource("/application/view/roomPropertiesInterface.fxml"));
 	    		AnchorPane rootRoomProp = loaderRoomProp.load();
@@ -254,6 +266,7 @@ public class MainInterfaceController implements Initializable {
 			Stage mobileProp;
 			mobileProp = new Stage();
 			mobileProp.setResizable(false);
+			mobileProp.getIcons().add(stageIcon);
 	    	try {
 	    		FXMLLoader loaderMobileProp = new FXMLLoader(getClass().getResource("/application/view/mobilePropertiesInterface.fxml"));
 	    		AnchorPane rootMobileProp = loaderMobileProp.load();
@@ -413,6 +426,7 @@ public class MainInterfaceController implements Initializable {
 			Stage oggettoProp;
 			oggettoProp = new Stage();
 			oggettoProp.setResizable(false);
+			oggettoProp.getIcons().add(stageIcon);
 	    	try {
 	    		FXMLLoader loaderOggettoProp = new FXMLLoader(getClass().getResource("/application/view/oggettoPropertiesInterface.fxml"));
 	    		AnchorPane rootOggettoProp = loaderOggettoProp.load();
@@ -489,9 +503,5 @@ public class MainInterfaceController implements Initializable {
 	
 	public static Mobile getMobileCorrente() {
 		return mobileSelezionato;
-	}
-	
-	private void selectItemInLstRoom() {
-		
 	}
 }
