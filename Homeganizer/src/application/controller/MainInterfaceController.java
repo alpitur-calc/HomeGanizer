@@ -104,6 +104,7 @@ public class MainInterfaceController implements Initializable {
     	mtmEliminaStanza.setOnAction(handleBtnEliminaStanza);
     	
     	txtObjectDescription.setEditable(false);
+    	cnvRoom.setOnMouseClicked(handleMouseClickCanvas);
     	Piantina.getInstance().setCanvas(cnvRoom);
     	
     }
@@ -555,4 +556,26 @@ public class MainInterfaceController implements Initializable {
 	public static boolean isModVista() {
 		return vista;
 	}
+		
+	private EventHandler<MouseEvent> handleMouseClickCanvas = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent event) {
+			if(mobileSelezionato != null) {
+				int cont = 0;
+				for(RoomPane r : lstFurniture.getItems()) {
+					if(r.getIdStanza().equals(mobileSelezionato.getId())) {
+						for(Mobile m : getStanzaCorrente().getMobili()) {
+							if(m.getId().equals(mobileSelezionato.getId())) {
+								lstFurniture.getSelectionModel().select(cont);
+								caricaOggetti(mobileSelezionato);
+							}
+						}
+					}
+					cont ++;
+				}
+			}
+		}
+		
+	};
 }

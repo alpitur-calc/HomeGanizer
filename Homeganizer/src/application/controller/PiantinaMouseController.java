@@ -2,6 +2,7 @@ package application.controller;
 
 import application.view.Piantina;
 import javafx.event.EventHandler;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
@@ -170,7 +171,7 @@ public class PiantinaMouseController {
 
 					MainInterfaceController.setMobileCorrente(
 							MainInterfaceController.getStanzaCorrente().getMobileSelezionato(xPiantina, yPiantina));
-
+					
 					p.xPre = xPiantina;
 					p.yPre = yPiantina;
 					p.deselezionaMobile();
