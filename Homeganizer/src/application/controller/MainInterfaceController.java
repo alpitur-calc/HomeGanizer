@@ -151,50 +151,52 @@ public class MainInterfaceController implements Initializable {
 
 		@Override
 		public void handle(ActionEvent e) {
+			
+			if(!isModVista()) {
+				String nome="";
+				int larghezza = 0, profondità = 0;
 				
-			String nome="";
-			int larghezza = 0, profondità = 0;
-			
-			Stage roomProp;
-			
-			roomProp = new Stage();
-			roomProp.setResizable(false);
-			roomProp.getIcons().add(stageIcon);
-	    	try {
-	    		FXMLLoader loaderRoomProp = new FXMLLoader(getClass().getResource("/application/view/roomPropertiesInterface.fxml"));
-	    		AnchorPane rootRoomProp = loaderRoomProp.load();
-	    		Scene sceneRoomProp = new Scene(rootRoomProp);
-	    		roomProp.setTitle("Inserire dati stanza");
-	    		roomProp.setScene(sceneRoomProp);
-			} catch (IOException e1) { e1.printStackTrace(); }
-	
-			roomProp.showAndWait();
-			Pane p = (Pane) roomProp.getScene().getRoot().getChildrenUnmodifiable().get(0);
-			
-			if(ConfermaCreazioneStanza) {
-				try {
-				if(p.getChildren().get(1).getId().equals("txtRoomName")) {
-					TextField txtRoomName = (TextField) p.getChildren().get(1);
-					nome = txtRoomName.getText();
-				}
-	
-				if(p.getChildren().get(2).getId().equals("txtHeight")) {
-					TextField txtHeight = (TextField) p.getChildren().get(2);
-					profondità = Integer.parseInt(txtHeight.getText());
-				}
-	
-				if(p.getChildren().get(3).getId().equals("txtWidth")) {
-					TextField txtWidth = (TextField) p.getChildren().get(3);
-					larghezza = Integer.parseInt(txtWidth.getText());
-				}
+				Stage roomProp;
 				
-				RoomHandler.getInstance().aggiungiStanza(nome, larghezza, profondità);
-				addStanzaToList(RoomHandler.getInstance().getStanze().getLast().getId(),nome);
-
-		    	ConfermaCreazioneStanza= false;
-				}
-				catch(NumberFormatException e2) {
-					MessageView.showMessageAlert(AlertType.WARNING, "Dati inseriti non validi", "Per favore, riprovare e inserire i dati correttamente.");
+				roomProp = new Stage();
+				roomProp.setResizable(false);
+				roomProp.getIcons().add(stageIcon);
+		    	try {
+		    		FXMLLoader loaderRoomProp = new FXMLLoader(getClass().getResource("/application/view/roomPropertiesInterface.fxml"));
+		    		AnchorPane rootRoomProp = loaderRoomProp.load();
+		    		Scene sceneRoomProp = new Scene(rootRoomProp);
+		    		roomProp.setTitle("Inserire dati stanza");
+		    		roomProp.setScene(sceneRoomProp);
+				} catch (IOException e1) { e1.printStackTrace(); }
+		
+				roomProp.showAndWait();
+				Pane p = (Pane) roomProp.getScene().getRoot().getChildrenUnmodifiable().get(0);
+				
+				if(ConfermaCreazioneStanza) {
+					try {
+						if(p.getChildren().get(1).getId().equals("txtRoomName")) {
+							TextField txtRoomName = (TextField) p.getChildren().get(1);
+							nome = txtRoomName.getText();
+						}
+			
+						if(p.getChildren().get(2).getId().equals("txtHeight")) {
+							TextField txtHeight = (TextField) p.getChildren().get(2);
+							profondità = Integer.parseInt(txtHeight.getText());
+						}
+			
+						if(p.getChildren().get(3).getId().equals("txtWidth")) {
+							TextField txtWidth = (TextField) p.getChildren().get(3);
+							larghezza = Integer.parseInt(txtWidth.getText());
+						}
+						
+						RoomHandler.getInstance().aggiungiStanza(nome, larghezza, profondità);
+						addStanzaToList(RoomHandler.getInstance().getStanze().getLast().getId(),nome);
+		
+				    	ConfermaCreazioneStanza= false;
+					}
+					catch(NumberFormatException e2) {
+						MessageView.showMessageAlert(AlertType.WARNING, "Dati inseriti non validi", "Per favore, riprovare e inserire i dati correttamente.");
+					}
 				}
 			}
 		}
@@ -275,13 +277,16 @@ public class MainInterfaceController implements Initializable {
 
 		@Override
 		public void handle(ActionEvent event) {
-			RoomHandler.getInstance().rimuoviStanza(stanzaSelezionata.getId());
-			lstFurniture.getItems().clear();
-			lstOggetti.getItems().clear();
-			setStanzaCorrente(null);
-			caricaStanze();
-			Piantina.getInstance().clear();
-			Piantina.getInstance().disegna();
+			if(!isModVista()) {
+				RoomHandler.getInstance().rimuoviStanza(stanzaSelezionata.getId());
+				lstFurniture.getItems().clear();
+				lstOggetti.getItems().clear();
+				txtObjectDescription.setText("");
+				setStanzaCorrente(null);
+				caricaStanze();
+				Piantina.getInstance().clear();
+				Piantina.getInstance().disegna();
+			}
 		}
 		
 	};
