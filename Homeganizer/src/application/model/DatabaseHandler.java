@@ -1,5 +1,6 @@
 package application.model;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,11 +15,16 @@ import javafx.scene.control.Alert.AlertType;
 
 public class DatabaseHandler {
 	private HashMap<String, User> users;
+	private HashMap<String,Integer> elencoCounter;
 	private MemorizedUserPassword memorizedUser;
 	private LinkedList<Stanza> stanze;
 	private String currentUser;
 
 	private static DatabaseHandler instance = null;
+
+	public static final String nomiCounter[] = { "IDCOUNTER", "IDCOUNTERARMADIO", "IDCOUNTERCASSAPANCA",
+			"IDCOUNTERLIBRERIA", "IDCOUNTERSCAFFALE", "IDCOUNTERTAVOLO", "IDCOUNTERBO", "IDCOUNTERCO", "IDCOUNTERDI",
+			"IDCOUNTEREL", "IDCOUNTERLI", "IDCOUNTERUT" };
 
 	public static DatabaseHandler getInstance() {
 		if (instance == null)
@@ -28,14 +34,18 @@ public class DatabaseHandler {
 
 	private DatabaseHandler() {
 		memorizedUser = null;
-		loadUsers();
+		initialLoad();
 	}
 
-	private void loadUsers() {
+	private void initialLoad() {
 		users = new HashMap<String, User>();
+		File f = new File("database.db");
+		boolean mustInitializeCounters = true;
+		if (f.exists() && !f.isDirectory())
+			mustInitializeCounters = false;
 		try {
 			Connection con = DriverManager.getConnection("jdbc:sqlite:database.db");
-			createTablesIfNotExist(con);
+			createTablesIfNotExist(con, mustInitializeCounters);
 			PreparedStatement stm1 = con.prepareStatement("SELECT * FROM users;");
 			ResultSet result = stm1.executeQuery();
 			while (result.next()) {
@@ -54,7 +64,7 @@ public class DatabaseHandler {
 		}
 	}
 
-	private static void createTablesIfNotExist(Connection con) throws Exception {
+	private static void createTablesIfNotExist(Connection con, boolean mustInitializeCounters) throws Exception {
 		PreparedStatement stm = con.prepareStatement(
 				"CREATE TABLE IF NOT EXISTS users(username varchar(2),password varchar(2),secureAnswer varchar(2));");
 		stm.executeUpdate();
@@ -71,7 +81,18 @@ public class DatabaseHandler {
 		stm.executeUpdate();
 		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS counter(tipo varchar(2),valore int);");
 		stm.executeUpdate();
+		if (mustInitializeCounters)
+			initializeCounters(con, stm);
 		stm.close();
+	}
+
+	private static void initializeCounters(Connection con, PreparedStatement stm) throws Exception {
+		for (int i = 0; i < 12; i++) {
+			stm = con.prepareStatement("INSERT INTO counter VALUES(?,?);");
+			stm.setString(1, nomiCounter[i]);
+			stm.setInt(2, 1);
+			stm.executeUpdate();
+		}
 	}
 
 	public HashMap<String, User> getUsers() {

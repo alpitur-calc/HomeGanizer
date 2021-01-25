@@ -37,6 +37,8 @@ public class Oggetto {
 		this.tipo = tipo;
 	}
 	
+	//costruttore per db
+	
 	public Oggetto(String id,String idMobile, String nome, String descrizione, String tipo){
 		this.id = id;		
 		this.idMobile = idMobile;
