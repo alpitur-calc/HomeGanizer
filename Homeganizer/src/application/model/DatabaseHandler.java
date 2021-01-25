@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -14,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 public class DatabaseHandler {
 	private HashMap<String, User> users;
 	private MemorizedUserPassword memorizedUser;
+	private LinkedList<Stanza> stanze;
 	// private Connection con; indeciso
 
 	private static DatabaseHandler instance = null;
@@ -33,7 +35,7 @@ public class DatabaseHandler {
 		users = new HashMap<String, User>();
 		try {
 			Connection con = DriverManager.getConnection("jdbc:sqlite:database.db");
-			createUsersTableIfNotExists(con);
+			createTablesIfNotExist(con);
 			PreparedStatement stm1 = con.prepareStatement("SELECT * FROM users;");
 			ResultSet result = stm1.executeQuery();
 			while (result.next()) {
@@ -52,7 +54,7 @@ public class DatabaseHandler {
 		}
 	}
 
-	private static void createUsersTableIfNotExists(Connection con) throws Exception {
+	private static void createTablesIfNotExist(Connection con) throws Exception {
 		PreparedStatement stm = con.prepareStatement(
 				"CREATE TABLE IF NOT EXISTS users(username varchar(5),password varchar(12),secureAnswer varchar(2));");
 		stm.executeUpdate();
