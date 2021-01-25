@@ -6,14 +6,9 @@ public class Mobile {
 	
 	public static final String 	ARMADIO = "Armadio",
 								CASSAPANCA = "Cassapanca",
-								//COMODINO = "Comodino",
-								//CONTAINER = "Container",
-								//CREDENZA = "Credenza",
 								LIBRERIA = "Libreria",
-								TAVOLO = "Tavolo",
-								//SCAFFALE = "Scaffale",
-								SCRIVANIA = "Scrivania";
-								//VETRINA = "Vetrina";
+								SCAFFALE = "Scaffale",
+								TAVOLO = "Tavolo";
 					
 	
 	//Prendere i vari COUNTER dal DB
@@ -21,7 +16,7 @@ public class Mobile {
 	private static Integer IDCOUNTERARMADIO = 1;
 	private static Integer IDCOUNTERCASSAPANCA = 1;
 	private static Integer IDCOUNTERLIBRERIA = 1;
-	private static Integer IDCOUNTERSCRIVANIA = 1;
+	private static Integer IDCOUNTERSCAFFALE = 1;
 	private static Integer IDCOUNTERTAVOLO = 1;
 	
 	
@@ -61,9 +56,9 @@ public class Mobile {
 			IDCOUNTERLIBRERIA++;
 			break;
 		
-		case SCRIVANIA:
-			this.id = "MSC" + IDCOUNTERSCRIVANIA.toString();
-			IDCOUNTERSCRIVANIA++;
+		case SCAFFALE:
+			this.id = "MSC" + IDCOUNTERSCAFFALE.toString();
+			IDCOUNTERSCAFFALE++;
 			break;
 		
 		case TAVOLO:
@@ -92,6 +87,52 @@ public class Mobile {
 
 	public LinkedList <Oggetto> getOggetti() {
 		return oggetti;
+	}
+	
+	public String getIcona() {
+		switch (tipo) {
+		
+		case ARMADIO:
+			return "ArmadioIcon";
+
+		case CASSAPANCA:
+			return "CassapancaIcon";
+			
+		case LIBRERIA:
+			return "LibreriaIcon";
+			
+		case SCAFFALE:
+			return "ScaffaleIcon";
+			
+		case TAVOLO:
+			return "TavoloIcon";
+			
+		default:
+			return null;
+		}
+	}
+	
+	public String getImmagine() {
+		switch (tipo) {
+		
+		case ARMADIO:
+			return "Armadio";
+
+		case CASSAPANCA:
+			return "Cassapanca";
+			
+		case LIBRERIA:
+			return "Libreria";
+			
+		case SCAFFALE:
+			return "Scaffale";
+			
+		case TAVOLO:
+			return "Tavolo";
+			
+		default:
+			return null;
+		}
 	}
 
 	public String getId() {
