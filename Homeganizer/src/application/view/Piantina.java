@@ -220,8 +220,8 @@ public class Piantina {
 
 				if (MainInterfaceController.getStanzaCorrente().getMobileSelezionato(xPiantina, yPiantina) != null) {
 
-					MainInterfaceController.setMobileCorrente(
-							MainInterfaceController.getStanzaCorrente().getMobileSelezionato(xPiantina, yPiantina));
+					MainInterfaceController.setMobileCorrente(MainInterfaceController.getStanzaCorrente().getMobileSelezionato(xPiantina, yPiantina));
+					
 					xPre = xPiantina;
 					yPre = yPiantina;
 					deselezionaMobile();

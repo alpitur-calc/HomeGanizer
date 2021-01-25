@@ -103,6 +103,7 @@ public class Stanza {
 				if (!inMatrice(m.getX() + l, m.getY() + p) || (matrice[m.getX() + l][m.getY() + p] != null && matrice[m.getX() + l][m.getY() + p] != m.getId())) 
 					return false;					
 		return true;
+		
 	}
 	
 	private boolean inMatrice(int x, int y) {
