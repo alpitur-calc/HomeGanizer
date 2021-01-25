@@ -276,8 +276,11 @@ public class MainInterfaceController implements Initializable {
 		@Override
 		public void handle(ActionEvent event) {
 			RoomHandler.getInstance().rimuoviStanza(stanzaSelezionata.getId());
+			lstFurniture.getItems().clear();
+			lstOggetti.getItems().clear();
 			setStanzaCorrente(null);
 			caricaStanze();
+			caricaMobili();
 			Piantina.getInstance().disegna();
 		}
 		
