@@ -60,7 +60,7 @@ public class DatabaseHandler {
 		stm.executeUpdate();
 		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS memUser(username varchar(2),password varchar(2));");
 		stm.executeUpdate();
-		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS stanze(id varchar(2),password varchar(2));");
+		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS stanze(id varchar(2),nome varchar(2),proprietario varchar(2),larghezza int,profondità int);");
 		stm.executeUpdate();
 		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS mobili(id varchar(2),password varchar(2));");
 		stm.executeUpdate();
