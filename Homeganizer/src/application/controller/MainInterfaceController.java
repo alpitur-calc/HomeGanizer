@@ -442,7 +442,7 @@ public class MainInterfaceController implements Initializable {
     		h.getChildren().add(nomeOggetto);
     		mp.getChildren().add(h);
     		mp.setOnMouseClicked(handleOggettoInListClicked);
-    		lstOggetti.getItems().add(lstOggetti.getItems().size(),mp);  
+    		lstOggetti.getItems().add(lstOggetti.getItems().size()-1,mp);  
     	}
 
 		
@@ -529,41 +529,54 @@ public class MainInterfaceController implements Initializable {
 	
 	@FXML
     void ricercaMobile(KeyEvent event) {
-		if( txtSpotlight.isFocused() &&!txtSpotlight.getText().equals("")) {
+		
+		if(txtSpotlight.isFocused() && !txtSpotlight.getText().equals("")) {
 			if(event.getCode().equals(KeyCode.ENTER)) {
+				
 				if(RoomHandler.getInstance().ricerca(txtSpotlight.getText())) {
-					int cont = 1;
+					int cont = 1, cont2 = 0, cont3 = 0;
+					boolean mobTrovato=false, stanzaTrovata =false;
+					
 					for(RoomPane r : lstRooms.getItems()) {
 						if(r.getIdStanza().equals(stanzaSelezionata.getId())) {
 							lstRooms.getSelectionModel().select(cont);
 							caricaMobili();
-							int cont2 = 0;
-							for(RoomPane r2 : lstFurniture.getItems()) {
-								if(r2.getIdStanza().equals(mobileSelezionato.getId())) {
-									for(Mobile m : getStanzaCorrente().getMobili()) {
-										if(m.getId().equals(mobileSelezionato.getId())) {
-											lstFurniture.getSelectionModel().select(cont2);
-											caricaOggetti(mobileSelezionato);
-											int cont3 = 0;
-											//Da qui in poi non so cosa ho fatto
-											//Funziona però non mostra la descrizione
-											for(RoomPane r3 : lstOggetti.getItems()) {
-												for(Oggetto o : getMobileCorrente().getOggetti()) {
-													if(o.getNome().equals(txtSpotlight.getText())) {
-														lstOggetti.getSelectionModel().select(cont3);
-														txtObjectDescription.getText(); // questo è il maledetto
-													}
-												}
-												cont3 ++;
-											}
-										}
-									}
-								}
-								cont2 ++;
-							}
-						}	
+							stanzaTrovata=true;
+						}
+						if(stanzaTrovata) { break; }
+						cont++;
 					}
-					cont ++;
+					
+					for(RoomPane r2 : lstFurniture.getItems()) {
+						if(r2.getIdStanza().equals(mobileSelezionato.getId())) {
+							for(Mobile m : getStanzaCorrente().getMobili()) {			
+								if(m.getId().equals(mobileSelezionato.getId())) {
+									lstFurniture.getSelectionModel().select(cont2);
+									caricaOggetti(mobileSelezionato);
+									mobTrovato=true;
+									break;
+								}
+							}
+						}
+						if(mobTrovato) { break; }
+						cont2++;
+					}
+					
+					for(Oggetto o : getMobileCorrente().getOggetti()) {
+						if(o.getNome().equals(txtSpotlight.getText())) {
+							oggettoSelezionato=o;									
+							caricaOggettoSelezionato(oggettoSelezionato);
+							break;
+						}
+					}
+					
+					for(RoomPane r3 : lstOggetti.getItems()) {
+						if(r3.getIdStanza().equals(oggettoSelezionato.getId())) {
+							lstOggetti.getSelectionModel().select(cont3);
+							break; 
+						}
+						cont3 ++;
+					}
 				}
 			}		
 		}
