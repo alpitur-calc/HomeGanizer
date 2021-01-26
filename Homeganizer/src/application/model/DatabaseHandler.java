@@ -250,6 +250,7 @@ public class DatabaseHandler {
 	
 	public void saveRooms(LinkedList<Stanza> stanze) throws Exception{
 		Connection con = DriverManager.getConnection("jdbc:sqlite:database.db");
+		saveCounters(con);
 		deleteRooms(con);
 		for(Stanza s : stanze) {
 			PreparedStatement stm1 = con.prepareStatement("INSERT INTO stanze VALUES(?,?,?,?,?);");
@@ -262,6 +263,58 @@ public class DatabaseHandler {
 			saveFurniture(con,stm1,s.getMobili());
 			stm1.close();
 		}
+	}
+
+	private void saveCounters(Connection con) throws Exception{
+		PreparedStatement stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Stanza.IDCOUNTER);
+		stm.setString(2, nomiCounter[0]);
+		stm.executeUpdate();
+		stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Mobile.IDCOUNTERARMADIO);
+		stm.setString(2, nomiCounter[1]);
+		stm.executeUpdate();
+		stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Mobile.IDCOUNTERCASSAPANCA);
+		stm.setString(2, nomiCounter[2]);
+		stm.executeUpdate();
+		stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Mobile.IDCOUNTERLIBRERIA);
+		stm.setString(2, nomiCounter[3]);
+		stm.executeUpdate();
+		stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Mobile.IDCOUNTERSCAFFALE);
+		stm.setString(2, nomiCounter[4]);
+		stm.executeUpdate();
+		stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Mobile.IDCOUNTERTAVOLO);
+		stm.setString(2, nomiCounter[5]);
+		stm.executeUpdate();
+		stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Oggetto.IDCOUNTERBO);
+		stm.setString(2, nomiCounter[6]);
+		stm.executeUpdate();
+		stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Oggetto.IDCOUNTERCO);
+		stm.setString(2, nomiCounter[7]);
+		stm.executeUpdate();
+		stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Oggetto.IDCOUNTERDI);
+		stm.setString(2, nomiCounter[8]);
+		stm.executeUpdate();
+		stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Oggetto.IDCOUNTEREL);
+		stm.setString(2, nomiCounter[9]);
+		stm.executeUpdate();
+		stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Oggetto.IDCOUNTERLI);
+		stm.setString(2, nomiCounter[10]);
+		stm.executeUpdate();
+		stm = con.prepareStatement("UPDATE counter SET valore=? WHERE tipo=?;");
+		stm.setInt(1, Oggetto.IDCOUNTERUT);
+		stm.setString(2, nomiCounter[11]);
+		stm.executeUpdate();
+		stm.close();
 	}
 
 	private void saveFurniture(Connection con, PreparedStatement stm1, LinkedList<Mobile> mobili) throws Exception {
@@ -316,7 +369,7 @@ public class DatabaseHandler {
 	}
 
 	private void deleteObjects(Connection con, PreparedStatement stm1, String idMobile) throws Exception {
-		stm1 = con.prepareStatement("DELETE FROM mobili WHERE idMobile=?;");
+		stm1 = con.prepareStatement("DELETE FROM oggetti WHERE idMobile=?;");
 		stm1.setString(1, idMobile);
 		stm1.executeUpdate();
 	}
