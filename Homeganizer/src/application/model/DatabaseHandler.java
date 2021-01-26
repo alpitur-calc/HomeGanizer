@@ -61,7 +61,6 @@ public class DatabaseHandler {
 		} catch (Exception e) {
 			MessageView.showMessageAlert(AlertType.ERROR, "Errore",
 					"Si è verificato un errore. Contattare l'amministratore");
-			e.printStackTrace();
 		}
 	}
 	
@@ -247,6 +246,41 @@ public class DatabaseHandler {
 					result.getString("descrizione"), result.getString("tipo"));
 			m.aggiungiOggetto(o);
 		}
+	}
+	
+	public void saveRooms(LinkedList<Stanza> stanze) throws Exception{
+		Connection con = DriverManager.getConnection("jdbc:sqlite:database.db");
+		deleteRooms(con);
+		
+	}
+
+	private void deleteRooms(Connection con) throws Exception {
+		PreparedStatement stm1 = con.prepareStatement("SELECT id FROM stanze WHERE proprietario=?;");
+		stm1.setString(1, currentUser);
+		ResultSet rs = stm1.executeQuery();
+		while(rs.next()) 
+			deleteFurniture(con,stm1,rs.getString("id"));
+		stm1 = con.prepareStatement("DELETE FROM stanze WHERE proprietario=?;");
+		stm1.setString(1, currentUser);
+		stm1.executeUpdate();
+		stm1.close();
+	}
+
+	private void deleteFurniture(Connection con, PreparedStatement stm1, String idStanza) throws Exception {
+		stm1 = con.prepareStatement("SELECT id FROM stanze WHERE proprietario=?;");
+		stm1.setString(1, currentUser);
+		ResultSet rs = stm1.executeQuery();
+		while(rs.next()) 
+			deleteObjects(con,stm1,rs.getString("id"));
+		stm1 = con.prepareStatement("DELETE FROM mobili WHERE idStanza=?;");
+		stm1.setString(1, idStanza);
+		stm1.executeUpdate();
+	}
+
+	private void deleteObjects(Connection con, PreparedStatement stm1, String idMobile) throws Exception {
+		stm1 = con.prepareStatement("DELETE FROM mobili WHERE idMobile=?;");
+		stm1.setString(1, idMobile);
+		stm1.executeUpdate();
 	}
 
 }
