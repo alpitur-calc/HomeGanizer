@@ -45,6 +45,7 @@ import javafx.stage.WindowEvent;
 public class MainInterfaceController implements Initializable {
 
 	public static boolean ConfermaCreazioneStanza=false, ConfermaCreazioneMobile=false, ConfermaCreazioneOggetto=false;
+	public static boolean Chiusura= false;
 	private static boolean vista = false;
 	
 	private static Stanza stanzaSelezionata = null; 
@@ -553,7 +554,7 @@ public class MainInterfaceController implements Initializable {
 			if(event.getCode().equals(KeyCode.ENTER)) {
 				
 				if(RoomHandler.getInstance().ricerca(txtSpotlight.getText())) {
-					int cont = 1, cont2 = 0, cont3 = 0;
+					int cont = 0, cont2 = 0, cont3 = 0;
 					boolean mobTrovato=false, stanzaTrovata =false;
 					
 					for(RoomPane r : lstRooms.getItems()) {
@@ -628,6 +629,8 @@ public class MainInterfaceController implements Initializable {
 		@Override
 		public void handle(WindowEvent event) {
 			Save();
+			
+			if(!Chiusura) { event.consume(); }
 		}
 	};
 	
