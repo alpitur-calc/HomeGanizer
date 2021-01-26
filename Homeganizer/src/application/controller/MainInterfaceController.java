@@ -270,6 +270,7 @@ public class MainInterfaceController implements Initializable {
     	
 		for(Stanza s : RoomHandler.getInstance().getStanze()) {
 			addStanzaToList(s.getId(),s.getNome());
+			s.aggiornaMatrice();
 		}
 	}
 	
