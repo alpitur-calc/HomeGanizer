@@ -38,6 +38,7 @@ public class ConfirmSaveInterfaceController implements Initializable{
 		@Override
 		public void handle(MouseEvent event) {
 			MainInterfaceController.Chiusura= true;
+			MainInterfaceController.ConfermaSalvataggio=true;
 			MessageView.showMessageAlert(AlertType.CONFIRMATION, "Successo", "Salvataggio effettuato.");
 			Stage thisStage = (Stage) btnSi.getScene().getWindow();
 			thisStage.close();
@@ -50,6 +51,7 @@ public class ConfirmSaveInterfaceController implements Initializable{
 		@Override
 		public void handle(MouseEvent event) {
 			MainInterfaceController.Chiusura= true;
+			MainInterfaceController.ConfermaSalvataggio=false;
 			MessageView.showMessageAlert(AlertType.CONFIRMATION, "Successo", "Salvataggio non effettuato.");
 			Stage thisStage = (Stage) btnNo.getScene().getWindow();
 			thisStage.close();
@@ -62,6 +64,7 @@ public class ConfirmSaveInterfaceController implements Initializable{
 		@Override
 		public void handle(MouseEvent event) {
 			MainInterfaceController.Chiusura= false;
+			MainInterfaceController.ConfermaSalvataggio=false;
 			MessageView.showMessageAlert(AlertType.CONFIRMATION, "Successo", "Operazione annullata.");	
 			Stage thisStage = (Stage) btnAnnulla.getScene().getWindow();
 			thisStage.close();

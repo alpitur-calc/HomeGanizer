@@ -45,7 +45,7 @@ import javafx.stage.WindowEvent;
 public class MainInterfaceController implements Initializable {
 
 	public static boolean ConfermaCreazioneStanza=false, ConfermaCreazioneMobile=false, ConfermaCreazioneOggetto=false;
-	public static boolean Chiusura= false;
+	public static boolean Chiusura= false, ConfermaSalvataggio=false;
 	private static boolean vista = false;
 	
 	private static Stanza stanzaSelezionata = null; 
@@ -655,7 +655,10 @@ public class MainInterfaceController implements Initializable {
 			} catch (IOException e1) { e1.printStackTrace(); }
 	    	
 	    	s.showAndWait();
-	    	RoomHandler.getInstance().salvaStanze();
+	    	if(ConfermaSalvataggio) {
+	    		RoomHandler.getInstance().salvaStanze();
+				ConfermaSalvataggio=false;
+	    	}
 	}
 	
 	public static void setStanzaCorrente(Stanza stanza) {
