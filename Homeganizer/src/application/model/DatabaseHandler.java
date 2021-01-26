@@ -1,14 +1,11 @@
 package application.model;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.LinkedList;
-
-import org.mindrot.jbcrypt.BCrypt;
 
 import application.view.MessageView;
 import javafx.scene.control.Alert.AlertType;
@@ -39,10 +36,10 @@ public class DatabaseHandler {
 
 	private void initialLoad() {
 		users = new HashMap<String, User>();
-		File f = new File("database.db");
+		elencoCounter = new HashMap<String,Integer>();
 		try {
 			Connection con = DriverManager.getConnection("jdbc:sqlite:database.db");
-			createTablesIfNotExist(con, mustInitializeCounters);
+			createTablesIfNotExist(con);
 			PreparedStatement stm1 = con.prepareStatement("SELECT * FROM users;");
 			ResultSet result = stm1.executeQuery();
 			while (result.next()) {
@@ -54,14 +51,40 @@ public class DatabaseHandler {
 			result = stm1.executeQuery();
 			while (result.next())
 				memorizedUser = new MemorizedUserPassword(result.getString("username"), result.getString("password"));
+			stm1 = con.prepareStatement("SELECT * FROM counter;");
+			result = stm1.executeQuery();
+			while (result.next()) {
+				elencoCounter.put(result.getString("tipo"), result.getInt("valore"));
+			}
 			stm1.close();
+			setCounters();
 		} catch (Exception e) {
 			MessageView.showMessageAlert(AlertType.ERROR, "Errore",
 					"Si è verificato un errore. Contattare l'amministratore");
+			e.printStackTrace();
 		}
 	}
+	
+	public void setCounters() {
+		Stanza.IDCOUNTER = elencoCounter.get(DatabaseHandler.nomiCounter[0]);
+		Mobile.IDCOUNTERARMADIO = elencoCounter.get(DatabaseHandler.nomiCounter[1]);
+		Mobile.IDCOUNTERCASSAPANCA = elencoCounter.get(DatabaseHandler.nomiCounter[2]);
+		Mobile.IDCOUNTERLIBRERIA = elencoCounter.get(DatabaseHandler.nomiCounter[3]);
+		Mobile.IDCOUNTERSCAFFALE = elencoCounter.get(DatabaseHandler.nomiCounter[4]);
+		Mobile.IDCOUNTERTAVOLO = elencoCounter.get(DatabaseHandler.nomiCounter[5]);
+		Oggetto.IDCOUNTERBO = elencoCounter.get(DatabaseHandler.nomiCounter[6]);
+		Oggetto.IDCOUNTERCO = elencoCounter.get(DatabaseHandler.nomiCounter[7]);
+		Oggetto.IDCOUNTERDI = elencoCounter.get(DatabaseHandler.nomiCounter[8]);
+		Oggetto.IDCOUNTEREL = elencoCounter.get(DatabaseHandler.nomiCounter[9]);
+		Oggetto.IDCOUNTERLI = elencoCounter.get(DatabaseHandler.nomiCounter[10]);
+		Oggetto.IDCOUNTERUT = elencoCounter.get(DatabaseHandler.nomiCounter[11]);
+	}
 
-	private static void createTablesIfNotExist(Connection con, boolean mustInitializeCounters) throws Exception {
+	public HashMap<String, Integer> getElencoCounter() {
+		return elencoCounter; // fa le bizze e non ho ancora capito perchè
+	}
+
+	private static void createTablesIfNotExist(Connection con) throws Exception {
 		PreparedStatement stm = con.prepareStatement(
 				"CREATE TABLE IF NOT EXISTS users(username varchar(2),password varchar(2),secureAnswer varchar(2));");
 		stm.executeUpdate();
@@ -78,13 +101,18 @@ public class DatabaseHandler {
 		stm.executeUpdate();
 		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS counter(tipo varchar(2),valore int);");
 		stm.executeUpdate();
-		if (mustInitializeCounters(stm))
+		if (mustInitializeCounters(con,stm))
 			initializeCounters(con, stm);
 		stm.close();
 	}
 
-	private static boolean mustInitializeCounters(PreparedStatement stm) {
-		return false;
+	private static boolean mustInitializeCounters(Connection con, PreparedStatement stm) throws Exception {
+		boolean b = true;
+		stm = con.prepareStatement("SELECT * FROM counter;");
+		ResultSet result = stm.executeQuery();
+		while(result.next())
+			b = false;
+		return b;
 	}
 
 	private static void initializeCounters(Connection con, PreparedStatement stm) throws Exception {
@@ -191,28 +219,27 @@ public class DatabaseHandler {
 		while (result.next()) {
 			Stanza s = new Stanza(result.getString("id"), result.getString("nome"), result.getString("proprietario"),
 					result.getInt("larghezza"), result.getInt("profondità"));
-			loadFurniture(result.getString("id"), s, con);
+			loadFurniture(result.getString("id"), s, con,stm1);
 			stanze.add(s);
 		}
 		stm1.close();
 	}
 
-	private void loadFurniture(String idStanza, Stanza s, Connection con) throws Exception {
-		PreparedStatement stm1 = con.prepareStatement("SELECT * FROM mobili WHERE idStanza=?;");
+	private void loadFurniture(String idStanza, Stanza s, Connection con,PreparedStatement stm1) throws Exception {
+		stm1 = con.prepareStatement("SELECT * FROM mobili WHERE idStanza=?;");
 		stm1.setString(1, idStanza);
 		ResultSet result = stm1.executeQuery();
 		while (result.next()) {
 			Mobile m = new Mobile(result.getString("id"), result.getString("idStanza"), result.getString("nome"),
 					result.getString("tipo"), result.getInt("x"), result.getInt("y"), result.getInt("w"),
 					result.getInt("h"));
-			loadObjects(result.getString("id"), m, con);
+			loadObjects(result.getString("id"), m, con,stm1);
 			s.aggiungiMobile(m);
 		}
-		stm1.close();
 	}
 
-	private void loadObjects(String idMobile, Mobile m, Connection con) throws Exception {
-		PreparedStatement stm1 = con.prepareStatement("SELECT * FROM oggetti WHERE idMobile=?;");
+	private void loadObjects(String idMobile, Mobile m, Connection con, PreparedStatement stm1) throws Exception {
+		stm1 = con.prepareStatement("SELECT * FROM oggetti WHERE idMobile=?;");
 		stm1.setString(1, idMobile);
 		ResultSet result = stm1.executeQuery();
 		while (result.next()) {
@@ -220,7 +247,6 @@ public class DatabaseHandler {
 					result.getString("descrizione"), result.getString("tipo"));
 			m.aggiungiOggetto(o);
 		}
-		stm1.close();
 	}
 
 }

@@ -14,51 +14,51 @@ import javafx.scene.input.MouseEvent;
 
 public class LoginController {
 
-    @FXML
-    private TextField txtUsername;
+	@FXML
+	private TextField txtUsername;
 
-    @FXML
-    private CheckBox chkRemember;
+	@FXML
+	private CheckBox chkRemember;
 
-    @FXML
-    private Label lblForgotpassword;
+	@FXML
+	private Label lblForgotpassword;
 
-    @FXML
-    private Button btnLogin;
+	@FXML
+	private Button btnLogin;
 
-    @FXML
-    private PasswordField txtPassword;
- 
-    @FXML
-    private Button btnRegister;
-    
-    
-    //Funzione che gestisce la pressione del tasto Login
-    @FXML
-    private void handleBtnLoginPressed(MouseEvent e) throws Exception {
-    	if (LoginHandler.login(txtUsername.getText(), txtPassword.getText(),chkRemember.isSelected()))
-    	SceneHandler.getInstance().goToScene("mainInterface.fxml", "Room Editor", 1280, 720);
-    }
-    
-    //Funzione che gestisce la pressione del tasto Register
-    @FXML
-    private void handleBtnRegisterPressed(MouseEvent e) throws Exception {
-    	SceneHandler.getInstance().goToScene("registerInterface.fxml", "Homeganizer Login", 1280, 720);
-    }
-    
-    //Funzione che gestisce la pressione sulla Label PasswordDimenticata
-    @FXML
-    private void handlelblForgotPasswordClicked(MouseEvent e) throws Exception {
-    	SceneHandler.getInstance().goToScene("passwordChangeInterface.fxml", "Homeganizer Login", 1280, 720);
-    }
+	@FXML
+	private PasswordField txtPassword;
+
+	@FXML
+	private Button btnRegister;
+
+	// Funzione che gestisce la pressione del tasto Login
+	@FXML
+	private void handleBtnLoginPressed(MouseEvent e) throws Exception {
+		if (LoginHandler.login(txtUsername.getText(), txtPassword.getText(), chkRemember.isSelected())) {
+			SceneHandler.getInstance().goToScene("mainInterface.fxml", "Room Editor", 1280, 720);
+		}
+	}
+
+	// Funzione che gestisce la pressione del tasto Register
+	@FXML
+	private void handleBtnRegisterPressed(MouseEvent e) throws Exception {
+		SceneHandler.getInstance().goToScene("registerInterface.fxml", "Homeganizer Login", 1280, 720);
+	}
+
+	// Funzione che gestisce la pressione sulla Label PasswordDimenticata
+	@FXML
+	private void handlelblForgotPasswordClicked(MouseEvent e) throws Exception {
+		SceneHandler.getInstance().goToScene("passwordChangeInterface.fxml", "Homeganizer Login", 1280, 720);
+	}
 
 	public void init() {
 		MemorizedUserPassword mup = DatabaseHandler.getInstance().getMemorizedUser();
-		if(mup != null) {
+		if (mup != null) {
 			chkRemember.setSelected(true);
 			txtUsername.appendText(mup.getUsername());
 			txtPassword.appendText(mup.getPassword());
 		}
 	}
-    
+
 }
