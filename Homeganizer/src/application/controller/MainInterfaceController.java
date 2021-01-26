@@ -166,6 +166,7 @@ public class MainInterfaceController implements Initializable {
 
     @FXML
 	void handleMtmLogOut(ActionEvent event) throws Exception {
+    	Save();
     	SceneHandler.getInstance().goToScene("loginInterface.fxml", "Room Editor", 1280, 720);
     }
     
