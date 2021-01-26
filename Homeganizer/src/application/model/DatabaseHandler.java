@@ -251,7 +251,45 @@ public class DatabaseHandler {
 	public void saveRooms(LinkedList<Stanza> stanze) throws Exception{
 		Connection con = DriverManager.getConnection("jdbc:sqlite:database.db");
 		deleteRooms(con);
-		
+		for(Stanza s : stanze) {
+			PreparedStatement stm1 = con.prepareStatement("INSERT INTO stanze VALUES(?,?,?,?,?);");
+			stm1.setString(1, s.getId());
+			stm1.setString(2, s.getNome());
+			stm1.setString(3, s.getProprietario());
+			stm1.setInt(4, s.getLarghezza());
+			stm1.setInt(5, s.getProfondità());
+			stm1.executeUpdate();
+			saveFurniture(con,stm1,s.getMobili());
+			stm1.close();
+		}
+	}
+
+	private void saveFurniture(Connection con, PreparedStatement stm1, LinkedList<Mobile> mobili) throws Exception {
+		for(Mobile m : mobili) {
+			stm1 = con.prepareStatement("INSERT INTO mobili VALUES(?,?,?,?,?,?,?,?);");
+			stm1.setString(1, m.getId());
+			stm1.setString(2, m.getIdStanza());
+			stm1.setString(3, m.getNome());
+			stm1.setString(4, m.getTipo());
+			stm1.setInt(5, m.getX());
+			stm1.setInt(6, m.getY());
+			stm1.setInt(7, m.getW());
+			stm1.setInt(8, m.getH());
+			stm1.executeUpdate();
+			saveObjects(con,stm1,m.getOggetti());
+		}
+	}
+
+	private void saveObjects(Connection con, PreparedStatement stm1, LinkedList<Oggetto> oggetti) throws Exception{
+		for(Oggetto o : oggetti) {
+			stm1 = con.prepareStatement("INSERT INTO oggetti VALUES(?,?,?,?,?);");
+			stm1.setString(1, o.getId());
+			stm1.setString(2, o.getIdMobile());
+			stm1.setString(3, o.getNome());
+			stm1.setString(4, o.getDescrizione());
+			stm1.setString(5, o.getTipo());
+			stm1.executeUpdate();
+		}
 	}
 
 	private void deleteRooms(Connection con) throws Exception {
@@ -267,8 +305,8 @@ public class DatabaseHandler {
 	}
 
 	private void deleteFurniture(Connection con, PreparedStatement stm1, String idStanza) throws Exception {
-		stm1 = con.prepareStatement("SELECT id FROM stanze WHERE proprietario=?;");
-		stm1.setString(1, currentUser);
+		stm1 = con.prepareStatement("SELECT id FROM mobili WHERE idStanza=?;");
+		stm1.setString(1, idStanza);
 		ResultSet rs = stm1.executeQuery();
 		while(rs.next()) 
 			deleteObjects(con,stm1,rs.getString("id"));
