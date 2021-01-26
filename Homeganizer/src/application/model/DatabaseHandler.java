@@ -93,10 +93,10 @@ public class DatabaseHandler {
 				"CREATE TABLE IF NOT EXISTS stanze(id varchar(2),nome varchar(2),proprietario varchar(2),larghezza int,profondità int);");
 		stm.executeUpdate();
 		stm = con.prepareStatement(
-				"CREATE TABLE IF NOT EXISTS mobili(id varchar(2),idStanza varchar(2),nome varchar(2),tipo varchar(2),x int,y int,w int,h int);");
+				"CREATE TABLE IF NOT EXISTS mobili(id varchar(2),idStanza varchar(2),nome varchar(2),tipo varchar(2),x int,y int,w int,h int,proprietario varchar(2));");
 		stm.executeUpdate();
 		stm = con.prepareStatement(
-				"CREATE TABLE IF NOT EXISTS oggetti(id varchar(2),idMobile varchar(2),nome varchar(2),descrizione varchar(2),tipo varchar(2));");
+				"CREATE TABLE IF NOT EXISTS oggetti(id varchar(2),idMobile varchar(2),nome varchar(2),descrizione varchar(2),tipo varchar(2),proprietario varchar(2));");
 		stm.executeUpdate();
 		stm = con.prepareStatement("CREATE TABLE IF NOT EXISTS counter(tipo varchar(2),valore int);");
 		stm.executeUpdate();
@@ -319,7 +319,7 @@ public class DatabaseHandler {
 
 	private void saveFurniture(Connection con, PreparedStatement stm1, LinkedList<Mobile> mobili) throws Exception {
 		for(Mobile m : mobili) {
-			stm1 = con.prepareStatement("INSERT INTO mobili VALUES(?,?,?,?,?,?,?,?);");
+			stm1 = con.prepareStatement("INSERT INTO mobili VALUES(?,?,?,?,?,?,?,?,?);");
 			stm1.setString(1, m.getId());
 			stm1.setString(2, m.getIdStanza());
 			stm1.setString(3, m.getNome());
@@ -328,6 +328,7 @@ public class DatabaseHandler {
 			stm1.setInt(6, m.getY());
 			stm1.setInt(7, m.getW());
 			stm1.setInt(8, m.getH());
+			stm1.setString(9, currentUser);
 			stm1.executeUpdate();
 			saveObjects(con,stm1,m.getOggetti());
 		}
@@ -335,43 +336,30 @@ public class DatabaseHandler {
 
 	private void saveObjects(Connection con, PreparedStatement stm1, LinkedList<Oggetto> oggetti) throws Exception{
 		for(Oggetto o : oggetti) {
-			stm1 = con.prepareStatement("INSERT INTO oggetti VALUES(?,?,?,?,?);");
+			stm1 = con.prepareStatement("INSERT INTO oggetti VALUES(?,?,?,?,?,?);");
 			stm1.setString(1, o.getId());
 			stm1.setString(2, o.getIdMobile());
 			stm1.setString(3, o.getNome());
 			stm1.setString(4, o.getDescrizione());
 			stm1.setString(5, o.getTipo());
+			stm1.setString(6, currentUser);
 			stm1.executeUpdate();
 		}
 	}
 
 	private void deleteRooms(Connection con) throws Exception {
-		PreparedStatement stm1 = con.prepareStatement("SELECT id FROM stanze WHERE proprietario=?;");
+		PreparedStatement stm1 = con.prepareStatement("DELETE FROM stanze WHERE proprietario=?;");
 		stm1.setString(1, currentUser);
-		ResultSet rs = stm1.executeQuery();
-		while(rs.next()) 
-			deleteFurniture(con,stm1,rs.getString("id"));
-		stm1 = con.prepareStatement("DELETE FROM stanze WHERE proprietario=?;");
+		stm1.executeUpdate();
+		stm1 = con.prepareStatement("DELETE FROM mobili WHERE proprietario=?;");
+		stm1.setString(1, currentUser);
+		stm1.executeUpdate();
+		stm1 = con.prepareStatement("DELETE FROM oggetti WHERE proprietario=?;");
 		stm1.setString(1, currentUser);
 		stm1.executeUpdate();
 		stm1.close();
 	}
 
-	private void deleteFurniture(Connection con, PreparedStatement stm1, String idStanza) throws Exception {
-		stm1 = con.prepareStatement("SELECT id FROM mobili WHERE idStanza=?;");
-		stm1.setString(1, idStanza);
-		ResultSet rs = stm1.executeQuery();
-		while(rs.next()) 
-			deleteObjects(con,stm1,rs.getString("id"));
-		stm1 = con.prepareStatement("DELETE FROM mobili WHERE idStanza=?;");
-		stm1.setString(1, idStanza);
-		stm1.executeUpdate();
-	}
 
-	private void deleteObjects(Connection con, PreparedStatement stm1, String idMobile) throws Exception {
-		stm1 = con.prepareStatement("DELETE FROM oggetti WHERE idMobile=?;");
-		stm1.setString(1, idMobile);
-		stm1.executeUpdate();
-	}
 
 }

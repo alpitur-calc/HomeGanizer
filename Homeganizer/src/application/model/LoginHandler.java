@@ -25,7 +25,8 @@ public class LoginHandler {
 					DatabaseHandler.getInstance().clearMemorizedUser();
 				SceneHandler.getInstance().goToScene("mainInterface.fxml", "Room Editor", 1280, 720);
 				RoomHandler.getInstance().setProprietario(insertedUsername);
-				DatabaseHandler.getInstance().loadRooms(insertedUsername);
+				//DatabaseHandler.getInstance().loadRooms(insertedUsername);
+				DatabaseHandler.getInstance().setCurrentUser(insertedUsername);
 			} else
 				{MessageView.showMessageAlert(AlertType.WARNING, "Attenzione", "Utente non registrato"); return false;}
 				
@@ -33,6 +34,7 @@ public class LoginHandler {
 		} catch (Exception e) {
 			MessageView.showMessageAlert(AlertType.ERROR, "Errore",
 					"Si è verificato un errore. Contattare l'amministratore");
+			e.printStackTrace();
 			return false;
 		}
 		return true;

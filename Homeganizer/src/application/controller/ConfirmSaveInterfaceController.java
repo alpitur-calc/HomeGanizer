@@ -37,11 +37,6 @@ public class ConfirmSaveInterfaceController implements Initializable{
 
 		@Override
 		public void handle(MouseEvent event) {
-			try {
-				DatabaseHandler.getInstance().saveRooms(RoomHandler.getInstance().getStanze());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			MainInterfaceController.Chiusura= true;
 			MessageView.showMessageAlert(AlertType.CONFIRMATION, "Successo", "Salvataggio effettuato.");
 			Stage thisStage = (Stage) btnSi.getScene().getWindow();
