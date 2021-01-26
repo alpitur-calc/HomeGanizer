@@ -39,50 +39,14 @@ public class Piantina {
 			c.setHeight(MainInterfaceController.getStanzaCorrente().getProfondità() * Piantina.l);
 			c.setWidth(MainInterfaceController.getStanzaCorrente().getLarghezza() * Piantina.l);
 
-			gc = c.getGraphicsContext2D();
-			gc.clearRect(0, 0, c.getWidth(), c.getHeight());
-			
-			for (int i = 0; i < c.getWidth(); i += Piantina.l) {
-				for (int j = 0; j < c.getHeight(); j += Piantina.l) {
-					gc.setLineWidth(0.5);
-					gc.setStroke(Color.DARKCYAN);
-					gc.strokeRect(i, j, Piantina.l, Piantina.l);
-				}
-			}
-
-			for (Mobile m : MainInterfaceController.getStanzaCorrente().getMobili()) {
-				gc.setFill(Color.BLUE);
-				gc.setLineWidth(3);
-				gc.setStroke(Color.BLACK);
-				gc.strokeRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l,
-						m.getH() * Piantina.l);
-				gc.fillRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
-				Image img = new Image("/resources/mobili/" + m.getImmagine() + ".png");
-				gc.drawImage(img, (double) m.getX() * l, (double) m.getY() * l, (double) l, (double) l);
-			}
+			paint();
 		}
 	}
 
 	public void aggiornaPiantina() {
 		gc.clearRect(0, 0, c.getWidth(), c.getHeight());
 
-		for (int i = 0; i < c.getWidth(); i += Piantina.l) {
-			for (int j = 0; j < c.getHeight(); j += Piantina.l) {
-				gc.setLineWidth(0.5);
-				gc.setStroke(Color.DARKCYAN);
-				gc.strokeRect(i, j, Piantina.l, Piantina.l);
-			}
-		}
-
-		for (Mobile m : MainInterfaceController.getStanzaCorrente().getMobili()) {
-			gc.setFill(Color.BLUE);
-			gc.setLineWidth(3);
-			gc.setStroke(Color.BLACK);
-			gc.strokeRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
-			gc.fillRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
-			Image img = new Image("/resources/mobili/" + m.getImmagine() + ".png");
-			gc.drawImage(img, (double) m.getX() * l, (double) m.getY() * l, (double) l, (double) l);
-		}
+		paint();
 	}
 
 	public void evidenziaMobile() {
@@ -106,8 +70,28 @@ public class Piantina {
 	}
 
 	public void deselezionaMobile() {
+		paint();
+	}
+
+	public void clear() {
+		gc.clearRect(0, 0, c.getWidth(), c.getHeight());
+	}
+
+	public void paint() {
+		gc = c.getGraphicsContext2D();
+		gc.clearRect(0, 0, c.getWidth(), c.getHeight());
+		gc.setFill(Color.WHITE);
+		gc.fillRect(0, 0, c.getWidth() * l, c.getWidth() * l);
+
+		for (int i = 0; i < c.getWidth(); i += Piantina.l) {
+			for (int j = 0; j < c.getHeight(); j += Piantina.l) {
+				gc.setLineWidth(0.5);
+				gc.setStroke(Color.DARKCYAN);
+				gc.strokeRect(i, j, Piantina.l, Piantina.l);
+			}
+		}
 		for (Mobile m : MainInterfaceController.getStanzaCorrente().getMobili()) {
-			gc.setFill(Color.BLUE);
+			gc.setFill(Color.DARKCYAN);
 			gc.setLineWidth(3);
 			gc.setStroke(Color.BLACK);
 			gc.strokeRect(m.getX() * Piantina.l, m.getY() * Piantina.l, m.getW() * Piantina.l, m.getH() * Piantina.l);
@@ -115,10 +99,6 @@ public class Piantina {
 			Image img = new Image("/resources/mobili/" + m.getImmagine() + ".png");
 			gc.drawImage(img, (double) m.getX() * l, (double) m.getY() * l, (double) l, (double) l);
 		}
-	}
-
-	public void clear() {
-		gc.clearRect(0, 0, c.getWidth(), c.getHeight());
 	}
 
 }
