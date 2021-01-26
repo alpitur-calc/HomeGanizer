@@ -499,7 +499,7 @@ public class MainInterfaceController implements Initializable {
 	    		FXMLLoader loaderOggettoProp = new FXMLLoader(getClass().getResource("/application/view/oggettoPropertiesInterface.fxml"));
 	    		AnchorPane rootOggettoProp = loaderOggettoProp.load();
 	    		Scene sceneOggettoProp = new Scene(rootOggettoProp);
-	    		oggettoProp.setTitle("Inserire dati mobile");
+	    		oggettoProp.setTitle("Inserire dati oggetto");
 	    		oggettoProp.setScene(sceneOggettoProp);
 			} catch (IOException e1) { e1.printStackTrace(); }
 	
