@@ -3,6 +3,8 @@ package application.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.model.DatabaseHandler;
+import application.model.RoomHandler;
 import application.view.MessageView;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -35,6 +37,11 @@ public class ConfirmSaveInterfaceController implements Initializable{
 
 		@Override
 		public void handle(MouseEvent event) {
+			try {
+				DatabaseHandler.getInstance().saveRooms(RoomHandler.getInstance().getStanze());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			MainInterfaceController.Chiusura= true;
 			MessageView.showMessageAlert(AlertType.CONFIRMATION, "Successo", "Salvataggio effettuato.");
 			Stage thisStage = (Stage) btnSi.getScene().getWindow();
