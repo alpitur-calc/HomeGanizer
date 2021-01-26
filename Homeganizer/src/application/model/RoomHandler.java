@@ -23,7 +23,9 @@ public class RoomHandler {
 	}
 
 	private RoomHandler() {
-		stanze = new LinkedList<Stanza>();
+		stanze = DatabaseHandler.getInstance().getStanze();
+		if(stanze == null)
+			stanze = new LinkedList<Stanza>();
 	}
 
 	public boolean aggiungiStanza(String nome, int larghezza, int profondità) {
@@ -41,7 +43,16 @@ public class RoomHandler {
 	}
 
 	public void caricaStanze() {
-
+		stanze = DatabaseHandler.getInstance().getStanze();
+	}
+	
+	public void salvaStanze() {
+		try {
+			DatabaseHandler.getInstance().saveRooms(stanze);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String getProprietario() {

@@ -655,6 +655,7 @@ public class MainInterfaceController implements Initializable {
 			} catch (IOException e1) { e1.printStackTrace(); }
 	    	
 	    	s.showAndWait();
+	    	RoomHandler.getInstance().salvaStanze();
 	}
 	
 	public static void setStanzaCorrente(Stanza stanza) {
