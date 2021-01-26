@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 import application.SceneHandler;
+import application.model.DatabaseHandler;
 import application.model.Mobile;
 import application.model.Oggetto;
 import application.model.RoomHandler;
@@ -264,6 +265,8 @@ public class MainInterfaceController implements Initializable {
 	 	
 	    	lstRooms.getItems().add(lstRooms.getItems().size(),pbtn); 
     	}
+    	
+    	RoomHandler.getInstance().caricaStanze();
     	
 		for(Stanza s : RoomHandler.getInstance().getStanze()) {
 			addStanzaToList(s.getId(),s.getNome());
