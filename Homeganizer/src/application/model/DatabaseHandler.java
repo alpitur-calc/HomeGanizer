@@ -211,6 +211,7 @@ public class DatabaseHandler {
 	}
 
 	public void loadRooms(String insertedUsername) throws Exception {
+		stanze = new LinkedList<Stanza>();
 		Connection con = DriverManager.getConnection("jdbc:sqlite:database.db");
 		PreparedStatement stm1 = con.prepareStatement("SELECT * FROM stanze WHERE proprietario=?;");
 		stm1.setString(1, insertedUsername);
