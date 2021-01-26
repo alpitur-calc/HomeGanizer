@@ -40,6 +40,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class MainInterfaceController implements Initializable {
 
@@ -93,6 +94,9 @@ public class MainInterfaceController implements Initializable {
 
     @FXML
     private MenuItem btnAbout;
+    
+    @FXML
+    private MenuItem mtmSalva;
       
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -102,12 +106,27 @@ public class MainInterfaceController implements Initializable {
 
     	mtmCreaStanza.setOnAction(handleBtnAddRoom);
     	mtmEliminaStanza.setOnAction(handleBtnEliminaStanza);
+    	mtmSalva.setOnAction(handleMtmSaveClicked);
     	
     	txtObjectDescription.setEditable(false);
     	cnvRoom.setOnMouseClicked(handleMouseClickCanvas);
     	Piantina.getInstance().setCanvas(cnvRoom);
-    	
+    	lstRooms.setOnMouseEntered(setCloseOperation);
+    	lstFurniture.setOnMouseEntered(setCloseOperation);
+    	lstOggetti.setOnMouseEntered(setCloseOperation);
+    	cnvRoom.setOnMouseEntered(setCloseOperation);
+    	txtObjectDescription.setOnMouseEntered(setCloseOperation);
     }
+    
+    private EventHandler<MouseEvent> setCloseOperation = new EventHandler<MouseEvent>(){
+
+		@Override
+		public void handle(MouseEvent event) {
+			Stage thisStage = (Stage) lstRooms.getScene().getWindow();
+			thisStage.setOnCloseRequest(handleMainStageClosing);
+		}
+    	
+    };
 
     @FXML
     void handleMnuAboutClicked(ActionEvent event) {
@@ -549,14 +568,10 @@ public class MainInterfaceController implements Initializable {
 					
 					for(RoomPane r2 : lstFurniture.getItems()) {
 						if(r2.getIdStanza().equals(mobileSelezionato.getId())) {
-							for(Mobile m : getStanzaCorrente().getMobili()) {			
-								if(m.getId().equals(mobileSelezionato.getId())) {
-									lstFurniture.getSelectionModel().select(cont2);
-									caricaOggetti(mobileSelezionato);
-									mobTrovato=true;
-									break;
-								}
-							}
+							lstFurniture.getSelectionModel().select(cont2);
+							caricaOggetti(mobileSelezionato);
+							mobTrovato=true;
+							break;
 						}
 						if(mobTrovato) { break; }
 						cont2++;
@@ -582,31 +597,6 @@ public class MainInterfaceController implements Initializable {
 		}
     }
 	
-	public static void setStanzaCorrente(Stanza stanza) {
-		stanzaSelezionata = stanza;
-		Piantina.getInstance().disegna();
-	}
-	
-	public static void setMobileCorrente(Mobile mobile) {
-		mobileSelezionato = mobile;
-	}
-	
-	public static Stanza getStanzaCorrente() {
-		return stanzaSelezionata;
-	}
-	
-	public static Mobile getMobileCorrente() {
-		return mobileSelezionato;
-	}
-	
-	public static void setModVista(boolean mod) {
-		vista= mod;
-	}
-	
-	public static boolean isModVista() {
-		return vista;
-	}
-		
 	private EventHandler<MouseEvent> handleMouseClickCanvas = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -632,4 +622,61 @@ public class MainInterfaceController implements Initializable {
 		}
 		
 	};
+	
+	private EventHandler<WindowEvent> handleMainStageClosing= new EventHandler<WindowEvent>() {
+
+		@Override
+		public void handle(WindowEvent event) {
+			Save();
+		}
+	};
+	
+	private EventHandler<ActionEvent> handleMtmSaveClicked = new EventHandler<ActionEvent>() {
+
+		@Override
+		public void handle(ActionEvent event) {
+			Save();
+		}};
+	
+	private void Save() {
+		Stage s;
+			s = new Stage();
+			s.setResizable(false);
+			s.getIcons().add(stageIcon);
+	    	try {
+	    		FXMLLoader loaderS = new FXMLLoader(getClass().getResource("/application/view/confirmSaveInterface.fxml"));
+	    		AnchorPane rootS = loaderS.load();
+	    		Scene sceneS = new Scene(rootS);
+	    		s.setTitle("Attenzione.");
+	    		s.setScene(sceneS);
+			} catch (IOException e1) { e1.printStackTrace(); }
+	    	
+	    	s.showAndWait();
+	}
+	
+	public static void setStanzaCorrente(Stanza stanza) {
+		stanzaSelezionata = stanza;
+		Piantina.getInstance().disegna();
+	}
+	
+	public static void setMobileCorrente(Mobile mobile) {
+		mobileSelezionato = mobile;
+	}
+	
+	public static Stanza getStanzaCorrente() {
+		return stanzaSelezionata;
+	}
+	
+	public static Mobile getMobileCorrente() {
+		return mobileSelezionato;
+	}
+	
+	public static void setModVista(boolean mod) {
+		vista= mod;
+	}
+	
+	public static boolean isModVista() {
+		return vista;
+	}
+	
 }
