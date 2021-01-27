@@ -21,6 +21,10 @@ public class SceneHandler {
 
 	private SceneHandler() {
 	}
+	
+	public Scene getScene() {
+		return scene;
+	}
 
 	public void init(Stage primaryStage) throws Exception {
 		stage = primaryStage;

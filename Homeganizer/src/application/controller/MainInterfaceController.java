@@ -633,9 +633,11 @@ public class MainInterfaceController implements Initializable {
 
 		@Override
 		public void handle(WindowEvent event) {
-			Save();
+			if(SceneHandler.getInstance().getScene() == ((Stage)event.getSource()).getScene()) {
+				Save();	
+				if(!Chiusura) { event.consume(); }
+			}
 			
-			if(!Chiusura) { event.consume(); }
 		}
 	};
 	
