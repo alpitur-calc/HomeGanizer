@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 public class SceneHandler {
 	private Stage stage;
 	private Scene scene;
+	private String actualScene=null;
 
 	private static SceneHandler instance = null;
 
@@ -22,14 +23,15 @@ public class SceneHandler {
 	private SceneHandler() {
 	}
 	
-	public Scene getScene() {
-		return scene;
+	public String getScene() {
+		return actualScene;
 	}
 
 	public void init(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		String filename = "loginInterface.fxml";
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/" + filename));
+		actualScene = filename;
 		Parent root = (Parent) loader.load();
 		Image stageIcon= new Image(getClass().getResourceAsStream("/resources/homeganizerIcon.png"));
 		scene = new Scene(root);
@@ -47,6 +49,7 @@ public class SceneHandler {
 
 	public void goToScene(String filename, String title, int x, int y) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/" + filename));
+		actualScene = filename;
 		Parent root = (Parent) loader.load();
 		scene.setRoot(root);
 		stage.setTitle(title);
